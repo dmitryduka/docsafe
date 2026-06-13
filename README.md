@@ -133,6 +133,28 @@ offset 0:  magic "DSVAULT" | version | headerLen | header (cleartext JSON)
 
 ---
 
+## Verifiable builds
+
+Because DocSafe holds sensitive documents, you shouldn't have to *trust* that the published app
+matches this source — you can **check it**.
+
+- **Reproducible:** two clean builds of the same tag produce a **byte-for-byte identical** APK.
+  The toolchain is pinned (Gradle wrapper + version catalog), the version is fixed, and the
+  non-deterministic AGP "dependencies info" blob is disabled.
+- **One-command verification:** rebuild from a release tag and run
+  [`tools/verify-apk.sh <official.apk>`](tools/verify-apk.sh). It compares the APK contents
+  (ignoring only the signature, which differs per signing key) and reports `MATCH ✅` or the
+  exact differing entries. Full guide: **[VERIFYING.md](VERIFYING.md)**.
+- **Signed chain:** each release is a **GPG-signed git tag** with a matching **GitHub Release**
+  that publishes the reproducibly-built APK and its `SHA256SUMS`.
+
+Note on Google Play: Play re-signs uploads with **Play App Signing**, so the Play-delivered APK
+won't be byte-identical to a local build. The **GitHub Release APK** (built from the same signed
+tag) is therefore the artifact to verify against. See [VERIFYING.md](VERIFYING.md) and
+[BUILDING.md](BUILDING.md).
+
+---
+
 ## Tech stack
 
 - **Kotlin**, **Jetpack Compose** + **Material 3**, single-Activity MVVM.
@@ -159,7 +181,7 @@ covered by fast host unit tests (no emulator required).
 
 ## Building
 
-Requirements: **JDK 17+** (the project targets JVM 17) and the **Android SDK** (platform 36).
+Requirements: **JDK 17** and the **Android SDK** (platform 36, build-tools 35.0.0).
 
 ```bash
 # Run the JVM unit tests (crypto + vault format + merge + concurrency)
@@ -167,35 +189,14 @@ Requirements: **JDK 17+** (the project targets JVM 17) and the **Android SDK** (
 
 # Build a debug APK and install on a connected device/emulator
 ./gradlew :app:installDebug
+
+# Build the release APK (unsigned unless keystore.properties is present)
+./gradlew :app:assembleRelease
 ```
 
-### Release signing
-
-Release builds are signed from a local `keystore.properties` (and a `.jks` keystore) that are
-**git-ignored and never committed**. Create your own:
-
-```bash
-keytool -genkeypair -v -keystore docsafe-release.jks \
-  -keyalg RSA -keysize 2048 -validity 10000 -alias docsafe
-```
-
-`keystore.properties` (in the project root):
-
-```properties
-storeFile=docsafe-release.jks
-storePassword=********
-keyAlias=docsafe
-keyPassword=********
-```
-
-Then:
-
-```bash
-./gradlew :app:assembleRelease   # signed APK
-./gradlew :app:bundleRelease     # AAB for Google Play
-```
-
-If `keystore.properties` is absent, the release build still compiles but is left unsigned.
+The exact pinned toolchain, the release-signing setup, and how releases are cut are documented
+in **[BUILDING.md](BUILDING.md)**. Release signing reads a local `keystore.properties` + `.jks`
+that are **git-ignored and never committed**.
 
 ---
 
@@ -221,6 +222,16 @@ If `keystore.properties` is absent, the release build still compiles but is left
 DocSafe has no analytics, no ads, and makes no network calls for its core features. Documents,
 OCR text, and previews stay on the device. The encrypted vault leaves the device only when you
 explicitly export or share it.
+
+You don't have to take that on trust — the app is open source and builds reproducibly, so anyone
+can confirm the released binary matches this source (see [Verifiable builds](#verifiable-builds)).
+
+Suggested Google Play description blurb:
+
+> **Open source & verifiable.** DocSafe works fully offline and stores your documents in a single
+> encrypted file that never leaves your device unless you export it. The complete source is on
+> GitHub, and every release is built reproducibly from a signed tag — anyone can rebuild the app
+> and confirm it matches the published code.
 
 ---
 

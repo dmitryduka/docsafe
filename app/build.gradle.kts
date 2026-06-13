@@ -56,6 +56,14 @@ android {
         }
     }
 
+    // Reproducible builds: AGP otherwise embeds an encrypted "dependencies info" blob
+    // (signed by Google Play) that is non-deterministic and prevents byte-for-byte
+    // verification. Drop it so anyone can rebuild an identical artifact from source.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
