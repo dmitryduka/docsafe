@@ -100,6 +100,22 @@ diff -r off rebuilt && echo "MATCH"
 
 A match means the released APK's code and resources are exactly what this source compiles to.
 
+### 4. (Bonus) Confirm it has no internet access
+
+DocSafe declares **no `INTERNET` permission**, so the OS denies its process any network socket.
+Check the APK directly:
+
+```bash
+aapt dump permissions docsafe-<version>.apk
+# Expected — only:
+#   uses-permission: name='android.permission.USE_BIOMETRIC'
+#   uses-permission: name='android.permission.USE_FINGERPRINT'
+# and NO android.permission.INTERNET / ACCESS_NETWORK_STATE
+```
+
+(On-device scanning/OCR keep working because they run inside Google Play Services, a separate
+process.)
+
 ---
 
 ## Verifying the Play build (what's on your device)

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- DocSafe never touches the network from its own process. The ML Kit / Play Services
+         dependencies declare INTERNET and ACCESS_NETWORK_STATE in their manifests; we strip
+         them from the merged manifest so the app has NO network access (the OS denies sockets
+         to a process whose package lacks INTERNET). On-device scanning/OCR still work because
+         they run inside Google Play Services, which has its own networking in a separate process.
+         Verify with: aapt dump permissions <apk>  ->  no android.permission.INTERNET. -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
 
     <!-- Package visibility (Android 11+): allow resolving a camera app for "Take photo". -->
     <queries>

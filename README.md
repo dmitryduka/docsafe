@@ -133,6 +133,26 @@ offset 0:  magic "DSVAULT" | version | headerLen | header (cleartext JSON)
 
 ---
 
+## No network access
+
+DocSafe requests **no internet permission at all**. Its merged manifest declares only
+`USE_BIOMETRIC` / `USE_FINGERPRINT` — there is **no `android.permission.INTERNET`** (the ML Kit /
+Play Services libraries declare it transitively, so it is explicitly stripped from the manifest).
+
+This is an **OS-enforced** guarantee, not a promise: Android only grants a process network
+sockets if its package holds `INTERNET`, so DocSafe's own code physically cannot open a network
+connection. Anyone can confirm it from the APK:
+
+```bash
+aapt dump permissions docsafe-<version>.apk      # no android.permission.INTERNET
+```
+
+On-device scanning and OCR still work — they run inside **Google Play Services** (a separate
+process with its own networking), so removing DocSafe's network access doesn't affect them.
+
+The only way data leaves the device is if **you** explicitly use the export / share action,
+which hands a file to another app of your choosing.
+
 ## Verifiable builds
 
 Because DocSafe holds sensitive documents, you shouldn't have to *trust* that the published app
@@ -229,7 +249,8 @@ can confirm the released binary matches this source (see [Verifiable builds](#ve
 Suggested Google Play description blurb:
 
 > **Open source & verifiable.** DocSafe works fully offline and stores your documents in a single
-> encrypted file that never leaves your device unless you export it. The complete source is on
+> encrypted file that never leaves your device unless you export it. It requests **no internet
+> permission**, so the app physically cannot send your data anywhere. The complete source is on
 > GitHub, and every release is built reproducibly from a signed tag — anyone can rebuild the app
 > and confirm it matches the published code.
 
