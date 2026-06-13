@@ -131,6 +131,9 @@ offset 0:  magic "DSVAULT" | version | headerLen | header (cleartext JSON)
 > **Range** requests, which is how a future Google Drive backend would fetch only the header,
 > index, and one blob — never the whole file.
 
+For why the password is run through **Argon2id** (and why that's the strongest, RFC-9106-standardized
+choice — not a weaker substitute for PBKDF2), see **[docs/key-derivation.md](docs/key-derivation.md)**.
+
 ---
 
 ## No network access
