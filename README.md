@@ -27,9 +27,7 @@ to someone else's cloud. DocSafe takes the opposite stance:
 
 ## Screenshots
 
-| Create your vault | Secure your vault |
-| --- | --- |
-| ![Create vault](docs/screenshots/01-create-vault.png) | ![Secure your vault](docs/screenshots/02-secure-vault.png) |
+![Create vault](docs/screenshots/01-create-vault.png)
 
 The onboarding makes the security model explicit up front: choose a master password (with a
 plain-language warning that it can't be recovered), then pick at least one quick unlock method
