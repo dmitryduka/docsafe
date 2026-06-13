@@ -38,6 +38,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
@@ -197,6 +198,24 @@ fun DocumentDetailScreen(
             attachment.kind == AttachmentKind.IMAGE -> onOpenImage(attachment.id)
             else -> openExternally(attachment)
         }
+    }
+
+    // "Save to device": pick a destination via SAF, then write the decrypted blob there.
+    var pendingSave by remember { mutableStateOf<Attachment?>(null) }
+    val saveFileLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("*/*")) { uri ->
+        val att = pendingSave
+        pendingSave = null
+        if (uri != null && att != null) {
+            scope.launch {
+                val ok = saveAttachmentToUri(context, viewModel, att, uri)
+                toast(context, context.getString(if (ok) R.string.file_saved else R.string.err_cant_save_file))
+            }
+        }
+    }
+    fun saveToDevice(attachment: Attachment) {
+        pendingSave = attachment
+        viewModel.notifyExternalActivityStarting()
+        saveFileLauncher.launch(safeFileName(attachment.fileName))
     }
 
     val pickPhotos = rememberLauncherForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uris ->
@@ -427,6 +446,7 @@ fun DocumentDetailScreen(
                         onOpen = { openExternally(attachment) },
                         onShare = { shareOne(attachment) },
                         onCopy = { copyToClipboard(context, viewModel, scope, attachment) },
+                        onSave = { saveToDevice(attachment) },
                         onRemove = { viewModel.removeAttachment(documentId, attachment.id) },
                     )
                 }
@@ -498,6 +518,7 @@ private fun AttachmentCell(
     onOpen: () -> Unit,
     onShare: () -> Unit,
     onCopy: () -> Unit,
+    onSave: () -> Unit,
     onRemove: () -> Unit,
 ) {
     var menuOpen by remember { mutableStateOf(false) }
@@ -543,6 +564,7 @@ private fun AttachmentCell(
                 DropdownMenuItem(text = { Text(stringResource(R.string.open_in_another_app)) }, onClick = { menuOpen = false; onOpen() })
                 DropdownMenuItem(text = { Text(stringResource(R.string.action_share)) }, onClick = { menuOpen = false; onShare() })
                 DropdownMenuItem(text = { Text(stringResource(R.string.copy_to_clipboard)) }, onClick = { menuOpen = false; onCopy() })
+                DropdownMenuItem(text = { Text(stringResource(R.string.save_to_device)) }, onClick = { menuOpen = false; onSave() })
                 DropdownMenuItem(text = { Text(stringResource(R.string.select)) }, onClick = { menuOpen = false; onLongPress() })
                 DropdownMenuItem(text = { Text(stringResource(R.string.action_remove)) }, onClick = { menuOpen = false; onRemove() })
             }
@@ -578,11 +600,15 @@ private fun FieldsTable(fields: List<DocField>, onCopyValue: (String) -> Unit, o
         fields.forEach { field ->
             Row(modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(field.key, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(0.34f))
-                Text(
-                    field.value,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.weight(0.66f).clickable { onCopyValue(field.value) }.padding(vertical = 6.dp),
-                )
+                // Wrapped in a SelectionContainer so a long-press lets you select & copy part of
+                // the value; a plain tap still copies the whole value.
+                SelectionContainer(modifier = Modifier.weight(0.66f)) {
+                    Text(
+                        field.value,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.fillMaxWidth().clickable { onCopyValue(field.value) }.padding(vertical = 6.dp),
+                    )
+                }
                 IconButton(onClick = { onRemove(field.id) }, modifier = Modifier.size(32.dp)) {
                     Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.action_remove), modifier = Modifier.size(18.dp))
                 }
@@ -670,6 +696,17 @@ private suspend fun exportToCache(context: Context, viewModel: VaultViewModel, a
         file.writeBytes(bytes)
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
         ExportedBlob(uri, attachment.mimeType ?: mimeFromName(attachment.fileName) ?: "application/octet-stream")
+    }
+
+/** Decrypts an attachment and writes it to a user-chosen location (SAF). Returns success. */
+private suspend fun saveAttachmentToUri(context: Context, viewModel: VaultViewModel, attachment: Attachment, dest: Uri): Boolean =
+    withContext(Dispatchers.IO) {
+        runCatching {
+            val bytes = viewModel.readBlob(attachment.blobId)
+            context.contentResolver.openOutputStream(dest)?.use { it.write(bytes) }
+                ?: error("no output stream")
+            true
+        }.getOrDefault(false)
     }
 
 /** Exports several attachments to cache and returns their FileProvider uris (for multi-share). */

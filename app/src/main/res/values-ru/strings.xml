@@ -84,7 +84,10 @@
     <string name="no_files_hint">Файлов пока нет. Нажмите «Добавить», чтобы отсканировать, сфотографировать или импортировать файлы.</string>
     <string name="thumbnail_size">Размер миниатюр</string>
     <string name="details">Детали</string>
-    <string name="tap_value_copy">Нажмите на значение, чтобы скопировать</string>
+    <string name="tap_value_copy">Нажмите, чтобы скопировать · удерживайте, чтобы выделить часть</string>
+    <string name="save_to_device">Сохранить на устройство</string>
+    <string name="file_saved">Сохранено на устройство</string>
+    <string name="err_cant_save_file">Не удалось сохранить файл</string>
     <string name="add_field">Добавить поле</string>
     <string name="field_key">Ключ</string>
     <string name="field_value">Значение</string>

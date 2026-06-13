@@ -86,7 +86,10 @@
     <string name="no_files_hint">No files yet. Tap Add to scan, take a photo, or import files.</string>
     <string name="thumbnail_size">Thumbnail size</string>
     <string name="details">Details</string>
-    <string name="tap_value_copy">Tap a value to copy it</string>
+    <string name="tap_value_copy">Tap a value to copy it · long-press to select part of it</string>
+    <string name="save_to_device">Save to device</string>
+    <string name="file_saved">Saved to device</string>
+    <string name="err_cant_save_file">Couldn\'t save this file</string>
     <string name="add_field">Add field</string>
     <string name="field_key">Key</string>
     <string name="field_value">Value</string>
