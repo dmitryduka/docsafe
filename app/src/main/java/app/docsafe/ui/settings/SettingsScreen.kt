@@ -63,6 +63,25 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
     var showPinDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showChangePassword by remember { mutableStateOf(false) }
+    var showVerifyPin by remember { mutableStateOf(false) }
+
+    // Step-up confirmation before the sensitive "change master password" action.
+    fun requestChangePassword() {
+        if (flags.biometric) {
+            scope.launch {
+                when (val r = authenticator.authenticate(
+                    context.getString(R.string.change_master_password),
+                    context.getString(R.string.unlock_subtitle),
+                )) {
+                    is BiometricResult.Success -> showChangePassword = true
+                    is BiometricResult.Error -> Toast.makeText(context, r.message, Toast.LENGTH_SHORT).show()
+                    BiometricResult.Failed -> Unit
+                }
+            }
+        } else {
+            showVerifyPin = true
+        }
+    }
 
     fun enableBiometric() {
         scope.launch {
@@ -146,7 +165,7 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
             }
             ListItem(
                 headlineContent = { Text(stringResource(R.string.change_master_password)) },
-                modifier = Modifier.clickable(enabled = !busy) { showChangePassword = true },
+                modifier = Modifier.clickable(enabled = !busy) { requestChangePassword() },
             )
 
             HorizontalDivider()
@@ -165,6 +184,21 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
         PinDialog(
             onDismiss = { showPinDialog = false },
             onConfirm = { pin -> viewModel.setPin(pin.toCharArray()); showPinDialog = false },
+        )
+    }
+    if (showVerifyPin) {
+        VerifyPinDialog(
+            onDismiss = { showVerifyPin = false },
+            onConfirm = { pin ->
+                scope.launch {
+                    if (viewModel.verifyPin(pin.toCharArray())) {
+                        showVerifyPin = false
+                        showChangePassword = true
+                    } else {
+                        Toast.makeText(context, context.getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            },
         )
     }
     if (showChangePassword) {
@@ -235,6 +269,32 @@ private fun PinDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
             }
         },
         confirmButton = { TextButton(onClick = { onConfirm(pin) }, enabled = valid) { Text(stringResource(R.string.action_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+    )
+}
+
+@Composable
+private fun VerifyPinDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
+    var pin by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.change_master_password)) },
+        text = {
+            OutlinedTextField(
+                value = pin,
+                onValueChange = { pin = it.filter(Char::isDigit) },
+                label = { Text(stringResource(R.string.pin)) },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = { onConfirm(pin) }, enabled = pin.length >= MIN_PIN_LEN) {
+                Text(stringResource(R.string.action_continue))
+            }
+        },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
     )
 }

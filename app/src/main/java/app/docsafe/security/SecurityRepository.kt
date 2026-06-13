@@ -274,6 +274,22 @@ class SecurityRepository @Inject constructor(
     private fun pinWrappedBlob(): ByteArray? =
         secureStore.masterKeyPinWrapped ?: secureStore.legacyPinWrappedDek
 
+    /** Verifies [pin] without changing any state (step-up confirmation for sensitive actions). */
+    fun verifyPin(pin: CharArray): Boolean {
+        val paramsBytes = secureStore.pinKdfParams ?: return false
+        val wrapped = pinWrappedBlob() ?: return false
+        val params = json.decodeFromString(KdfParamsDto.serializer(), String(paramsBytes, Charsets.UTF_8)).toKdfParams()
+        val key = PinKdf.deriveKey(pin, params)
+        return try {
+            KeyEnvelope.unwrap(key, wrapped).fill(0)
+            true
+        } catch (e: DecryptionException) {
+            false
+        } finally {
+            key.fill(0)
+        }
+    }
+
     /** Common tail of every unlock: migrate legacy if needed, hold the master key, open active vault. */
     private fun finishUnlock(mk: ByteArray) {
         if (needsMigration()) migrateLegacyVault(mk)

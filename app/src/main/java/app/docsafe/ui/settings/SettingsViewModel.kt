@@ -64,6 +64,10 @@ class SettingsViewModel @Inject constructor(
         localePrefs.languageTag = tag
     }
 
+    /** Verifies the app PIN (step-up confirmation), Argon2 off the main thread. */
+    suspend fun verifyPin(pin: CharArray): Boolean =
+        withContext(Dispatchers.Default) { securityRepository.verifyPin(pin) }
+
     /** Changes the current vault's master password (re-wraps its DEK; Argon2 off the main thread). */
     fun changeMasterPassword(newPassword: CharArray, onDone: () -> Unit) = viewModelScope.launch {
         _busy.value = true

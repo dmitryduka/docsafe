@@ -29,6 +29,38 @@ class BiometricAuthenticator(private val activity: FragmentActivity) {
 
     fun isAvailable(): Boolean = status() == BiometricManager.BIOMETRIC_SUCCESS
 
+    /** Identity confirmation without a crypto object (step-up auth for sensitive actions). */
+    suspend fun authenticate(title: String, subtitle: String): BiometricResult =
+        suspendCancellableCoroutine { cont ->
+            val executor = androidx.core.content.ContextCompat.getMainExecutor(activity)
+            val prompt = BiometricPrompt(
+                activity,
+                executor,
+                object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                        if (cont.isActive) cont.resume(BiometricResult.Success(null))
+                    }
+
+                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                        if (cont.isActive) cont.resume(BiometricResult.Error(errorCode, errString.toString()))
+                    }
+
+                    override fun onAuthenticationFailed() {}
+                },
+            )
+            val info = BiometricPrompt.PromptInfo.Builder()
+                .setTitle(title)
+                .setSubtitle(subtitle)
+                .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+                .build()
+            try {
+                prompt.authenticate(info)
+            } catch (e: Exception) {
+                if (cont.isActive) cont.resumeWithException(e)
+            }
+            cont.invokeOnCancellation { prompt.cancelAuthentication() }
+        }
+
     suspend fun authenticate(title: String, subtitle: String, cryptoCipher: Cipher): BiometricResult =
         suspendCancellableCoroutine { cont ->
             val executor = androidx.core.content.ContextCompat.getMainExecutor(activity)
