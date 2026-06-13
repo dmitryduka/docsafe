@@ -27,14 +27,27 @@ to someone else's cloud. DocSafe takes the opposite stance:
 
 ## Screenshots
 
-![Create vault](docs/screenshots/01-create-vault.png)
+> All screenshots use synthetic, non-personal sample documents.
 
-The onboarding makes the security model explicit up front: choose a master password (with a
-plain-language warning that it can't be recovered), then pick at least one quick unlock method
-(biometrics / device credential, or a PIN).
+| Folder browser | Document detail | Search by name & tag |
+| --- | --- | --- |
+| ![Folder browser](docs/screenshots/03-folder-browser.png) | ![Document detail](docs/screenshots/05-document-detail.png) | ![Search with folder paths](docs/screenshots/10-search.png) |
+| Starred section, folders & documents, slick search bar. | Key/value fields, tags, and in-vault thumbnails. | Results show each item's folder path. |
 
-*More screenshots — folder browser, document detail, in-app viewer, OCR field extraction and
-batch mode — can be dropped into `docs/screenshots/` and linked here.*
+| OCR field extraction | Save detected field | Batch extraction |
+| --- | --- | --- |
+| ![OCR auto-detect](docs/screenshots/07-ocr.png) | ![Save as field](docs/screenshots/08-ocr-save-field.png) | ![Batch extract](docs/screenshots/09-batch-extract.png) |
+| On-device OCR boxes every number/code — tap to grab it. | Tapping a box pre-fills the add-field dialog. | Step through documents and assign values to keys. |
+
+| Multi-select | Move to folder | Onboarding & security |
+| --- | --- | --- |
+| ![Multi-select](docs/screenshots/11-multiselect.png) | ![Move](docs/screenshots/12-move.png) | ![Create vault](docs/screenshots/01-create-vault.png) |
+| Select documents/folders for bulk actions. | Pick or create a destination subfolder. | Master password with a plain-language warning. |
+
+| Settings | 17 languages |
+| --- | --- |
+| ![Settings](docs/screenshots/13-settings.png) | ![Language picker](docs/screenshots/14-language.png) |
+| Manage unlock methods and language. | In-app picker; defaults to the system language. |
 
 ---
 
