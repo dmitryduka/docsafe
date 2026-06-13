@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">キャンセル</string>
+    <string name="action_save">保存</string>
+    <string name="action_add">追加</string>
+    <string name="action_remove">取り除く</string>
+    <string name="action_delete">削除</string>
+    <string name="action_rename">名前を変更</string>
+    <string name="action_share">共有</string>
+    <string name="action_open">開く</string>
+    <string name="action_close">閉じる</string>
+    <string name="action_continue">続行</string>
+    <string name="action_enable">有効にする</string>
+    <string name="copied">コピーしました</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">保管庫を作成</string>
+    <string name="create_vault_subtitle">マスターパスワードを設定してください。この保管庫を共有する全員が、同じパスワードでインポートします。この端末では再入力する必要はありません。</string>
+    <string name="master_password">マスターパスワード</string>
+    <string name="confirm_password">パスワードを確認</string>
+    <string name="create_vault">保管庫を作成</string>
+    <string name="import_shared_vault">代わりに共有保管庫をインポート</string>
+    <string name="password_warning">このパスワードを覚え、安全な場所に書き留めてください。ドキュメントはこのパスワードを基にした強力な AES-256 暗号化で保護されます。リセットや復元はできません。忘れると保管庫を二度と開けず、中身はすべて永久に失われます。</string>
+    <string name="min_chars">%1$d 文字以上で入力してください。</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">保管庫を保護</string>
+    <string name="secure_vault_subtitle">DocSafe を開くたびに使用するロック解除方法を 1 つ以上選んでください。</string>
+    <string name="biometrics_title">生体認証 / 端末のロック解除</string>
+    <string name="biometrics_desc">指紋、顔、または端末の PIN を使用します。</string>
+    <string name="biometrics_unavailable">この端末では利用できません。画面ロックを設定すると有効になります。</string>
+    <string name="pin_title">PIN コード</string>
+    <string name="pin_desc">生体認証の代わりに使用する数字の PIN です。</string>
+    <string name="set_pin">PIN を設定</string>
+    <string name="pin_hint">PIN（%1$d 桁以上）</string>
+    <string name="confirm_pin">PIN を確認</string>
+    <string name="set_a_pin">PIN を設定</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">DocSafe のロックを解除</string>
+    <string name="unlock_subtitle">ドキュメントを開くために本人確認を行ってください。</string>
+    <string name="use_biometrics">生体認証 / 端末のロック解除を使用</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">PIN でロック解除</string>
+    <string name="incorrect_pin">PIN が正しくありません。</string>
+    <string name="auth_failed">認証に失敗しました。</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">保管庫をインポート</string>
+    <string name="import_vault_subtitle">「%1$s」の共有マスターパスワードを入力してください。これがこの端末の保管庫となり、現在保存されている保管庫を置き換えます。</string>
+    <string name="import_vault">保管庫をインポート</string>
+
+    <!-- Browser -->
+    <string name="my_vault">マイ保管庫</string>
+    <string name="search_hint">名前やタグで検索</string>
+    <string name="starred">お気に入り</string>
+    <string name="section_all">すべて</string>
+    <string name="new_folder">新しいフォルダ</string>
+    <string name="new_document">新しいドキュメント</string>
+    <string name="rename_folder">フォルダ名を変更</string>
+    <string name="reclaim_storage">ストレージを解放</string>
+    <string name="reclaiming">空き容量を解放中…</string>
+    <string name="save_vault_to_device">保管庫を端末に保存</string>
+    <string name="share_vault">保管庫を共有</string>
+    <string name="settings">設定</string>
+    <string name="nothing_here">まだ何もありません</string>
+    <string name="nothing_here_hint">+ をタップしてフォルダやドキュメントを追加します。</string>
+    <string name="no_matches">該当なし</string>
+    <string name="folder">フォルダ</string>
+    <string name="files_count">%1$d 件のファイル</string>
+    <string name="vault_saved">保管庫を保存しました</string>
+    <string name="vault_save_failed">保管庫を保存できませんでした</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">ドキュメント名を変更</string>
+    <string name="delete_document">ドキュメントを削除</string>
+    <string name="add_text_field">テキストフィールドを追加</string>
+    <string name="add_tag">タグを追加</string>
+    <string name="add_tag_chip">+ タグ</string>
+    <string name="scan_document">ドキュメントをスキャン</string>
+    <string name="take_photo">写真を撮る</string>
+    <string name="photo_library">フォトライブラリ</string>
+    <string name="browse_files">ファイルを参照（すべての種類）</string>
+    <string name="no_files_hint">ファイルはまだありません。「追加」をタップしてスキャン、撮影、またはファイルをインポートします。</string>
+    <string name="thumbnail_size">サムネイルのサイズ</string>
+    <string name="details">詳細</string>
+    <string name="tap_value_copy">値をタップするとコピーできます</string>
+    <string name="add_field">フィールドを追加</string>
+    <string name="field_key">キー</string>
+    <string name="field_value">値</string>
+    <string name="custom_key">カスタムキー</string>
+    <string name="custom_option">カスタム…</string>
+    <string name="open_in_another_app">別のアプリで開く</string>
+    <string name="copy_to_clipboard">クリップボードにコピー</string>
+    <string name="select">選択</string>
+    <string name="selected_count">%1$d 件選択中</string>
+    <string name="added_on">%1$s に追加</string>
+
+    <!-- Share into app -->
+    <string name="add_items">%1$d 件を追加</string>
+    <string name="share_choose_destination">共有されたファイルを追加するドキュメントを選ぶか、新規作成してください。</string>
+    <string name="new_document_add_here">新しいドキュメント（ここに追加）</string>
+    <string name="tap_to_add_here">タップしてここに追加</string>
+
+    <!-- Settings -->
+    <string name="settings_title">設定</string>
+    <string name="settings_security">セキュリティ</string>
+    <string name="settings_language">言語</string>
+    <string name="language_system_default">システムのデフォルト</string>
+    <string name="biometric_unlock">生体認証でロック解除</string>
+    <string name="change_pin">PIN を変更</string>
+    <string name="turn_off">オフにする</string>
+    <string name="keep_one_method">ロック解除方法を 1 つ以上残してください。</string>
+    <string name="enabled">有効</string>
+    <string name="disabled">オフ</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">開くアプリを選択</string>
+    <string name="share_via">共有方法を選択</string>
+    <string name="count_folders">%1$d 個のフォルダ</string>
+    <string name="count_documents">%1$d 件のドキュメント</string>
+    <string name="empty">空</string>
+    <string name="share_selected">選択項目を共有</string>
+    <string name="remove_selected">選択項目を取り除く</string>
+    <string name="err_cant_open">このファイルを開けませんでした</string>
+    <string name="err_no_app">この種類のファイルを開けるアプリがありません</string>
+    <string name="err_cant_share">このファイルを共有できませんでした</string>
+    <string name="err_cant_copy">このファイルをコピーできませんでした</string>
+    <string name="err_scanner">この端末ではドキュメントスキャナーを利用できません</string>
+    <string name="err_no_camera">利用できるカメラアプリがありません</string>
+    <string name="cd_back">戻る</string>
+    <string name="cd_new">新規</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">テキストを抽出</string>
+    <string name="ocr_select_area">範囲を選択</string>
+    <string name="ocr_hint_auto">ハイライトされた番号やコードをタップするとフィールドとして保存できます。</string>
+    <string name="ocr_hint_region">番号やコードを枠で囲んで抽出します。</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">データを抽出（一括）</string>
+    <string name="batch_title">データを抽出</string>
+    <string name="batch_progress">%1$d / %2$d</string>
+    <string name="batch_no_docs">ここにはスキャンできる画像付きのドキュメントがありません。</string>
+    <string name="batch_scanning">スキャン中…</string>
+    <string name="batch_no_candidates">このドキュメントから番号やコードは検出されませんでした。</string>
+    <string name="batch_previous">前へ</string>
+    <string name="batch_next">次へ</string>
+    <string name="batch_finish">完了</string>
+    <string name="field_added">追加しました</string>
+    <string name="field_added_undo">追加しました — タップで取り消し</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">移動</string>
+    <string name="move_to_title">移動先…</string>
+    <string name="move_here">ここに移動</string>
+    <string name="move_to_root">「マイ保管庫」（ルート）に移動</string>
+    <string name="new_folder_here">ここに新しいフォルダ</string>
+    <string name="no_subfolders">ここにサブフォルダはありません</string>
+</resources>

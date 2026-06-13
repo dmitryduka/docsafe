@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Anuluj</string>
+    <string name="action_save">Zapisz</string>
+    <string name="action_add">Dodaj</string>
+    <string name="action_remove">Usuń</string>
+    <string name="action_delete">Usuń</string>
+    <string name="action_rename">Zmień nazwę</string>
+    <string name="action_share">Udostępnij</string>
+    <string name="action_open">Otwórz</string>
+    <string name="action_close">Zamknij</string>
+    <string name="action_continue">Kontynuuj</string>
+    <string name="action_enable">Włącz</string>
+    <string name="copied">Skopiowano</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Utwórz sejf</string>
+    <string name="create_vault_subtitle">Wybierz hasło główne. Wszyscy, którzy współdzielą ten sejf, używają tego samego hasła do jego zaimportowania. Na tym urządzeniu nie trzeba będzie wpisywać go ponownie.</string>
+    <string name="master_password">Hasło główne</string>
+    <string name="confirm_password">Potwierdź hasło</string>
+    <string name="create_vault">Utwórz sejf</string>
+    <string name="import_shared_vault">Zamiast tego zaimportuj udostępniony sejf</string>
+    <string name="password_warning">Zapamiętaj to hasło i zapisz je w bezpiecznym miejscu. Twoje dokumenty są chronione silnym szyfrowaniem AES-256 opartym na tym haśle. Nie da się go zresetować ani odzyskać — jeśli je zapomnisz, sejfu nie będzie już można otworzyć, a cała jego zawartość zostanie bezpowrotnie utracona.</string>
+    <string name="min_chars">Użyj co najmniej %1$d znaków.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Zabezpiecz sejf</string>
+    <string name="secure_vault_subtitle">Wybierz co najmniej jeden sposób odblokowywania DocSafe przy każdym otwarciu.</string>
+    <string name="biometrics_title">Biometria / odblokowanie urządzeniem</string>
+    <string name="biometrics_desc">Użyj odcisku palca, twarzy lub kodu PIN urządzenia.</string>
+    <string name="biometrics_unavailable">Niedostępne na tym urządzeniu. Skonfiguruj blokadę ekranu, aby włączyć.</string>
+    <string name="pin_title">Kod PIN</string>
+    <string name="pin_desc">Numeryczny PIN jako alternatywa dla biometrii.</string>
+    <string name="set_pin">Ustaw PIN</string>
+    <string name="pin_hint">PIN (min. %1$d cyfr)</string>
+    <string name="confirm_pin">Potwierdź PIN</string>
+    <string name="set_a_pin">Ustaw PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Odblokuj DocSafe</string>
+    <string name="unlock_subtitle">Potwierdź swoją tożsamość, aby otworzyć dokumenty.</string>
+    <string name="use_biometrics">Biometria / odblokowanie urządzeniem</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Odblokuj kodem PIN</string>
+    <string name="incorrect_pin">Nieprawidłowy PIN.</string>
+    <string name="auth_failed">Uwierzytelnianie nie powiodło się.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Importuj sejf</string>
+    <string name="import_vault_subtitle">Wprowadź wspólne hasło główne dla „%1$s”. Stanie się on sejfem tego urządzenia, zastępując dotychczasowy.</string>
+    <string name="import_vault">Importuj sejf</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Mój sejf</string>
+    <string name="search_hint">Szukaj nazw i tagów</string>
+    <string name="starred">Oznaczone gwiazdką</string>
+    <string name="section_all">Wszystkie</string>
+    <string name="new_folder">Nowy folder</string>
+    <string name="new_document">Nowy dokument</string>
+    <string name="rename_folder">Zmień nazwę folderu</string>
+    <string name="reclaim_storage">Zwolnij miejsce</string>
+    <string name="reclaiming">Zwalnianie miejsca…</string>
+    <string name="save_vault_to_device">Zapisz sejf na urządzeniu</string>
+    <string name="share_vault">Udostępnij sejf</string>
+    <string name="settings">Ustawienia</string>
+    <string name="nothing_here">Tu jeszcze nic nie ma</string>
+    <string name="nothing_here_hint">Dotknij +, aby dodać folder lub dokument.</string>
+    <string name="no_matches">Brak wyników</string>
+    <string name="folder">Folder</string>
+    <string name="files_count">Pliki: %1$d</string>
+    <string name="vault_saved">Sejf zapisany</string>
+    <string name="vault_save_failed">Nie udało się zapisać sejfu</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Zmień nazwę dokumentu</string>
+    <string name="delete_document">Usuń dokument</string>
+    <string name="add_text_field">Dodaj pole tekstowe</string>
+    <string name="add_tag">Dodaj tag</string>
+    <string name="add_tag_chip">+ Tag</string>
+    <string name="scan_document">Skanuj dokument</string>
+    <string name="take_photo">Zrób zdjęcie</string>
+    <string name="photo_library">Galeria zdjęć</string>
+    <string name="browse_files">Przeglądaj pliki (dowolny typ)</string>
+    <string name="no_files_hint">Brak plików. Dotknij Dodaj, aby zeskanować, zrobić zdjęcie lub zaimportować pliki.</string>
+    <string name="thumbnail_size">Rozmiar miniatur</string>
+    <string name="details">Szczegóły</string>
+    <string name="tap_value_copy">Dotknij wartość, aby ją skopiować</string>
+    <string name="add_field">Dodaj pole</string>
+    <string name="field_key">Klucz</string>
+    <string name="field_value">Wartość</string>
+    <string name="custom_key">Własny klucz</string>
+    <string name="custom_option">Inne…</string>
+    <string name="open_in_another_app">Otwórz w innej aplikacji</string>
+    <string name="copy_to_clipboard">Kopiuj do schowka</string>
+    <string name="select">Wybierz</string>
+    <string name="selected_count">Wybrano: %1$d</string>
+    <string name="added_on">Dodano %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Dodaj elementy: %1$d</string>
+    <string name="share_choose_destination">Wybierz dokument, do którego chcesz dodać udostępnione pliki, lub utwórz nowy.</string>
+    <string name="new_document_add_here">Nowy dokument (dodaj tutaj)</string>
+    <string name="tap_to_add_here">Dotknij, aby dodać tutaj</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Ustawienia</string>
+    <string name="settings_security">Bezpieczeństwo</string>
+    <string name="settings_language">Język</string>
+    <string name="language_system_default">Domyślny systemowy</string>
+    <string name="biometric_unlock">Odblokowanie biometryczne</string>
+    <string name="change_pin">Zmień PIN</string>
+    <string name="turn_off">Wyłącz</string>
+    <string name="keep_one_method">Zachowaj co najmniej jeden sposób odblokowywania.</string>
+    <string name="enabled">Włączone</string>
+    <string name="disabled">Wył.</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Otwórz za pomocą</string>
+    <string name="share_via">Udostępnij przez</string>
+    <string name="count_folders">Foldery: %1$d</string>
+    <string name="count_documents">Dok.: %1$d</string>
+    <string name="empty">Puste</string>
+    <string name="share_selected">Udostępnij wybrane</string>
+    <string name="remove_selected">Usuń wybrane</string>
+    <string name="err_cant_open">Nie udało się otworzyć pliku</string>
+    <string name="err_no_app">Brak aplikacji do otwarcia tego typu pliku</string>
+    <string name="err_cant_share">Nie udało się udostępnić pliku</string>
+    <string name="err_cant_copy">Nie udało się skopiować pliku</string>
+    <string name="err_scanner">Skaner dokumentów niedostępny na tym urządzeniu</string>
+    <string name="err_no_camera">Brak aplikacji aparatu</string>
+    <string name="cd_back">Wstecz</string>
+    <string name="cd_new">Nowy</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Wyodrębnij tekst</string>
+    <string name="ocr_select_area">Zaznacz obszar</string>
+    <string name="ocr_hint_auto">Dotknij podświetlony numer lub kod, aby zapisać go jako pole.</string>
+    <string name="ocr_hint_region">Przeciągnij ramkę nad numerem lub kodem, aby go wyodrębnić.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Wyodrębnij dane (wsadowo)</string>
+    <string name="batch_title">Wyodrębnianie danych</string>
+    <string name="batch_progress">%1$d z %2$d</string>
+    <string name="batch_no_docs">Brak tutaj dokumentów z obrazami do zeskanowania.</string>
+    <string name="batch_scanning">Skanowanie…</string>
+    <string name="batch_no_candidates">W tym dokumencie nie wykryto numerów ani kodów.</string>
+    <string name="batch_previous">Wstecz</string>
+    <string name="batch_next">Dalej</string>
+    <string name="batch_finish">Gotowe</string>
+    <string name="field_added">Dodano</string>
+    <string name="field_added_undo">Dodano — dotknij, aby cofnąć</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Przenieś</string>
+    <string name="move_to_title">Przenieś do…</string>
+    <string name="move_here">Przenieś tutaj</string>
+    <string name="move_to_root">Przenieś do „Mój sejf” (katalog główny)</string>
+    <string name="new_folder_here">Nowy folder tutaj</string>
+    <string name="no_subfolders">Brak podfolderów</string>
+</resources>

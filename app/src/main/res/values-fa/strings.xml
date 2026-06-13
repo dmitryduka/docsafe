@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">لغو</string>
+    <string name="action_save">ذخیره</string>
+    <string name="action_add">افزودن</string>
+    <string name="action_remove">برداشتن</string>
+    <string name="action_delete">حذف</string>
+    <string name="action_rename">تغییر نام</string>
+    <string name="action_share">اشتراک‌گذاری</string>
+    <string name="action_open">باز کردن</string>
+    <string name="action_close">بستن</string>
+    <string name="action_continue">ادامه</string>
+    <string name="action_enable">فعال کردن</string>
+    <string name="copied">کپی شد</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">صندوق خود را بسازید</string>
+    <string name="create_vault_subtitle">یک گذرواژه اصلی انتخاب کنید. همه کسانی که این صندوق را به اشتراک می‌گذارند، از همان گذرواژه برای وارد کردن آن استفاده می‌کنند. لازم نیست دوباره آن را روی این دستگاه وارد کنید.</string>
+    <string name="master_password">گذرواژه اصلی</string>
+    <string name="confirm_password">تأیید گذرواژه</string>
+    <string name="create_vault">ساخت صندوق</string>
+    <string name="import_shared_vault">به‌جای آن، یک صندوق مشترک را وارد کنید</string>
+    <string name="password_warning">این گذرواژه را به خاطر بسپارید و آن را در جایی امن یادداشت کنید. اسناد شما با رمزنگاری قوی AES-256 بر پایه این گذرواژه محافظت می‌شوند. هیچ راهی برای بازنشانی یا بازیابی آن وجود ندارد — اگر آن را فراموش کنید، صندوق دیگر هرگز باز نخواهد شد و همه محتویات آن برای همیشه از دست می‌رود.</string>
+    <string name="min_chars">حداقل از %1$d نویسه استفاده کنید.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">صندوق خود را ایمن کنید</string>
+    <string name="secure_vault_subtitle">حداقل یک روش برای باز کردن DocSafe در هر بار باز شدن انتخاب کنید.</string>
+    <string name="biometrics_title">زیست‌سنجی / باز کردن قفل دستگاه</string>
+    <string name="biometrics_desc">از اثر انگشت، چهره یا PIN دستگاه استفاده کنید.</string>
+    <string name="biometrics_unavailable">روی این دستگاه در دسترس نیست. برای فعال‌سازی، قفل صفحه را تنظیم کنید.</string>
+    <string name="pin_title">کد PIN</string>
+    <string name="pin_desc">یک PIN عددی به‌عنوان جایگزین زیست‌سنجی.</string>
+    <string name="set_pin">تنظیم PIN</string>
+    <string name="pin_hint">PIN (حداقل %1$d رقم)</string>
+    <string name="confirm_pin">تأیید PIN</string>
+    <string name="set_a_pin">یک PIN تنظیم کنید</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">باز کردن DocSafe</string>
+    <string name="unlock_subtitle">برای باز کردن اسنادتان، هویت خود را تأیید کنید.</string>
+    <string name="use_biometrics">استفاده از زیست‌سنجی / باز کردن قفل دستگاه</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">باز کردن با PIN</string>
+    <string name="incorrect_pin">PIN نادرست است.</string>
+    <string name="auth_failed">احراز هویت ناموفق بود.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">وارد کردن صندوق</string>
+    <string name="import_vault_subtitle">گذرواژه اصلی مشترک برای «%1$s» را وارد کنید. این به‌عنوان صندوق این دستگاه می‌شود و جایگزین هر صندوقی که اکنون اینجا ذخیره شده می‌گردد.</string>
+    <string name="import_vault">وارد کردن صندوق</string>
+
+    <!-- Browser -->
+    <string name="my_vault">صندوق من</string>
+    <string name="search_hint">جستجوی نام‌ها و برچسب‌ها</string>
+    <string name="starred">ستاره‌دار</string>
+    <string name="section_all">همه</string>
+    <string name="new_folder">پوشه جدید</string>
+    <string name="new_document">سند جدید</string>
+    <string name="rename_folder">تغییر نام پوشه</string>
+    <string name="reclaim_storage">آزادسازی فضا</string>
+    <string name="reclaiming">در حال آزادسازی فضا…</string>
+    <string name="save_vault_to_device">ذخیره صندوق در دستگاه</string>
+    <string name="share_vault">اشتراک‌گذاری صندوق</string>
+    <string name="settings">تنظیمات</string>
+    <string name="nothing_here">هنوز چیزی اینجا نیست</string>
+    <string name="nothing_here_hint">برای افزودن پوشه یا سند، روی + ضربه بزنید.</string>
+    <string name="no_matches">موردی یافت نشد</string>
+    <string name="folder">پوشه</string>
+    <string name="files_count">%1$d فایل</string>
+    <string name="vault_saved">صندوق ذخیره شد</string>
+    <string name="vault_save_failed">ذخیره صندوق ممکن نشد</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">تغییر نام سند</string>
+    <string name="delete_document">حذف سند</string>
+    <string name="add_text_field">افزودن فیلد متنی</string>
+    <string name="add_tag">افزودن برچسب</string>
+    <string name="add_tag_chip">+ برچسب</string>
+    <string name="scan_document">اسکن سند</string>
+    <string name="take_photo">گرفتن عکس</string>
+    <string name="photo_library">گالری عکس</string>
+    <string name="browse_files">مرور فایل‌ها (هر نوع)</string>
+    <string name="no_files_hint">هنوز فایلی نیست. برای اسکن، گرفتن عکس یا وارد کردن فایل‌ها، روی افزودن ضربه بزنید.</string>
+    <string name="thumbnail_size">اندازه بندانگشتی</string>
+    <string name="details">جزئیات</string>
+    <string name="tap_value_copy">برای کپی کردن یک مقدار، روی آن ضربه بزنید</string>
+    <string name="add_field">افزودن فیلد</string>
+    <string name="field_key">کلید</string>
+    <string name="field_value">مقدار</string>
+    <string name="custom_key">کلید سفارشی</string>
+    <string name="custom_option">سفارشی…</string>
+    <string name="open_in_another_app">باز کردن در برنامه دیگر</string>
+    <string name="copy_to_clipboard">کپی در کلیپ‌بورد</string>
+    <string name="select">انتخاب</string>
+    <string name="selected_count">%1$d انتخاب شد</string>
+    <string name="added_on">افزوده‌شده در %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">افزودن %1$d مورد</string>
+    <string name="share_choose_destination">سندی را برای افزودن فایل‌(های) اشتراکی انتخاب کنید، یا یکی بسازید.</string>
+    <string name="new_document_add_here">سند جدید (اینجا افزوده شود)</string>
+    <string name="tap_to_add_here">برای افزودن در اینجا ضربه بزنید</string>
+
+    <!-- Settings -->
+    <string name="settings_title">تنظیمات</string>
+    <string name="settings_security">امنیت</string>
+    <string name="settings_language">زبان</string>
+    <string name="language_system_default">پیش‌فرض سیستم</string>
+    <string name="biometric_unlock">باز کردن با زیست‌سنجی</string>
+    <string name="change_pin">تغییر PIN</string>
+    <string name="turn_off">خاموش کردن</string>
+    <string name="keep_one_method">حداقل یک روش باز کردن قفل را نگه دارید.</string>
+    <string name="enabled">فعال</string>
+    <string name="disabled">خاموش</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">باز کردن با</string>
+    <string name="share_via">اشتراک‌گذاری از طریق</string>
+    <string name="count_folders">%1$d پوشه</string>
+    <string name="count_documents">%1$d سند</string>
+    <string name="empty">خالی</string>
+    <string name="share_selected">اشتراک‌گذاری موارد انتخاب‌شده</string>
+    <string name="remove_selected">برداشتن موارد انتخاب‌شده</string>
+    <string name="err_cant_open">باز کردن این فایل ممکن نشد</string>
+    <string name="err_no_app">هیچ برنامه‌ای نمی‌تواند این نوع فایل را باز کند</string>
+    <string name="err_cant_share">اشتراک‌گذاری این فایل ممکن نشد</string>
+    <string name="err_cant_copy">کپی این فایل ممکن نشد</string>
+    <string name="err_scanner">اسکنر سند روی این دستگاه در دسترس نیست</string>
+    <string name="err_no_camera">هیچ برنامه دوربینی در دسترس نیست</string>
+    <string name="cd_back">بازگشت</string>
+    <string name="cd_new">جدید</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">استخراج متن</string>
+    <string name="ocr_select_area">یک ناحیه انتخاب کنید</string>
+    <string name="ocr_hint_auto">برای ذخیره یک شماره یا کد به‌عنوان فیلد، روی آن ضربه بزنید.</string>
+    <string name="ocr_hint_region">برای استخراج یک شماره یا کد، کادری دور آن بکشید.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">استخراج داده‌ها (دسته‌ای)</string>
+    <string name="batch_title">استخراج داده‌ها</string>
+    <string name="batch_progress">%1$d از %2$d</string>
+    <string name="batch_no_docs">اینجا سندی با تصویر برای اسکن وجود ندارد.</string>
+    <string name="batch_scanning">در حال اسکن…</string>
+    <string name="batch_no_candidates">در این سند شماره یا کدی شناسایی نشد.</string>
+    <string name="batch_previous">قبلی</string>
+    <string name="batch_next">بعدی</string>
+    <string name="batch_finish">پایان</string>
+    <string name="field_added">افزوده شد</string>
+    <string name="field_added_undo">افزوده شد — برای واگرد ضربه بزنید</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">انتقال</string>
+    <string name="move_to_title">انتقال به…</string>
+    <string name="move_here">انتقال به اینجا</string>
+    <string name="move_to_root">انتقال به «صندوق من» (ریشه)</string>
+    <string name="new_folder_here">پوشه جدید در اینجا</string>
+    <string name="no_subfolders">اینجا زیرپوشه‌ای نیست</string>
+</resources>

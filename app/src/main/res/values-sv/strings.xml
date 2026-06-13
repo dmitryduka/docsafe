@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Avbryt</string>
+    <string name="action_save">Spara</string>
+    <string name="action_add">Lägg till</string>
+    <string name="action_remove">Ta bort</string>
+    <string name="action_delete">Radera</string>
+    <string name="action_rename">Byt namn</string>
+    <string name="action_share">Dela</string>
+    <string name="action_open">Öppna</string>
+    <string name="action_close">Stäng</string>
+    <string name="action_continue">Fortsätt</string>
+    <string name="action_enable">Aktivera</string>
+    <string name="copied">Kopierat</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Skapa ditt valv</string>
+    <string name="create_vault_subtitle">Välj ett huvudlösenord. Alla som delar detta valv använder samma lösenord för att importera det. Du behöver inte ange det igen på den här enheten.</string>
+    <string name="master_password">Huvudlösenord</string>
+    <string name="confirm_password">Bekräfta lösenord</string>
+    <string name="create_vault">Skapa valv</string>
+    <string name="import_shared_vault">Importera ett delat valv i stället</string>
+    <string name="password_warning">Kom ihåg detta lösenord och skriv ner det på ett säkert ställe. Dina dokument skyddas med stark AES-256-kryptering baserad på detta lösenord. Det går inte att återställa eller återskapa — om du glömmer det kan valvet aldrig öppnas igen och allt innehåll går förlorat för alltid.</string>
+    <string name="min_chars">Använd minst %1$d tecken.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Skydda ditt valv</string>
+    <string name="secure_vault_subtitle">Välj minst ett sätt att låsa upp DocSafe varje gång du öppnar det.</string>
+    <string name="biometrics_title">Biometri / enhetsupplåsning</string>
+    <string name="biometrics_desc">Använd fingeravtryck, ansikte eller enhetens PIN.</string>
+    <string name="biometrics_unavailable">Inte tillgängligt på den här enheten. Ställ in ett skärmlås för att aktivera.</string>
+    <string name="pin_title">PIN-kod</string>
+    <string name="pin_desc">En numerisk PIN som alternativ till biometri.</string>
+    <string name="set_pin">Ange PIN</string>
+    <string name="pin_hint">PIN (minst %1$d siffror)</string>
+    <string name="confirm_pin">Bekräfta PIN</string>
+    <string name="set_a_pin">Ange en PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Lås upp DocSafe</string>
+    <string name="unlock_subtitle">Bekräfta att det är du för att öppna dina dokument.</string>
+    <string name="use_biometrics">Använd biometri / enhetsupplåsning</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Lås upp med PIN</string>
+    <string name="incorrect_pin">Felaktig PIN.</string>
+    <string name="auth_failed">Autentiseringen misslyckades.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Importera valv</string>
+    <string name="import_vault_subtitle">Ange det delade huvudlösenordet för \"%1$s\". Detta blir den här enhetens valv och ersätter det valv som för närvarande finns lagrat här.</string>
+    <string name="import_vault">Importera valv</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Mitt valv</string>
+    <string name="search_hint">Sök bland namn och taggar</string>
+    <string name="starred">Stjärnmärkta</string>
+    <string name="section_all">Alla</string>
+    <string name="new_folder">Ny mapp</string>
+    <string name="new_document">Nytt dokument</string>
+    <string name="rename_folder">Byt namn på mapp</string>
+    <string name="reclaim_storage">Frigör lagring</string>
+    <string name="reclaiming">Frigör utrymme…</string>
+    <string name="save_vault_to_device">Spara valv på enheten</string>
+    <string name="share_vault">Dela valv</string>
+    <string name="settings">Inställningar</string>
+    <string name="nothing_here">Inget här ännu</string>
+    <string name="nothing_here_hint">Tryck på + för att lägga till en mapp eller ett dokument.</string>
+    <string name="no_matches">Inga träffar</string>
+    <string name="folder">Mapp</string>
+    <string name="files_count">%1$d filer</string>
+    <string name="vault_saved">Valv sparat</string>
+    <string name="vault_save_failed">Det gick inte att spara valvet</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Byt namn på dokument</string>
+    <string name="delete_document">Radera dokument</string>
+    <string name="add_text_field">Lägg till textfält</string>
+    <string name="add_tag">Lägg till tagg</string>
+    <string name="add_tag_chip">+ Tagg</string>
+    <string name="scan_document">Skanna dokument</string>
+    <string name="take_photo">Ta foto</string>
+    <string name="photo_library">Fotobibliotek</string>
+    <string name="browse_files">Bläddra bland filer (alla typer)</string>
+    <string name="no_files_hint">Inga filer ännu. Tryck på Lägg till för att skanna, ta ett foto eller importera filer.</string>
+    <string name="thumbnail_size">Miniatyrstorlek</string>
+    <string name="details">Detaljer</string>
+    <string name="tap_value_copy">Tryck på ett värde för att kopiera det</string>
+    <string name="add_field">Lägg till fält</string>
+    <string name="field_key">Nyckel</string>
+    <string name="field_value">Värde</string>
+    <string name="custom_key">Egen nyckel</string>
+    <string name="custom_option">Anpassad…</string>
+    <string name="open_in_another_app">Öppna i en annan app</string>
+    <string name="copy_to_clipboard">Kopiera till urklipp</string>
+    <string name="select">Välj</string>
+    <string name="selected_count">%1$d valda</string>
+    <string name="added_on">Tillagd %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Lägg till %1$d objekt</string>
+    <string name="share_choose_destination">Välj ett dokument att lägga till de delade filerna i, eller skapa ett nytt.</string>
+    <string name="new_document_add_here">Nytt dokument (lägg till här)</string>
+    <string name="tap_to_add_here">Tryck för att lägga till här</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Inställningar</string>
+    <string name="settings_security">Säkerhet</string>
+    <string name="settings_language">Språk</string>
+    <string name="language_system_default">Systemstandard</string>
+    <string name="biometric_unlock">Biometrisk upplåsning</string>
+    <string name="change_pin">Ändra PIN</string>
+    <string name="turn_off">Stäng av</string>
+    <string name="keep_one_method">Behåll minst en upplåsningsmetod.</string>
+    <string name="enabled">Aktiverad</string>
+    <string name="disabled">Av</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Öppna med</string>
+    <string name="share_via">Dela via</string>
+    <string name="count_folders">%1$d mappar</string>
+    <string name="count_documents">%1$d dok.</string>
+    <string name="empty">Tom</string>
+    <string name="share_selected">Dela valda</string>
+    <string name="remove_selected">Ta bort valda</string>
+    <string name="err_cant_open">Det gick inte att öppna filen</string>
+    <string name="err_no_app">Ingen app kan öppna den här filtypen</string>
+    <string name="err_cant_share">Det gick inte att dela filen</string>
+    <string name="err_cant_copy">Det gick inte att kopiera filen</string>
+    <string name="err_scanner">Dokumentskanner är inte tillgänglig på den här enheten</string>
+    <string name="err_no_camera">Ingen kameraapp tillgänglig</string>
+    <string name="cd_back">Tillbaka</string>
+    <string name="cd_new">Ny</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Extrahera text</string>
+    <string name="ocr_select_area">Markera ett område</string>
+    <string name="ocr_hint_auto">Tryck på ett markerat nummer eller en kod för att spara det som ett fält.</string>
+    <string name="ocr_hint_region">Dra en ruta över ett nummer eller en kod för att extrahera det.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Extrahera data (batch)</string>
+    <string name="batch_title">Extrahera data</string>
+    <string name="batch_progress">%1$d av %2$d</string>
+    <string name="batch_no_docs">Inga dokument med bilder att skanna här.</string>
+    <string name="batch_scanning">Skannar…</string>
+    <string name="batch_no_candidates">Inga nummer eller koder hittades i det här dokumentet.</string>
+    <string name="batch_previous">Föregående</string>
+    <string name="batch_next">Nästa</string>
+    <string name="batch_finish">Slutför</string>
+    <string name="field_added">Tillagt</string>
+    <string name="field_added_undo">Tillagt — tryck för att ångra</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Flytta</string>
+    <string name="move_to_title">Flytta till…</string>
+    <string name="move_here">Flytta hit</string>
+    <string name="move_to_root">Flytta till Mitt valv (rot)</string>
+    <string name="new_folder_here">Ny mapp här</string>
+    <string name="no_subfolders">Inga undermappar här</string>
+</resources>

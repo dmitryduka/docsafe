@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Peruuta</string>
+    <string name="action_save">Tallenna</string>
+    <string name="action_add">Lisää</string>
+    <string name="action_remove">Poista</string>
+    <string name="action_delete">Poista</string>
+    <string name="action_rename">Nimeä uudelleen</string>
+    <string name="action_share">Jaa</string>
+    <string name="action_open">Avaa</string>
+    <string name="action_close">Sulje</string>
+    <string name="action_continue">Jatka</string>
+    <string name="action_enable">Ota käyttöön</string>
+    <string name="copied">Kopioitu</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Luo holvi</string>
+    <string name="create_vault_subtitle">Valitse pääsalasana. Kaikki tämän holvin jakavat käyttävät samaa salasanaa sen tuomiseen. Sinun ei tarvitse kirjoittaa sitä uudelleen tällä laitteella.</string>
+    <string name="master_password">Pääsalasana</string>
+    <string name="confirm_password">Vahvista salasana</string>
+    <string name="create_vault">Luo holvi</string>
+    <string name="import_shared_vault">Tuo sen sijaan jaettu holvi</string>
+    <string name="password_warning">Muista tämä salasana ja kirjoita se talteen turvalliseen paikkaan. Asiakirjasi on suojattu vahvalla AES-256-salauksella, joka perustuu tähän salasanaan. Sitä ei voi nollata eikä palauttaa — jos unohdat sen, holvia ei voi enää koskaan avata ja kaikki sen sisältö menetetään lopullisesti.</string>
+    <string name="min_chars">Käytä vähintään %1$d merkkiä.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Suojaa holvi</string>
+    <string name="secure_vault_subtitle">Valitse vähintään yksi tapa avata DocSafe joka kerta, kun avaat sen.</string>
+    <string name="biometrics_title">Biometriikka / laitteen lukituksen avaus</string>
+    <string name="biometrics_desc">Käytä sormenjälkeä, kasvoja tai laitteen PIN-koodia.</string>
+    <string name="biometrics_unavailable">Ei käytettävissä tällä laitteella. Ota käyttöön määrittämällä näytön lukitus.</string>
+    <string name="pin_title">PIN-koodi</string>
+    <string name="pin_desc">Numeerinen PIN biometriikan vaihtoehtona.</string>
+    <string name="set_pin">Aseta PIN</string>
+    <string name="pin_hint">PIN (vähintään %1$d numeroa)</string>
+    <string name="confirm_pin">Vahvista PIN</string>
+    <string name="set_a_pin">Aseta PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Avaa DocSafe</string>
+    <string name="unlock_subtitle">Vahvista henkilöllisyytesi avataksesi asiakirjasi.</string>
+    <string name="use_biometrics">Biometriikka / laitteen lukituksen avaus</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Avaa PIN-koodilla</string>
+    <string name="incorrect_pin">Virheellinen PIN.</string>
+    <string name="auth_failed">Todennus epäonnistui.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Tuo holvi</string>
+    <string name="import_vault_subtitle">Anna jaettu pääsalasana kohteelle \"%1$s\". Tästä tulee tämän laitteen holvi, joka korvaa tällä hetkellä tähän tallennetun holvin.</string>
+    <string name="import_vault">Tuo holvi</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Oma holvi</string>
+    <string name="search_hint">Hae nimistä ja tunnisteista</string>
+    <string name="starred">Suosikit</string>
+    <string name="section_all">Kaikki</string>
+    <string name="new_folder">Uusi kansio</string>
+    <string name="new_document">Uusi asiakirja</string>
+    <string name="rename_folder">Nimeä kansio uudelleen</string>
+    <string name="reclaim_storage">Vapauta tilaa</string>
+    <string name="reclaiming">Vapautetaan tilaa…</string>
+    <string name="save_vault_to_device">Tallenna holvi laitteelle</string>
+    <string name="share_vault">Jaa holvi</string>
+    <string name="settings">Asetukset</string>
+    <string name="nothing_here">Täällä ei ole vielä mitään</string>
+    <string name="nothing_here_hint">Lisää kansio tai asiakirja napauttamalla +.</string>
+    <string name="no_matches">Ei osumia</string>
+    <string name="folder">Kansio</string>
+    <string name="files_count">%1$d tiedostoa</string>
+    <string name="vault_saved">Holvi tallennettu</string>
+    <string name="vault_save_failed">Holvin tallennus epäonnistui</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Nimeä asiakirja uudelleen</string>
+    <string name="delete_document">Poista asiakirja</string>
+    <string name="add_text_field">Lisää tekstikenttä</string>
+    <string name="add_tag">Lisää tunniste</string>
+    <string name="add_tag_chip">+ Tunniste</string>
+    <string name="scan_document">Skannaa asiakirja</string>
+    <string name="take_photo">Ota kuva</string>
+    <string name="photo_library">Kuvakirjasto</string>
+    <string name="browse_files">Selaa tiedostoja (mikä tahansa tyyppi)</string>
+    <string name="no_files_hint">Ei vielä tiedostoja. Napauta Lisää skannataksesi, ottaaksesi kuvan tai tuodaksesi tiedostoja.</string>
+    <string name="thumbnail_size">Pikkukuvan koko</string>
+    <string name="details">Tiedot</string>
+    <string name="tap_value_copy">Kopioi arvo napauttamalla sitä</string>
+    <string name="add_field">Lisää kenttä</string>
+    <string name="field_key">Avain</string>
+    <string name="field_value">Arvo</string>
+    <string name="custom_key">Mukautettu avain</string>
+    <string name="custom_option">Mukautettu…</string>
+    <string name="open_in_another_app">Avaa toisessa sovelluksessa</string>
+    <string name="copy_to_clipboard">Kopioi leikepöydälle</string>
+    <string name="select">Valitse</string>
+    <string name="selected_count">%1$d valittu</string>
+    <string name="added_on">Lisätty %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Lisää %1$d kohdetta</string>
+    <string name="share_choose_destination">Valitse asiakirja, johon jaetut tiedostot lisätään, tai luo uusi.</string>
+    <string name="new_document_add_here">Uusi asiakirja (lisää tähän)</string>
+    <string name="tap_to_add_here">Lisää tähän napauttamalla</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Asetukset</string>
+    <string name="settings_security">Suojaus</string>
+    <string name="settings_language">Kieli</string>
+    <string name="language_system_default">Järjestelmän oletus</string>
+    <string name="biometric_unlock">Biometrinen lukituksen avaus</string>
+    <string name="change_pin">Vaihda PIN</string>
+    <string name="turn_off">Poista käytöstä</string>
+    <string name="keep_one_method">Säilytä vähintään yksi lukituksen avaustapa.</string>
+    <string name="enabled">Käytössä</string>
+    <string name="disabled">Pois</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Avaa sovelluksella</string>
+    <string name="share_via">Jaa sovelluksella</string>
+    <string name="count_folders">%1$d kansiota</string>
+    <string name="count_documents">%1$d asiakirjaa</string>
+    <string name="empty">Tyhjä</string>
+    <string name="share_selected">Jaa valitut</string>
+    <string name="remove_selected">Poista valitut</string>
+    <string name="err_cant_open">Tiedoston avaaminen epäonnistui</string>
+    <string name="err_no_app">Mikään sovellus ei voi avata tätä tiedostotyyppiä</string>
+    <string name="err_cant_share">Tiedoston jakaminen epäonnistui</string>
+    <string name="err_cant_copy">Tiedoston kopiointi epäonnistui</string>
+    <string name="err_scanner">Asiakirjaskanneri ei ole käytettävissä tällä laitteella</string>
+    <string name="err_no_camera">Ei kamerasovellusta käytettävissä</string>
+    <string name="cd_back">Takaisin</string>
+    <string name="cd_new">Uusi</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Pura teksti</string>
+    <string name="ocr_select_area">Valitse alue</string>
+    <string name="ocr_hint_auto">Napauta korostettua numeroa tai koodia tallentaaksesi sen kenttänä.</string>
+    <string name="ocr_hint_region">Vedä laatikko numeron tai koodin päälle purkaaksesi sen.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Pura tiedot (erä)</string>
+    <string name="batch_title">Pura tiedot</string>
+    <string name="batch_progress">%1$d / %2$d</string>
+    <string name="batch_no_docs">Täällä ei ole skannattavia kuvia sisältäviä asiakirjoja.</string>
+    <string name="batch_scanning">Skannataan…</string>
+    <string name="batch_no_candidates">Tästä asiakirjasta ei löytynyt numeroita tai koodeja.</string>
+    <string name="batch_previous">Edellinen</string>
+    <string name="batch_next">Seuraava</string>
+    <string name="batch_finish">Valmis</string>
+    <string name="field_added">Lisätty</string>
+    <string name="field_added_undo">Lisätty — kumoa napauttamalla</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Siirrä</string>
+    <string name="move_to_title">Siirrä kohteeseen…</string>
+    <string name="move_here">Siirrä tähän</string>
+    <string name="move_to_root">Siirrä kohteeseen Oma holvi (juuri)</string>
+    <string name="new_folder_here">Uusi kansio tähän</string>
+    <string name="no_subfolders">Täällä ei ole alikansioita</string>
+</resources>

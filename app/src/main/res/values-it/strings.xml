@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Annulla</string>
+    <string name="action_save">Salva</string>
+    <string name="action_add">Aggiungi</string>
+    <string name="action_remove">Rimuovi</string>
+    <string name="action_delete">Elimina</string>
+    <string name="action_rename">Rinomina</string>
+    <string name="action_share">Condividi</string>
+    <string name="action_open">Apri</string>
+    <string name="action_close">Chiudi</string>
+    <string name="action_continue">Continua</string>
+    <string name="action_enable">Attiva</string>
+    <string name="copied">Copiato</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Crea il tuo archivio</string>
+    <string name="create_vault_subtitle">Scegli una password principale. Tutti coloro che condividono questo archivio usano la stessa password per importarlo. Su questo dispositivo non dovrai digitarla di nuovo.</string>
+    <string name="master_password">Password principale</string>
+    <string name="confirm_password">Conferma password</string>
+    <string name="create_vault">Crea archivio</string>
+    <string name="import_shared_vault">Importa invece un archivio condiviso</string>
+    <string name="password_warning">Ricorda questa password e annotala in un luogo sicuro. I tuoi documenti sono protetti con una solida crittografia AES-256 basata su questa password. Non è possibile reimpostarla o recuperarla: se la dimentichi, l\'archivio non potrà più essere aperto e tutto il suo contenuto andrà perso per sempre.</string>
+    <string name="min_chars">Usa almeno %1$d caratteri.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Proteggi il tuo archivio</string>
+    <string name="secure_vault_subtitle">Scegli almeno un modo per sbloccare DocSafe a ogni apertura.</string>
+    <string name="biometrics_title">Biometria / sblocco dispositivo</string>
+    <string name="biometrics_desc">Usa impronta, volto o il PIN del dispositivo.</string>
+    <string name="biometrics_unavailable">Non disponibile su questo dispositivo. Configura un blocco schermo per attivarlo.</string>
+    <string name="pin_title">Codice PIN</string>
+    <string name="pin_desc">Un PIN numerico come alternativa alla biometria.</string>
+    <string name="set_pin">Imposta PIN</string>
+    <string name="pin_hint">PIN (min %1$d cifre)</string>
+    <string name="confirm_pin">Conferma PIN</string>
+    <string name="set_a_pin">Imposta un PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Sblocca DocSafe</string>
+    <string name="unlock_subtitle">Conferma la tua identità per aprire i tuoi documenti.</string>
+    <string name="use_biometrics">Usa biometria / sblocco dispositivo</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Sblocca con PIN</string>
+    <string name="incorrect_pin">PIN errato.</string>
+    <string name="auth_failed">Autenticazione non riuscita.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Importa archivio</string>
+    <string name="import_vault_subtitle">Inserisci la password principale condivisa per \"%1$s\". Diventerà l\'archivio di questo dispositivo, sostituendo qualsiasi archivio attualmente memorizzato qui.</string>
+    <string name="import_vault">Importa archivio</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Il mio archivio</string>
+    <string name="search_hint">Cerca nomi ed etichette</string>
+    <string name="starred">Preferiti</string>
+    <string name="section_all">Tutti</string>
+    <string name="new_folder">Nuova cartella</string>
+    <string name="new_document">Nuovo documento</string>
+    <string name="rename_folder">Rinomina cartella</string>
+    <string name="reclaim_storage">Libera spazio</string>
+    <string name="reclaiming">Liberazione spazio…</string>
+    <string name="save_vault_to_device">Salva archivio sul dispositivo</string>
+    <string name="share_vault">Condividi archivio</string>
+    <string name="settings">Impostazioni</string>
+    <string name="nothing_here">Ancora niente qui</string>
+    <string name="nothing_here_hint">Tocca + per aggiungere una cartella o un documento.</string>
+    <string name="no_matches">Nessun risultato</string>
+    <string name="folder">Cartella</string>
+    <string name="files_count">%1$d file</string>
+    <string name="vault_saved">Archivio salvato</string>
+    <string name="vault_save_failed">Impossibile salvare l\'archivio</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Rinomina documento</string>
+    <string name="delete_document">Elimina documento</string>
+    <string name="add_text_field">Aggiungi campo di testo</string>
+    <string name="add_tag">Aggiungi etichetta</string>
+    <string name="add_tag_chip">+ Etichetta</string>
+    <string name="scan_document">Scansiona documento</string>
+    <string name="take_photo">Scatta foto</string>
+    <string name="photo_library">Libreria foto</string>
+    <string name="browse_files">Sfoglia file (qualsiasi tipo)</string>
+    <string name="no_files_hint">Ancora nessun file. Tocca Aggiungi per scansionare, scattare una foto o importare file.</string>
+    <string name="thumbnail_size">Dimensione miniature</string>
+    <string name="details">Dettagli</string>
+    <string name="tap_value_copy">Tocca un valore per copiarlo</string>
+    <string name="add_field">Aggiungi campo</string>
+    <string name="field_key">Chiave</string>
+    <string name="field_value">Valore</string>
+    <string name="custom_key">Chiave personalizzata</string>
+    <string name="custom_option">Personalizzato…</string>
+    <string name="open_in_another_app">Apri in un\'altra app</string>
+    <string name="copy_to_clipboard">Copia negli appunti</string>
+    <string name="select">Seleziona</string>
+    <string name="selected_count">%1$d selezionati</string>
+    <string name="added_on">Aggiunto il %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Aggiungi %1$d elemento/i</string>
+    <string name="share_choose_destination">Scegli un documento a cui aggiungere i file condivisi, oppure creane uno.</string>
+    <string name="new_document_add_here">Nuovo documento (aggiungi qui)</string>
+    <string name="tap_to_add_here">Tocca per aggiungere qui</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_security">Sicurezza</string>
+    <string name="settings_language">Lingua</string>
+    <string name="language_system_default">Lingua di sistema</string>
+    <string name="biometric_unlock">Sblocco biometrico</string>
+    <string name="change_pin">Cambia PIN</string>
+    <string name="turn_off">Disattiva</string>
+    <string name="keep_one_method">Mantieni almeno un metodo di sblocco.</string>
+    <string name="enabled">Attivato</string>
+    <string name="disabled">Disattivato</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Apri con</string>
+    <string name="share_via">Condividi tramite</string>
+    <string name="count_folders">%1$d cartelle</string>
+    <string name="count_documents">%1$d doc.</string>
+    <string name="empty">Vuoto</string>
+    <string name="share_selected">Condividi selezionati</string>
+    <string name="remove_selected">Rimuovi selezionati</string>
+    <string name="err_cant_open">Impossibile aprire questo file</string>
+    <string name="err_no_app">Nessuna app può aprire questo tipo di file</string>
+    <string name="err_cant_share">Impossibile condividere questo file</string>
+    <string name="err_cant_copy">Impossibile copiare questo file</string>
+    <string name="err_scanner">Scanner di documenti non disponibile su questo dispositivo</string>
+    <string name="err_no_camera">Nessuna app fotocamera disponibile</string>
+    <string name="cd_back">Indietro</string>
+    <string name="cd_new">Nuovo</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Estrai testo</string>
+    <string name="ocr_select_area">Seleziona un\'area</string>
+    <string name="ocr_hint_auto">Tocca un numero o codice evidenziato per salvarlo come campo.</string>
+    <string name="ocr_hint_region">Trascina un riquadro su un numero o codice per estrarlo.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Estrai dati (in blocco)</string>
+    <string name="batch_title">Estrazione dati</string>
+    <string name="batch_progress">%1$d di %2$d</string>
+    <string name="batch_no_docs">Nessun documento con immagini da scansionare qui.</string>
+    <string name="batch_scanning">Scansione…</string>
+    <string name="batch_no_candidates">Nessun numero o codice rilevato in questo documento.</string>
+    <string name="batch_previous">Precedente</string>
+    <string name="batch_next">Avanti</string>
+    <string name="batch_finish">Fine</string>
+    <string name="field_added">Aggiunto</string>
+    <string name="field_added_undo">Aggiunto — tocca per annullare</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Sposta</string>
+    <string name="move_to_title">Sposta in…</string>
+    <string name="move_here">Sposta qui</string>
+    <string name="move_to_root">Sposta in Il mio archivio (radice)</string>
+    <string name="new_folder_here">Nuova cartella qui</string>
+    <string name="no_subfolders">Nessuna sottocartella qui</string>
+</resources>

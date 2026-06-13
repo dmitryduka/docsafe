@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">გაუქმება</string>
+    <string name="action_save">შენახვა</string>
+    <string name="action_add">დამატება</string>
+    <string name="action_remove">მოშორება</string>
+    <string name="action_delete">წაშლა</string>
+    <string name="action_rename">გადარქმევა</string>
+    <string name="action_share">გაზიარება</string>
+    <string name="action_open">გახსნა</string>
+    <string name="action_close">დახურვა</string>
+    <string name="action_continue">გაგრძელება</string>
+    <string name="action_enable">ჩართვა</string>
+    <string name="copied">დაკოპირდა</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">შექმენით თქვენი საცავი</string>
+    <string name="create_vault_subtitle">აირჩიეთ მთავარი პაროლი. ყველა, ვინც ამ საცავს იზიარებს, მის იმპორტისთვის იმავე პაროლს იყენებს. ამ მოწყობილობაზე მის ხელახლა აკრეფა აღარ დაგჭირდებათ.</string>
+    <string name="master_password">მთავარი პაროლი</string>
+    <string name="confirm_password">დაადასტურეთ პაროლი</string>
+    <string name="create_vault">საცავის შექმნა</string>
+    <string name="import_shared_vault">ამის ნაცვლად, გააზიარებული საცავის იმპორტი</string>
+    <string name="password_warning">დაიმახსოვრეთ ეს პაროლი და ჩაიწერეთ უსაფრთხო ადგილას. თქვენი დოკუმენტები დაცულია ამ პაროლზე დაფუძნებული ძლიერი AES-256 დაშიფვრით. მისი განულება ან აღდგენა შეუძლებელია — თუ დაივიწყებთ, საცავის გახსნა აღარასოდეს მოხერხდება და მთელი მისი შიგთავსი სამუდამოდ დაიკარგება.</string>
+    <string name="min_chars">გამოიყენეთ სულ მცირე %1$d სიმბოლო.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">დაიცავით თქვენი საცავი</string>
+    <string name="secure_vault_subtitle">აირჩიეთ DocSafe-ის განბლოკვის სულ მცირე ერთი ხერხი ყოველი გახსნისას.</string>
+    <string name="biometrics_title">ბიომეტრია / მოწყობილობით განბლოკვა</string>
+    <string name="biometrics_desc">გამოიყენეთ თითის ანაბეჭდი, სახე ან მოწყობილობის PIN.</string>
+    <string name="biometrics_unavailable">ამ მოწყობილობაზე მიუწვდომელია. ჩასართავად დააყენეთ ეკრანის ბლოკი.</string>
+    <string name="pin_title">PIN-კოდი</string>
+    <string name="pin_desc">ციფრული PIN ბიომეტრიის ალტერნატივად.</string>
+    <string name="set_pin">PIN-ის დაყენება</string>
+    <string name="pin_hint">PIN (მინ. %1$d ციფრი)</string>
+    <string name="confirm_pin">დაადასტურეთ PIN</string>
+    <string name="set_a_pin">დააყენეთ PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">DocSafe-ის განბლოკვა</string>
+    <string name="unlock_subtitle">დაადასტურეთ, რომ ეს თქვენ ხართ, დოკუმენტების გასახსნელად.</string>
+    <string name="use_biometrics">ბიომეტრია / მოწყობილობით განბლოკვა</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">PIN-ით განბლოკვა</string>
+    <string name="incorrect_pin">არასწორი PIN.</string>
+    <string name="auth_failed">ავთენტიფიკაცია ვერ მოხერხდა.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">საცავის იმპორტი</string>
+    <string name="import_vault_subtitle">შეიყვანეთ გააზიარებული მთავარი პაროლი „%1$s“-ისთვის. ის გახდება ამ მოწყობილობის საცავი და ჩაანაცვლებს აქ ამჟამად შენახულ ნებისმიერ საცავს.</string>
+    <string name="import_vault">საცავის იმპორტი</string>
+
+    <!-- Browser -->
+    <string name="my_vault">ჩემი საცავი</string>
+    <string name="search_hint">ძებნა სახელებსა და ტეგებში</string>
+    <string name="starred">რჩეული</string>
+    <string name="section_all">ყველა</string>
+    <string name="new_folder">ახალი საქაღალდე</string>
+    <string name="new_document">ახალი დოკუმენტი</string>
+    <string name="rename_folder">საქაღალდის გადარქმევა</string>
+    <string name="reclaim_storage">მეხსიერების გათავისუფლება</string>
+    <string name="reclaiming">სივრცის გათავისუფლება…</string>
+    <string name="save_vault_to_device">საცავის შენახვა მოწყობილობაზე</string>
+    <string name="share_vault">საცავის გაზიარება</string>
+    <string name="settings">პარამეტრები</string>
+    <string name="nothing_here">აქ ჯერ არაფერია</string>
+    <string name="nothing_here_hint">საქაღალდის ან დოკუმენტის დასამატებლად შეეხეთ +.</string>
+    <string name="no_matches">დამთხვევა ვერ მოიძებნა</string>
+    <string name="folder">საქაღალდე</string>
+    <string name="files_count">%1$d ფაილი</string>
+    <string name="vault_saved">საცავი შენახულია</string>
+    <string name="vault_save_failed">საცავის შენახვა ვერ მოხერხდა</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">დოკუმენტის გადარქმევა</string>
+    <string name="delete_document">დოკუმენტის წაშლა</string>
+    <string name="add_text_field">ტექსტური ველის დამატება</string>
+    <string name="add_tag">ტეგის დამატება</string>
+    <string name="add_tag_chip">+ ტეგი</string>
+    <string name="scan_document">დოკუმენტის სკანირება</string>
+    <string name="take_photo">ფოტოს გადაღება</string>
+    <string name="photo_library">ფოტოების გალერეა</string>
+    <string name="browse_files">ფაილების დათვალიერება (ნებისმიერი ტიპი)</string>
+    <string name="no_files_hint">ფაილები ჯერ არ არის. დასასკანერებლად, ფოტოს გადასაღებად ან ფაილების იმპორტისთვის შეეხეთ „დამატება“.</string>
+    <string name="thumbnail_size">მინიატურის ზომა</string>
+    <string name="details">დეტალები</string>
+    <string name="tap_value_copy">დასაკოპირებლად შეეხეთ მნიშვნელობას</string>
+    <string name="add_field">ველის დამატება</string>
+    <string name="field_key">გასაღები</string>
+    <string name="field_value">მნიშვნელობა</string>
+    <string name="custom_key">საკუთარი გასაღები</string>
+    <string name="custom_option">სხვა…</string>
+    <string name="open_in_another_app">სხვა აპში გახსნა</string>
+    <string name="copy_to_clipboard">ბუფერში კოპირება</string>
+    <string name="select">არჩევა</string>
+    <string name="selected_count">არჩეულია: %1$d</string>
+    <string name="added_on">დაემატა %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">%1$d ერთეულის დამატება</string>
+    <string name="share_choose_destination">აირჩიეთ დოკუმენტი გააზიარებული ფაილ(ებ)ის დასამატებლად, ან შექმენით ახალი.</string>
+    <string name="new_document_add_here">ახალი დოკუმენტი (აქ დამატება)</string>
+    <string name="tap_to_add_here">შეეხეთ აქ დასამატებლად</string>
+
+    <!-- Settings -->
+    <string name="settings_title">პარამეტრები</string>
+    <string name="settings_security">უსაფრთხოება</string>
+    <string name="settings_language">ენა</string>
+    <string name="language_system_default">სისტემის ნაგულისხმევი</string>
+    <string name="biometric_unlock">ბიომეტრიით განბლოკვა</string>
+    <string name="change_pin">PIN-ის შეცვლა</string>
+    <string name="turn_off">გამორთვა</string>
+    <string name="keep_one_method">დატოვეთ განბლოკვის სულ მცირე ერთი ხერხი.</string>
+    <string name="enabled">ჩართულია</string>
+    <string name="disabled">გამორთ.</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">გახსნა აპით</string>
+    <string name="share_via">გაზიარება საშუალებით</string>
+    <string name="count_folders">%1$d საქაღალდე</string>
+    <string name="count_documents">%1$d დოკ.</string>
+    <string name="empty">ცარიელია</string>
+    <string name="share_selected">არჩეულის გაზიარება</string>
+    <string name="remove_selected">არჩეულის მოშორება</string>
+    <string name="err_cant_open">ფაილის გახსნა ვერ მოხერხდა</string>
+    <string name="err_no_app">ამ ტიპის ფაილის გასახსნელი აპი არ არის</string>
+    <string name="err_cant_share">ფაილის გაზიარება ვერ მოხერხდა</string>
+    <string name="err_cant_copy">ფაილის კოპირება ვერ მოხერხდა</string>
+    <string name="err_scanner">დოკუმენტების სკანერი ამ მოწყობილობაზე მიუწვდომელია</string>
+    <string name="err_no_camera">კამერის აპი არ არის</string>
+    <string name="cd_back">უკან</string>
+    <string name="cd_new">ახალი</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">ტექსტის ამოღება</string>
+    <string name="ocr_select_area">აირჩიეთ არე</string>
+    <string name="ocr_hint_auto">შეეხეთ მონიშნულ ნომერს ან კოდს, რომ ის ველად შეინახოთ.</string>
+    <string name="ocr_hint_region">ნომრის ან კოდის ამოსაღებად შემოხაზეთ იგი ჩარჩოთი.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">მონაცემების ამოღება (პაკეტურად)</string>
+    <string name="batch_title">მონაცემების ამოღება</string>
+    <string name="batch_progress">%1$d / %2$d</string>
+    <string name="batch_no_docs">აქ არ არის გამოსახულებების მქონე დოკუმენტები სასკანერებლად.</string>
+    <string name="batch_scanning">სკანირება…</string>
+    <string name="batch_no_candidates">ამ დოკუმენტში ნომრები ან კოდები ვერ მოიძებნა.</string>
+    <string name="batch_previous">წინა</string>
+    <string name="batch_next">შემდეგი</string>
+    <string name="batch_finish">დასრულება</string>
+    <string name="field_added">დაემატა</string>
+    <string name="field_added_undo">დაემატა — შეეხეთ გასაუქმებლად</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">გადატანა</string>
+    <string name="move_to_title">გადატანა…</string>
+    <string name="move_here">აქ გადატანა</string>
+    <string name="move_to_root">გადატანა „ჩემს საცავში“ (ფესვი)</string>
+    <string name="new_folder_here">ახალი საქაღალდე აქ</string>
+    <string name="no_subfolders">აქ ქვესაქაღალდეები არ არის</string>
+</resources>

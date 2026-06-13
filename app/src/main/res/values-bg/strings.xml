@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Отказ</string>
+    <string name="action_save">Запази</string>
+    <string name="action_add">Добави</string>
+    <string name="action_remove">Премахни</string>
+    <string name="action_delete">Изтрий</string>
+    <string name="action_rename">Преименувай</string>
+    <string name="action_share">Сподели</string>
+    <string name="action_open">Отвори</string>
+    <string name="action_close">Затвори</string>
+    <string name="action_continue">Продължи</string>
+    <string name="action_enable">Включи</string>
+    <string name="copied">Копирано</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Създайте своя сейф</string>
+    <string name="create_vault_subtitle">Изберете главна парола. Всеки, който споделя този сейф, използва същата парола, за да го импортира. На това устройство няма да се налага да я въвеждате отново.</string>
+    <string name="master_password">Главна парола</string>
+    <string name="confirm_password">Потвърдете паролата</string>
+    <string name="create_vault">Създай сейф</string>
+    <string name="import_shared_vault">Вместо това импортирай споделен сейф</string>
+    <string name="password_warning">Запомнете тази парола и я запишете на сигурно място. Документите ви са защитени със силно AES-256 криптиране, базирано на тази парола. Няма начин да я нулирате или възстановите — ако я забравите, сейфът никога няма да може да бъде отворен и всичко в него ще бъде изгубено завинаги.</string>
+    <string name="min_chars">Използвайте поне %1$d знака.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Защитете сейфа си</string>
+    <string name="secure_vault_subtitle">Изберете поне един начин за отключване на DocSafe при всяко отваряне.</string>
+    <string name="biometrics_title">Биометрия / отключване на устройството</string>
+    <string name="biometrics_desc">Използвайте пръстов отпечатък, лице или PIN на устройството.</string>
+    <string name="biometrics_unavailable">Не е налично на това устройство. Настройте заключване на екрана, за да го включите.</string>
+    <string name="pin_title">PIN код</string>
+    <string name="pin_desc">Цифров PIN като алтернатива на биометрията.</string>
+    <string name="set_pin">Задай PIN</string>
+    <string name="pin_hint">PIN (мин. %1$d цифри)</string>
+    <string name="confirm_pin">Потвърдете PIN</string>
+    <string name="set_a_pin">Задайте PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Отключи DocSafe</string>
+    <string name="unlock_subtitle">Потвърдете, че сте вие, за да отворите документите си.</string>
+    <string name="use_biometrics">Биометрия / отключване на устройството</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Отключи с PIN</string>
+    <string name="incorrect_pin">Неправилен PIN.</string>
+    <string name="auth_failed">Неуспешно удостоверяване.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Импортиране на сейф</string>
+    <string name="import_vault_subtitle">Въведете споделената главна парола за „%1$s“. Той става сейфът на това устройство, замествайки текущо съхранения тук сейф.</string>
+    <string name="import_vault">Импортирай сейф</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Моят сейф</string>
+    <string name="search_hint">Търсене по имена и етикети</string>
+    <string name="starred">Любими</string>
+    <string name="section_all">Всички</string>
+    <string name="new_folder">Нова папка</string>
+    <string name="new_document">Нов документ</string>
+    <string name="rename_folder">Преименуване на папка</string>
+    <string name="reclaim_storage">Освободи място</string>
+    <string name="reclaiming">Освобождаване на място…</string>
+    <string name="save_vault_to_device">Запази сейфа на устройството</string>
+    <string name="share_vault">Сподели сейфа</string>
+    <string name="settings">Настройки</string>
+    <string name="nothing_here">Тук още няма нищо</string>
+    <string name="nothing_here_hint">Докоснете +, за да добавите папка или документ.</string>
+    <string name="no_matches">Няма съвпадения</string>
+    <string name="folder">Папка</string>
+    <string name="files_count">%1$d файла</string>
+    <string name="vault_saved">Сейфът е запазен</string>
+    <string name="vault_save_failed">Сейфът не можа да бъде запазен</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Преименуване на документ</string>
+    <string name="delete_document">Изтрий документа</string>
+    <string name="add_text_field">Добави текстово поле</string>
+    <string name="add_tag">Добави етикет</string>
+    <string name="add_tag_chip">+ Етикет</string>
+    <string name="scan_document">Сканирай документ</string>
+    <string name="take_photo">Направи снимка</string>
+    <string name="photo_library">Галерия</string>
+    <string name="browse_files">Прегледай файлове (всякакъв тип)</string>
+    <string name="no_files_hint">Все още няма файлове. Докоснете „Добави“, за да сканирате, направите снимка или импортирате файлове.</string>
+    <string name="thumbnail_size">Размер на миниатюрите</string>
+    <string name="details">Подробности</string>
+    <string name="tap_value_copy">Докоснете стойност, за да я копирате</string>
+    <string name="add_field">Добави поле</string>
+    <string name="field_key">Ключ</string>
+    <string name="field_value">Стойност</string>
+    <string name="custom_key">Персонализиран ключ</string>
+    <string name="custom_option">Друго…</string>
+    <string name="open_in_another_app">Отвори в друго приложение</string>
+    <string name="copy_to_clipboard">Копирай в клипборда</string>
+    <string name="select">Избери</string>
+    <string name="selected_count">Избрани: %1$d</string>
+    <string name="added_on">Добавено %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Добави %1$d елемент(а)</string>
+    <string name="share_choose_destination">Изберете документ, към който да добавите споделените файлове, или създайте нов.</string>
+    <string name="new_document_add_here">Нов документ (добави тук)</string>
+    <string name="tap_to_add_here">Докоснете, за да добавите тук</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_security">Сигурност</string>
+    <string name="settings_language">Език</string>
+    <string name="language_system_default">Системен по подразбиране</string>
+    <string name="biometric_unlock">Отключване с биометрия</string>
+    <string name="change_pin">Промени PIN</string>
+    <string name="turn_off">Изключи</string>
+    <string name="keep_one_method">Запазете поне един начин за отключване.</string>
+    <string name="enabled">Включено</string>
+    <string name="disabled">Изкл.</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Отвори с</string>
+    <string name="share_via">Сподели чрез</string>
+    <string name="count_folders">%1$d папки</string>
+    <string name="count_documents">%1$d док.</string>
+    <string name="empty">Празно</string>
+    <string name="share_selected">Сподели избраните</string>
+    <string name="remove_selected">Премахни избраните</string>
+    <string name="err_cant_open">Файлът не можа да бъде отворен</string>
+    <string name="err_no_app">Няма приложение, което да отвори този тип файл</string>
+    <string name="err_cant_share">Файлът не можа да бъде споделен</string>
+    <string name="err_cant_copy">Файлът не можа да бъде копиран</string>
+    <string name="err_scanner">Скенерът за документи не е наличен на това устройство</string>
+    <string name="err_no_camera">Няма налично приложение за камера</string>
+    <string name="cd_back">Назад</string>
+    <string name="cd_new">Нов</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Извлечи текст</string>
+    <string name="ocr_select_area">Изберете област</string>
+    <string name="ocr_hint_auto">Докоснете маркиран номер или код, за да го запазите като поле.</string>
+    <string name="ocr_hint_region">Очертайте рамка около номер или код, за да го извлечете.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Извлечи данни (пакетно)</string>
+    <string name="batch_title">Извличане на данни</string>
+    <string name="batch_progress">%1$d от %2$d</string>
+    <string name="batch_no_docs">Тук няма документи с изображения за сканиране.</string>
+    <string name="batch_scanning">Сканиране…</string>
+    <string name="batch_no_candidates">В този документ не са открити номера или кодове.</string>
+    <string name="batch_previous">Назад</string>
+    <string name="batch_next">Напред</string>
+    <string name="batch_finish">Готово</string>
+    <string name="field_added">Добавено</string>
+    <string name="field_added_undo">Добавено — докоснете, за да отмените</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Премести</string>
+    <string name="move_to_title">Премести в…</string>
+    <string name="move_here">Премести тук</string>
+    <string name="move_to_root">Премести в „Моят сейф“ (корен)</string>
+    <string name="new_folder_here">Нова папка тук</string>
+    <string name="no_subfolders">Тук няма подпапки</string>
+</resources>

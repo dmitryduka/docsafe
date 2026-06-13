@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Annuler</string>
+    <string name="action_save">Enregistrer</string>
+    <string name="action_add">Ajouter</string>
+    <string name="action_remove">Retirer</string>
+    <string name="action_delete">Supprimer</string>
+    <string name="action_rename">Renommer</string>
+    <string name="action_share">Partager</string>
+    <string name="action_open">Ouvrir</string>
+    <string name="action_close">Fermer</string>
+    <string name="action_continue">Continuer</string>
+    <string name="action_enable">Activer</string>
+    <string name="copied">Copié</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Créez votre coffre</string>
+    <string name="create_vault_subtitle">Choisissez un mot de passe principal. Toute personne partageant ce coffre utilise le même mot de passe pour l\'importer. Vous n\'aurez pas à le ressaisir sur cet appareil.</string>
+    <string name="master_password">Mot de passe principal</string>
+    <string name="confirm_password">Confirmez le mot de passe</string>
+    <string name="create_vault">Créer le coffre</string>
+    <string name="import_shared_vault">Importer plutôt un coffre partagé</string>
+    <string name="password_warning">Mémorisez ce mot de passe et notez-le en lieu sûr. Vos documents sont protégés par un chiffrement AES-256 robuste basé sur ce mot de passe. Il est impossible de le réinitialiser ou de le récupérer — si vous l\'oubliez, le coffre ne pourra plus jamais être ouvert et tout son contenu sera perdu à jamais.</string>
+    <string name="min_chars">Utilisez au moins %1$d caractères.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Sécurisez votre coffre</string>
+    <string name="secure_vault_subtitle">Choisissez au moins une méthode pour déverrouiller DocSafe à chaque ouverture.</string>
+    <string name="biometrics_title">Biométrie / déverrouillage de l\'appareil</string>
+    <string name="biometrics_desc">Utilisez l\'empreinte, le visage ou le code PIN de l\'appareil.</string>
+    <string name="biometrics_unavailable">Indisponible sur cet appareil. Configurez un verrouillage d\'écran pour l\'activer.</string>
+    <string name="pin_title">Code PIN</string>
+    <string name="pin_desc">Un PIN numérique comme alternative à la biométrie.</string>
+    <string name="set_pin">Définir un PIN</string>
+    <string name="pin_hint">PIN (min. %1$d chiffres)</string>
+    <string name="confirm_pin">Confirmez le PIN</string>
+    <string name="set_a_pin">Définir un PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Déverrouiller DocSafe</string>
+    <string name="unlock_subtitle">Confirmez votre identité pour ouvrir vos documents.</string>
+    <string name="use_biometrics">Biométrie / déverrouillage de l\'appareil</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Déverrouiller avec le PIN</string>
+    <string name="incorrect_pin">PIN incorrect.</string>
+    <string name="auth_failed">Échec de l\'authentification.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Importer un coffre</string>
+    <string name="import_vault_subtitle">Saisissez le mot de passe principal partagé pour « %1$s ». Il deviendra le coffre de cet appareil, remplaçant tout coffre actuellement stocké ici.</string>
+    <string name="import_vault">Importer le coffre</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Mon coffre</string>
+    <string name="search_hint">Rechercher des noms et des étiquettes</string>
+    <string name="starred">Favoris</string>
+    <string name="section_all">Tout</string>
+    <string name="new_folder">Nouveau dossier</string>
+    <string name="new_document">Nouveau document</string>
+    <string name="rename_folder">Renommer le dossier</string>
+    <string name="reclaim_storage">Libérer de l\'espace</string>
+    <string name="reclaiming">Libération de l\'espace…</string>
+    <string name="save_vault_to_device">Enregistrer le coffre sur l\'appareil</string>
+    <string name="share_vault">Partager le coffre</string>
+    <string name="settings">Paramètres</string>
+    <string name="nothing_here">Rien ici pour l\'instant</string>
+    <string name="nothing_here_hint">Appuyez sur + pour ajouter un dossier ou un document.</string>
+    <string name="no_matches">Aucun résultat</string>
+    <string name="folder">Dossier</string>
+    <string name="files_count">%1$d fichiers</string>
+    <string name="vault_saved">Coffre enregistré</string>
+    <string name="vault_save_failed">Impossible d\'enregistrer le coffre</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Renommer le document</string>
+    <string name="delete_document">Supprimer le document</string>
+    <string name="add_text_field">Ajouter un champ texte</string>
+    <string name="add_tag">Ajouter une étiquette</string>
+    <string name="add_tag_chip">+ Étiquette</string>
+    <string name="scan_document">Numériser un document</string>
+    <string name="take_photo">Prendre une photo</string>
+    <string name="photo_library">Photothèque</string>
+    <string name="browse_files">Parcourir les fichiers (tout type)</string>
+    <string name="no_files_hint">Aucun fichier pour l\'instant. Appuyez sur Ajouter pour numériser, prendre une photo ou importer des fichiers.</string>
+    <string name="thumbnail_size">Taille des miniatures</string>
+    <string name="details">Détails</string>
+    <string name="tap_value_copy">Appuyez sur une valeur pour la copier</string>
+    <string name="add_field">Ajouter un champ</string>
+    <string name="field_key">Clé</string>
+    <string name="field_value">Valeur</string>
+    <string name="custom_key">Clé personnalisée</string>
+    <string name="custom_option">Personnalisé…</string>
+    <string name="open_in_another_app">Ouvrir dans une autre application</string>
+    <string name="copy_to_clipboard">Copier dans le presse-papiers</string>
+    <string name="select">Sélectionner</string>
+    <string name="selected_count">%1$d sélectionné(s)</string>
+    <string name="added_on">Ajouté le %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Ajouter %1$d élément(s)</string>
+    <string name="share_choose_destination">Choisissez un document auquel ajouter le(s) fichier(s) partagé(s), ou créez-en un.</string>
+    <string name="new_document_add_here">Nouveau document (ajouter ici)</string>
+    <string name="tap_to_add_here">Appuyez pour ajouter ici</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_security">Sécurité</string>
+    <string name="settings_language">Langue</string>
+    <string name="language_system_default">Langue du système</string>
+    <string name="biometric_unlock">Déverrouillage biométrique</string>
+    <string name="change_pin">Modifier le PIN</string>
+    <string name="turn_off">Désactiver</string>
+    <string name="keep_one_method">Conservez au moins une méthode de déverrouillage.</string>
+    <string name="enabled">Activé</string>
+    <string name="disabled">Désactivé</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Ouvrir avec</string>
+    <string name="share_via">Partager via</string>
+    <string name="count_folders">%1$d dossiers</string>
+    <string name="count_documents">%1$d docs</string>
+    <string name="empty">Vide</string>
+    <string name="share_selected">Partager la sélection</string>
+    <string name="remove_selected">Retirer la sélection</string>
+    <string name="err_cant_open">Impossible d\'ouvrir ce fichier</string>
+    <string name="err_no_app">Aucune application ne peut ouvrir ce type de fichier</string>
+    <string name="err_cant_share">Impossible de partager ce fichier</string>
+    <string name="err_cant_copy">Impossible de copier ce fichier</string>
+    <string name="err_scanner">Scanner de documents indisponible sur cet appareil</string>
+    <string name="err_no_camera">Aucune application appareil photo disponible</string>
+    <string name="cd_back">Retour</string>
+    <string name="cd_new">Nouveau</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Extraire le texte</string>
+    <string name="ocr_select_area">Sélectionner une zone</string>
+    <string name="ocr_hint_auto">Appuyez sur un numéro ou un code en surbrillance pour l\'enregistrer comme champ.</string>
+    <string name="ocr_hint_region">Tracez un cadre autour d\'un numéro ou d\'un code pour l\'extraire.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Extraire les données (par lot)</string>
+    <string name="batch_title">Extraire les données</string>
+    <string name="batch_progress">%1$d sur %2$d</string>
+    <string name="batch_no_docs">Aucun document avec images à numériser ici.</string>
+    <string name="batch_scanning">Numérisation…</string>
+    <string name="batch_no_candidates">Aucun numéro ou code détecté dans ce document.</string>
+    <string name="batch_previous">Précédent</string>
+    <string name="batch_next">Suivant</string>
+    <string name="batch_finish">Terminer</string>
+    <string name="field_added">Ajouté</string>
+    <string name="field_added_undo">Ajouté — appuyez pour annuler</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Déplacer</string>
+    <string name="move_to_title">Déplacer vers…</string>
+    <string name="move_here">Déplacer ici</string>
+    <string name="move_to_root">Déplacer vers « Mon coffre » (racine)</string>
+    <string name="new_folder_here">Nouveau dossier ici</string>
+    <string name="no_subfolders">Aucun sous-dossier ici</string>
+</resources>

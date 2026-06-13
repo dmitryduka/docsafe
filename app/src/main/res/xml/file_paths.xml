@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Decrypted blobs are exported to this cache subdir for share/clipboard, then cleaned up. -->
+    <cache-path name="shared" path="shared/" />
+    <!-- Camera capture target (the camera app writes the photo here before we encrypt it). -->
+    <cache-path name="capture" path="capture/" />
+    <files-path name="exports" path="exports/" />
+</paths>

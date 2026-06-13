@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Отмена</string>
+    <string name="action_save">Сохранить</string>
+    <string name="action_add">Добавить</string>
+    <string name="action_remove">Убрать</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_rename">Переименовать</string>
+    <string name="action_share">Поделиться</string>
+    <string name="action_open">Открыть</string>
+    <string name="action_close">Закрыть</string>
+    <string name="action_continue">Продолжить</string>
+    <string name="action_enable">Включить</string>
+    <string name="copied">Скопировано</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Создайте хранилище</string>
+    <string name="create_vault_subtitle">Выберите мастер-пароль. Все, у кого есть это хранилище, используют один и тот же пароль для его импорта. На этом устройстве вводить его снова не потребуется.</string>
+    <string name="master_password">Мастер-пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="create_vault">Создать хранилище</string>
+    <string name="import_shared_vault">Вместо этого импортировать общее хранилище</string>
+    <string name="password_warning">Запомните этот пароль и запишите его в надёжном месте. Ваши документы защищены надёжным шифрованием AES-256 на основе этого пароля. Сбросить или восстановить его невозможно — если вы его забудете, хранилище уже нельзя будет открыть, и всё его содержимое будет потеряно навсегда.</string>
+    <string name="min_chars">Используйте не менее %1$d символов.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Защитите хранилище</string>
+    <string name="secure_vault_subtitle">Выберите хотя бы один способ разблокировки DocSafe при каждом открытии.</string>
+    <string name="biometrics_title">Биометрия / разблокировка устройством</string>
+    <string name="biometrics_desc">Используйте отпечаток, лицо или PIN устройства.</string>
+    <string name="biometrics_unavailable">Недоступно на этом устройстве. Настройте блокировку экрана, чтобы включить.</string>
+    <string name="pin_title">PIN-код</string>
+    <string name="pin_desc">Числовой PIN как альтернатива биометрии.</string>
+    <string name="set_pin">Задать PIN</string>
+    <string name="pin_hint">PIN (не менее %1$d цифр)</string>
+    <string name="confirm_pin">Подтвердите PIN</string>
+    <string name="set_a_pin">Задать PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Разблокировать DocSafe</string>
+    <string name="unlock_subtitle">Подтвердите, что это вы, чтобы открыть документы.</string>
+    <string name="use_biometrics">Биометрия / разблокировка устройством</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Разблокировать по PIN</string>
+    <string name="incorrect_pin">Неверный PIN.</string>
+    <string name="auth_failed">Не удалось пройти проверку.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Импорт хранилища</string>
+    <string name="import_vault_subtitle">Введите общий мастер-пароль для «%1$s». Оно станет хранилищем этого устройства, заменив текущее.</string>
+    <string name="import_vault">Импортировать хранилище</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Моё хранилище</string>
+    <string name="search_hint">Поиск по именам и тегам</string>
+    <string name="starred">Избранное</string>
+    <string name="section_all">Все</string>
+    <string name="new_folder">Новая папка</string>
+    <string name="new_document">Новый документ</string>
+    <string name="rename_folder">Переименовать папку</string>
+    <string name="reclaim_storage">Освободить место</string>
+    <string name="reclaiming">Освобождение места…</string>
+    <string name="save_vault_to_device">Сохранить хранилище на устройство</string>
+    <string name="share_vault">Поделиться хранилищем</string>
+    <string name="settings">Настройки</string>
+    <string name="nothing_here">Здесь пока пусто</string>
+    <string name="nothing_here_hint">Нажмите +, чтобы добавить папку или документ.</string>
+    <string name="no_matches">Ничего не найдено</string>
+    <string name="folder">Папка</string>
+    <string name="files_count">%1$d файлов</string>
+    <string name="vault_saved">Хранилище сохранено</string>
+    <string name="vault_save_failed">Не удалось сохранить хранилище</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Переименовать документ</string>
+    <string name="delete_document">Удалить документ</string>
+    <string name="add_text_field">Добавить поле</string>
+    <string name="add_tag">Добавить тег</string>
+    <string name="add_tag_chip">+ Тег</string>
+    <string name="scan_document">Сканировать документ</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="photo_library">Галерея</string>
+    <string name="browse_files">Выбрать файлы (любой тип)</string>
+    <string name="no_files_hint">Файлов пока нет. Нажмите «Добавить», чтобы отсканировать, сфотографировать или импортировать файлы.</string>
+    <string name="thumbnail_size">Размер миниатюр</string>
+    <string name="details">Детали</string>
+    <string name="tap_value_copy">Нажмите на значение, чтобы скопировать</string>
+    <string name="add_field">Добавить поле</string>
+    <string name="field_key">Ключ</string>
+    <string name="field_value">Значение</string>
+    <string name="custom_key">Свой ключ</string>
+    <string name="custom_option">Другое…</string>
+    <string name="open_in_another_app">Открыть в другом приложении</string>
+    <string name="copy_to_clipboard">Скопировать в буфер</string>
+    <string name="select">Выбрать</string>
+    <string name="selected_count">Выбрано: %1$d</string>
+    <string name="added_on">Добавлено %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Добавить элементов: %1$d</string>
+    <string name="share_choose_destination">Выберите документ, чтобы добавить присланные файлы, или создайте новый.</string>
+    <string name="new_document_add_here">Новый документ (добавить сюда)</string>
+    <string name="tap_to_add_here">Нажмите, чтобы добавить сюда</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_security">Безопасность</string>
+    <string name="settings_language">Язык</string>
+    <string name="language_system_default">Системный язык</string>
+    <string name="biometric_unlock">Разблокировка по биометрии</string>
+    <string name="change_pin">Изменить PIN</string>
+    <string name="turn_off">Выключить</string>
+    <string name="keep_one_method">Оставьте хотя бы один способ разблокировки.</string>
+    <string name="enabled">Включено</string>
+    <string name="disabled">Выкл.</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Открыть с помощью</string>
+    <string name="share_via">Поделиться через</string>
+    <string name="count_folders">папок: %1$d</string>
+    <string name="count_documents">док.: %1$d</string>
+    <string name="empty">Пусто</string>
+    <string name="share_selected">Поделиться выбранным</string>
+    <string name="remove_selected">Удалить выбранное</string>
+    <string name="err_cant_open">Не удалось открыть файл</string>
+    <string name="err_no_app">Нет приложения для открытия этого типа файла</string>
+    <string name="err_cant_share">Не удалось поделиться файлом</string>
+    <string name="err_cant_copy">Не удалось скопировать файл</string>
+    <string name="err_scanner">Сканер документов недоступен на этом устройстве</string>
+    <string name="err_no_camera">Нет приложения камеры</string>
+    <string name="cd_back">Назад</string>
+    <string name="cd_new">Создать</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Извлечь текст</string>
+    <string name="ocr_select_area">Выделить область</string>
+    <string name="ocr_hint_auto">Нажмите на выделенный номер или код, чтобы сохранить как поле.</string>
+    <string name="ocr_hint_region">Обведите рамкой номер или код, чтобы извлечь его.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Извлечь данные (пакетно)</string>
+    <string name="batch_title">Извлечение данных</string>
+    <string name="batch_progress">%1$d из %2$d</string>
+    <string name="batch_no_docs">Здесь нет документов с изображениями для сканирования.</string>
+    <string name="batch_scanning">Сканирование…</string>
+    <string name="batch_no_candidates">В этом документе не найдено номеров или кодов.</string>
+    <string name="batch_previous">Назад</string>
+    <string name="batch_next">Далее</string>
+    <string name="batch_finish">Готово</string>
+    <string name="field_added">Добавлено</string>
+    <string name="field_added_undo">Добавлено — нажмите, чтобы отменить</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Переместить</string>
+    <string name="move_to_title">Переместить в…</string>
+    <string name="move_here">Переместить сюда</string>
+    <string name="move_to_root">Переместить в «Моё хранилище» (корень)</string>
+    <string name="new_folder_here">Новая папка здесь</string>
+    <string name="no_subfolders">Здесь нет вложенных папок</string>
+</resources>

@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_save">Guardar</string>
+    <string name="action_add">Adicionar</string>
+    <string name="action_remove">Remover</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_rename">Mudar o nome</string>
+    <string name="action_share">Partilhar</string>
+    <string name="action_open">Abrir</string>
+    <string name="action_close">Fechar</string>
+    <string name="action_continue">Continuar</string>
+    <string name="action_enable">Ativar</string>
+    <string name="copied">Copiado</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Crie o seu cofre</string>
+    <string name="create_vault_subtitle">Escolha uma palavra-passe principal. Todos os que partilham este cofre usam a mesma palavra-passe para o importar. Não precisará de a escrever novamente neste dispositivo.</string>
+    <string name="master_password">Palavra-passe principal</string>
+    <string name="confirm_password">Confirme a palavra-passe</string>
+    <string name="create_vault">Criar cofre</string>
+    <string name="import_shared_vault">Em vez disso, importar um cofre partilhado</string>
+    <string name="password_warning">Memorize esta palavra-passe e anote-a num local seguro. Os seus documentos estão protegidos com encriptação forte AES-256 baseada nesta palavra-passe. Não é possível repô-la nem recuperá-la — se a esquecer, o cofre nunca mais poderá ser aberto e todo o seu conteúdo ficará perdido para sempre.</string>
+    <string name="min_chars">Use pelo menos %1$d caracteres.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Proteja o seu cofre</string>
+    <string name="secure_vault_subtitle">Escolha pelo menos uma forma de desbloquear o DocSafe sempre que o abrir.</string>
+    <string name="biometrics_title">Biometria / desbloqueio do dispositivo</string>
+    <string name="biometrics_desc">Use a impressão digital, o rosto ou o PIN do dispositivo.</string>
+    <string name="biometrics_unavailable">Indisponível neste dispositivo. Configure um bloqueio de ecrã para ativar.</string>
+    <string name="pin_title">Código PIN</string>
+    <string name="pin_desc">Um PIN numérico como alternativa à biometria.</string>
+    <string name="set_pin">Definir PIN</string>
+    <string name="pin_hint">PIN (mín. %1$d dígitos)</string>
+    <string name="confirm_pin">Confirme o PIN</string>
+    <string name="set_a_pin">Definir um PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Desbloquear o DocSafe</string>
+    <string name="unlock_subtitle">Confirme que é você para abrir os seus documentos.</string>
+    <string name="use_biometrics">Usar biometria / desbloqueio do dispositivo</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Desbloquear com PIN</string>
+    <string name="incorrect_pin">PIN incorreto.</string>
+    <string name="auth_failed">Falha na autenticação.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Importar cofre</string>
+    <string name="import_vault_subtitle">Introduza a palavra-passe principal partilhada de \"%1$s\". Este passará a ser o cofre deste dispositivo, substituindo qualquer cofre aqui guardado.</string>
+    <string name="import_vault">Importar cofre</string>
+
+    <!-- Browser -->
+    <string name="my_vault">O meu cofre</string>
+    <string name="search_hint">Pesquisar nomes e etiquetas</string>
+    <string name="starred">Favoritos</string>
+    <string name="section_all">Todos</string>
+    <string name="new_folder">Nova pasta</string>
+    <string name="new_document">Novo documento</string>
+    <string name="rename_folder">Mudar o nome da pasta</string>
+    <string name="reclaim_storage">Libertar espaço</string>
+    <string name="reclaiming">A libertar espaço…</string>
+    <string name="save_vault_to_device">Guardar o cofre no dispositivo</string>
+    <string name="share_vault">Partilhar cofre</string>
+    <string name="settings">Definições</string>
+    <string name="nothing_here">Ainda não há nada aqui</string>
+    <string name="nothing_here_hint">Toque em + para adicionar uma pasta ou documento.</string>
+    <string name="no_matches">Sem resultados</string>
+    <string name="folder">Pasta</string>
+    <string name="files_count">%1$d ficheiros</string>
+    <string name="vault_saved">Cofre guardado</string>
+    <string name="vault_save_failed">Não foi possível guardar o cofre</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Mudar o nome do documento</string>
+    <string name="delete_document">Eliminar documento</string>
+    <string name="add_text_field">Adicionar campo de texto</string>
+    <string name="add_tag">Adicionar etiqueta</string>
+    <string name="add_tag_chip">+ Etiqueta</string>
+    <string name="scan_document">Digitalizar documento</string>
+    <string name="take_photo">Tirar fotografia</string>
+    <string name="photo_library">Galeria de fotografias</string>
+    <string name="browse_files">Procurar ficheiros (qualquer tipo)</string>
+    <string name="no_files_hint">Ainda não há ficheiros. Toque em Adicionar para digitalizar, tirar uma fotografia ou importar ficheiros.</string>
+    <string name="thumbnail_size">Tamanho das miniaturas</string>
+    <string name="details">Detalhes</string>
+    <string name="tap_value_copy">Toque num valor para o copiar</string>
+    <string name="add_field">Adicionar campo</string>
+    <string name="field_key">Chave</string>
+    <string name="field_value">Valor</string>
+    <string name="custom_key">Chave personalizada</string>
+    <string name="custom_option">Personalizado…</string>
+    <string name="open_in_another_app">Abrir noutra aplicação</string>
+    <string name="copy_to_clipboard">Copiar para a área de transferência</string>
+    <string name="select">Selecionar</string>
+    <string name="selected_count">%1$d selecionados</string>
+    <string name="added_on">Adicionado a %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Adicionar %1$d item(ns)</string>
+    <string name="share_choose_destination">Escolha um documento para adicionar o(s) ficheiro(s) partilhado(s), ou crie um.</string>
+    <string name="new_document_add_here">Novo documento (adicionar aqui)</string>
+    <string name="tap_to_add_here">Toque para adicionar aqui</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Definições</string>
+    <string name="settings_security">Segurança</string>
+    <string name="settings_language">Idioma</string>
+    <string name="language_system_default">Predefinição do sistema</string>
+    <string name="biometric_unlock">Desbloqueio por biometria</string>
+    <string name="change_pin">Alterar PIN</string>
+    <string name="turn_off">Desativar</string>
+    <string name="keep_one_method">Mantenha pelo menos um método de desbloqueio.</string>
+    <string name="enabled">Ativado</string>
+    <string name="disabled">Desativado</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Abrir com</string>
+    <string name="share_via">Partilhar através de</string>
+    <string name="count_folders">%1$d pastas</string>
+    <string name="count_documents">%1$d docs</string>
+    <string name="empty">Vazio</string>
+    <string name="share_selected">Partilhar selecionados</string>
+    <string name="remove_selected">Remover selecionados</string>
+    <string name="err_cant_open">Não foi possível abrir este ficheiro</string>
+    <string name="err_no_app">Nenhuma aplicação consegue abrir este tipo de ficheiro</string>
+    <string name="err_cant_share">Não foi possível partilhar este ficheiro</string>
+    <string name="err_cant_copy">Não foi possível copiar este ficheiro</string>
+    <string name="err_scanner">Digitalizador de documentos indisponível neste dispositivo</string>
+    <string name="err_no_camera">Nenhuma aplicação de câmara disponível</string>
+    <string name="cd_back">Voltar</string>
+    <string name="cd_new">Novo</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Extrair texto</string>
+    <string name="ocr_select_area">Selecione uma área</string>
+    <string name="ocr_hint_auto">Toque num número ou código destacado para o guardar como campo.</string>
+    <string name="ocr_hint_region">Arraste uma caixa sobre um número ou código para o extrair.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Extrair dados (em lote)</string>
+    <string name="batch_title">Extrair dados</string>
+    <string name="batch_progress">%1$d de %2$d</string>
+    <string name="batch_no_docs">Não há documentos com imagens para digitalizar aqui.</string>
+    <string name="batch_scanning">A digitalizar…</string>
+    <string name="batch_no_candidates">Não foram detetados números nem códigos neste documento.</string>
+    <string name="batch_previous">Anterior</string>
+    <string name="batch_next">Seguinte</string>
+    <string name="batch_finish">Concluir</string>
+    <string name="field_added">Adicionado</string>
+    <string name="field_added_undo">Adicionado — toque para anular</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Mover</string>
+    <string name="move_to_title">Mover para…</string>
+    <string name="move_here">Mover para aqui</string>
+    <string name="move_to_root">Mover para O meu cofre (raiz)</string>
+    <string name="new_folder_here">Nova pasta aqui</string>
+    <string name="no_subfolders">Não há subpastas aqui</string>
+</resources>

@@ -1,0 +1,23 @@
+# Build output
+*.iml
+.gradle/
+.kotlin/
+build/
+/captures
+.externalNativeBuild
+.cxx
+
+# IDE / OS
+/.idea
+.DS_Store
+
+# Local config (machine-specific)
+local.properties
+
+# Release signing — NEVER commit
+*.keystore
+*.jks
+keystore.properties
+
+# Personal / encrypted vault files — NEVER commit
+*.dsvault

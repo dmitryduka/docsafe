@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">取消</string>
+    <string name="action_save">保存</string>
+    <string name="action_add">添加</string>
+    <string name="action_remove">移除</string>
+    <string name="action_delete">删除</string>
+    <string name="action_rename">重命名</string>
+    <string name="action_share">分享</string>
+    <string name="action_open">打开</string>
+    <string name="action_close">关闭</string>
+    <string name="action_continue">继续</string>
+    <string name="action_enable">启用</string>
+    <string name="copied">已复制</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">创建保险库</string>
+    <string name="create_vault_subtitle">设置一个主密码。共享此保险库的所有人都使用同一个密码来导入它。在本设备上无需再次输入。</string>
+    <string name="master_password">主密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="create_vault">创建保险库</string>
+    <string name="import_shared_vault">改为导入共享保险库</string>
+    <string name="password_warning">请记住此密码并将其记录在安全的地方。您的文档使用基于此密码的强 AES-256 加密进行保护。它无法被重置或找回——如果忘记，保险库将永远无法打开，其中的所有内容也将永久丢失。</string>
+    <string name="min_chars">请至少使用 %1$d 个字符。</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">保护您的保险库</string>
+    <string name="secure_vault_subtitle">请至少选择一种每次打开 DocSafe 时的解锁方式。</string>
+    <string name="biometrics_title">生物识别 / 设备解锁</string>
+    <string name="biometrics_desc">使用指纹、面容或设备 PIN。</string>
+    <string name="biometrics_unavailable">本设备不支持。请设置屏幕锁定后启用。</string>
+    <string name="pin_title">PIN 码</string>
+    <string name="pin_desc">使用数字 PIN 作为生物识别的替代方式。</string>
+    <string name="set_pin">设置 PIN</string>
+    <string name="pin_hint">PIN（至少 %1$d 位）</string>
+    <string name="confirm_pin">确认 PIN</string>
+    <string name="set_a_pin">设置 PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">解锁 DocSafe</string>
+    <string name="unlock_subtitle">请确认身份以打开您的文档。</string>
+    <string name="use_biometrics">使用生物识别 / 设备解锁</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">使用 PIN 解锁</string>
+    <string name="incorrect_pin">PIN 不正确。</string>
+    <string name="auth_failed">身份验证失败。</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">导入保险库</string>
+    <string name="import_vault_subtitle">请输入 \"%1$s\" 的共享主密码。它将成为本设备的保险库，替换当前存储在此处的任何保险库。</string>
+    <string name="import_vault">导入保险库</string>
+
+    <!-- Browser -->
+    <string name="my_vault">我的保险库</string>
+    <string name="search_hint">搜索名称和标签</string>
+    <string name="starred">已加星标</string>
+    <string name="section_all">全部</string>
+    <string name="new_folder">新建文件夹</string>
+    <string name="new_document">新建文档</string>
+    <string name="rename_folder">重命名文件夹</string>
+    <string name="reclaim_storage">回收存储空间</string>
+    <string name="reclaiming">正在回收空间…</string>
+    <string name="save_vault_to_device">将保险库保存到设备</string>
+    <string name="share_vault">分享保险库</string>
+    <string name="settings">设置</string>
+    <string name="nothing_here">这里还没有内容</string>
+    <string name="nothing_here_hint">点按 + 添加文件夹或文档。</string>
+    <string name="no_matches">无匹配结果</string>
+    <string name="folder">文件夹</string>
+    <string name="files_count">%1$d 个文件</string>
+    <string name="vault_saved">保险库已保存</string>
+    <string name="vault_save_failed">无法保存保险库</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">重命名文档</string>
+    <string name="delete_document">删除文档</string>
+    <string name="add_text_field">添加文本字段</string>
+    <string name="add_tag">添加标签</string>
+    <string name="add_tag_chip">+ 标签</string>
+    <string name="scan_document">扫描文档</string>
+    <string name="take_photo">拍照</string>
+    <string name="photo_library">相册</string>
+    <string name="browse_files">浏览文件（任意类型）</string>
+    <string name="no_files_hint">还没有文件。点按"添加"以扫描、拍照或导入文件。</string>
+    <string name="thumbnail_size">缩略图大小</string>
+    <string name="details">详情</string>
+    <string name="tap_value_copy">点按某个值即可复制</string>
+    <string name="add_field">添加字段</string>
+    <string name="field_key">键</string>
+    <string name="field_value">值</string>
+    <string name="custom_key">自定义键</string>
+    <string name="custom_option">自定义…</string>
+    <string name="open_in_another_app">在其他应用中打开</string>
+    <string name="copy_to_clipboard">复制到剪贴板</string>
+    <string name="select">选择</string>
+    <string name="selected_count">已选择 %1$d 项</string>
+    <string name="added_on">添加于 %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">添加 %1$d 项</string>
+    <string name="share_choose_destination">请选择一个文档以添加共享文件，或新建一个。</string>
+    <string name="new_document_add_here">新建文档（添加到此处）</string>
+    <string name="tap_to_add_here">点按以添加到此处</string>
+
+    <!-- Settings -->
+    <string name="settings_title">设置</string>
+    <string name="settings_security">安全</string>
+    <string name="settings_language">语言</string>
+    <string name="language_system_default">系统默认</string>
+    <string name="biometric_unlock">生物识别解锁</string>
+    <string name="change_pin">更改 PIN</string>
+    <string name="turn_off">关闭</string>
+    <string name="keep_one_method">请至少保留一种解锁方式。</string>
+    <string name="enabled">已启用</string>
+    <string name="disabled">已关闭</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">打开方式</string>
+    <string name="share_via">分享方式</string>
+    <string name="count_folders">%1$d 个文件夹</string>
+    <string name="count_documents">%1$d 个文档</string>
+    <string name="empty">空</string>
+    <string name="share_selected">分享所选</string>
+    <string name="remove_selected">移除所选</string>
+    <string name="err_cant_open">无法打开此文件</string>
+    <string name="err_no_app">没有应用可以打开此文件类型</string>
+    <string name="err_cant_share">无法分享此文件</string>
+    <string name="err_cant_copy">无法复制此文件</string>
+    <string name="err_scanner">本设备不支持文档扫描器</string>
+    <string name="err_no_camera">没有可用的相机应用</string>
+    <string name="cd_back">返回</string>
+    <string name="cd_new">新建</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">提取文本</string>
+    <string name="ocr_select_area">选择区域</string>
+    <string name="ocr_hint_auto">点按高亮的数字或代码以将其保存为字段。</string>
+    <string name="ocr_hint_region">在数字或代码上拖出方框以提取它。</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">提取数据（批量）</string>
+    <string name="batch_title">提取数据</string>
+    <string name="batch_progress">第 %1$d 项，共 %2$d 项</string>
+    <string name="batch_no_docs">这里没有含图片可供扫描的文档。</string>
+    <string name="batch_scanning">正在扫描…</string>
+    <string name="batch_no_candidates">此文档中未检测到数字或代码。</string>
+    <string name="batch_previous">上一项</string>
+    <string name="batch_next">下一项</string>
+    <string name="batch_finish">完成</string>
+    <string name="field_added">已添加</string>
+    <string name="field_added_undo">已添加——点按以撤销</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">移动</string>
+    <string name="move_to_title">移动到…</string>
+    <string name="move_here">移动到此处</string>
+    <string name="move_to_root">移动到"我的保险库"（根目录）</string>
+    <string name="new_folder_here">在此处新建文件夹</string>
+    <string name="no_subfolders">此处没有子文件夹</string>
+</resources>

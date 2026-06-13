@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_save">Speichern</string>
+    <string name="action_add">Hinzufügen</string>
+    <string name="action_remove">Entfernen</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_rename">Umbenennen</string>
+    <string name="action_share">Teilen</string>
+    <string name="action_open">Öffnen</string>
+    <string name="action_close">Schließen</string>
+    <string name="action_continue">Weiter</string>
+    <string name="action_enable">Aktivieren</string>
+    <string name="copied">Kopiert</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Tresor erstellen</string>
+    <string name="create_vault_subtitle">Wähle ein Master-Passwort. Alle, die diesen Tresor teilen, verwenden dasselbe Passwort, um ihn zu importieren. Auf diesem Gerät musst du es nicht erneut eingeben.</string>
+    <string name="master_password">Master-Passwort</string>
+    <string name="confirm_password">Passwort bestätigen</string>
+    <string name="create_vault">Tresor erstellen</string>
+    <string name="import_shared_vault">Stattdessen einen geteilten Tresor importieren</string>
+    <string name="password_warning">Merke dir dieses Passwort und notiere es an einem sicheren Ort. Deine Dokumente sind mit starker AES-256-Verschlüsselung auf Basis dieses Passworts geschützt. Es kann weder zurückgesetzt noch wiederhergestellt werden — wenn du es vergisst, lässt sich der Tresor nie wieder öffnen und alles darin ist für immer verloren.</string>
+    <string name="min_chars">Verwende mindestens %1$d Zeichen.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Tresor schützen</string>
+    <string name="secure_vault_subtitle">Wähle mindestens eine Methode, um DocSafe bei jedem Öffnen zu entsperren.</string>
+    <string name="biometrics_title">Biometrie / Geräteentsperrung</string>
+    <string name="biometrics_desc">Verwende Fingerabdruck, Gesicht oder die PIN deines Geräts.</string>
+    <string name="biometrics_unavailable">Auf diesem Gerät nicht verfügbar. Richte eine Bildschirmsperre ein, um es zu aktivieren.</string>
+    <string name="pin_title">PIN-Code</string>
+    <string name="pin_desc">Eine numerische PIN als Alternative zur Biometrie.</string>
+    <string name="set_pin">PIN festlegen</string>
+    <string name="pin_hint">PIN (mind. %1$d Ziffern)</string>
+    <string name="confirm_pin">PIN bestätigen</string>
+    <string name="set_a_pin">PIN festlegen</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">DocSafe entsperren</string>
+    <string name="unlock_subtitle">Bestätige, dass du es bist, um deine Dokumente zu öffnen.</string>
+    <string name="use_biometrics">Biometrie / Geräteentsperrung verwenden</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Mit PIN entsperren</string>
+    <string name="incorrect_pin">Falsche PIN.</string>
+    <string name="auth_failed">Authentifizierung fehlgeschlagen.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Tresor importieren</string>
+    <string name="import_vault_subtitle">Gib das geteilte Master-Passwort für \"%1$s\" ein. Dieser wird zum Tresor dieses Geräts und ersetzt den hier aktuell gespeicherten Tresor.</string>
+    <string name="import_vault">Tresor importieren</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Mein Tresor</string>
+    <string name="search_hint">Namen und Tags durchsuchen</string>
+    <string name="starred">Favoriten</string>
+    <string name="section_all">Alle</string>
+    <string name="new_folder">Neuer Ordner</string>
+    <string name="new_document">Neues Dokument</string>
+    <string name="rename_folder">Ordner umbenennen</string>
+    <string name="reclaim_storage">Speicher freigeben</string>
+    <string name="reclaiming">Speicher wird freigegeben…</string>
+    <string name="save_vault_to_device">Tresor auf Gerät speichern</string>
+    <string name="share_vault">Tresor teilen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="nothing_here">Noch nichts vorhanden</string>
+    <string name="nothing_here_hint">Tippe auf +, um einen Ordner oder ein Dokument hinzuzufügen.</string>
+    <string name="no_matches">Keine Treffer</string>
+    <string name="folder">Ordner</string>
+    <string name="files_count">%1$d Dateien</string>
+    <string name="vault_saved">Tresor gespeichert</string>
+    <string name="vault_save_failed">Tresor konnte nicht gespeichert werden</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Dokument umbenennen</string>
+    <string name="delete_document">Dokument löschen</string>
+    <string name="add_text_field">Textfeld hinzufügen</string>
+    <string name="add_tag">Tag hinzufügen</string>
+    <string name="add_tag_chip">+ Tag</string>
+    <string name="scan_document">Dokument scannen</string>
+    <string name="take_photo">Foto aufnehmen</string>
+    <string name="photo_library">Fotomediathek</string>
+    <string name="browse_files">Dateien durchsuchen (beliebiger Typ)</string>
+    <string name="no_files_hint">Noch keine Dateien. Tippe auf Hinzufügen, um zu scannen, ein Foto aufzunehmen oder Dateien zu importieren.</string>
+    <string name="thumbnail_size">Miniaturansichtsgröße</string>
+    <string name="details">Details</string>
+    <string name="tap_value_copy">Tippe auf einen Wert, um ihn zu kopieren</string>
+    <string name="add_field">Feld hinzufügen</string>
+    <string name="field_key">Schlüssel</string>
+    <string name="field_value">Wert</string>
+    <string name="custom_key">Eigener Schlüssel</string>
+    <string name="custom_option">Benutzerdefiniert…</string>
+    <string name="open_in_another_app">In anderer App öffnen</string>
+    <string name="copy_to_clipboard">In Zwischenablage kopieren</string>
+    <string name="select">Auswählen</string>
+    <string name="selected_count">%1$d ausgewählt</string>
+    <string name="added_on">Hinzugefügt am %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">%1$d Element(e) hinzufügen</string>
+    <string name="share_choose_destination">Wähle ein Dokument, um die geteilte(n) Datei(en) hinzuzufügen, oder erstelle eins.</string>
+    <string name="new_document_add_here">Neues Dokument (hier hinzufügen)</string>
+    <string name="tap_to_add_here">Tippen, um hier hinzuzufügen</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_security">Sicherheit</string>
+    <string name="settings_language">Sprache</string>
+    <string name="language_system_default">Systemstandard</string>
+    <string name="biometric_unlock">Biometrische Entsperrung</string>
+    <string name="change_pin">PIN ändern</string>
+    <string name="turn_off">Ausschalten</string>
+    <string name="keep_one_method">Behalte mindestens eine Entsperrmethode bei.</string>
+    <string name="enabled">Aktiviert</string>
+    <string name="disabled">Aus</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Öffnen mit</string>
+    <string name="share_via">Teilen über</string>
+    <string name="count_folders">%1$d Ordner</string>
+    <string name="count_documents">%1$d Dok.</string>
+    <string name="empty">Leer</string>
+    <string name="share_selected">Auswahl teilen</string>
+    <string name="remove_selected">Auswahl entfernen</string>
+    <string name="err_cant_open">Datei konnte nicht geöffnet werden</string>
+    <string name="err_no_app">Keine App kann diesen Dateityp öffnen</string>
+    <string name="err_cant_share">Datei konnte nicht geteilt werden</string>
+    <string name="err_cant_copy">Datei konnte nicht kopiert werden</string>
+    <string name="err_scanner">Dokumentenscanner auf diesem Gerät nicht verfügbar</string>
+    <string name="err_no_camera">Keine Kamera-App verfügbar</string>
+    <string name="cd_back">Zurück</string>
+    <string name="cd_new">Neu</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Text extrahieren</string>
+    <string name="ocr_select_area">Bereich auswählen</string>
+    <string name="ocr_hint_auto">Tippe auf eine hervorgehobene Nummer oder einen Code, um sie als Feld zu speichern.</string>
+    <string name="ocr_hint_region">Ziehe einen Rahmen über eine Nummer oder einen Code, um sie zu extrahieren.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Daten extrahieren (Stapel)</string>
+    <string name="batch_title">Daten extrahieren</string>
+    <string name="batch_progress">%1$d von %2$d</string>
+    <string name="batch_no_docs">Hier gibt es keine Dokumente mit Bildern zum Scannen.</string>
+    <string name="batch_scanning">Wird gescannt…</string>
+    <string name="batch_no_candidates">In diesem Dokument wurden keine Nummern oder Codes erkannt.</string>
+    <string name="batch_previous">Zurück</string>
+    <string name="batch_next">Weiter</string>
+    <string name="batch_finish">Fertig</string>
+    <string name="field_added">Hinzugefügt</string>
+    <string name="field_added_undo">Hinzugefügt — tippen zum Rückgängigmachen</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Verschieben</string>
+    <string name="move_to_title">Verschieben nach…</string>
+    <string name="move_here">Hierher verschieben</string>
+    <string name="move_to_root">Nach „Mein Tresor“ (Stammordner) verschieben</string>
+    <string name="new_folder_here">Neuer Ordner hier</string>
+    <string name="no_subfolders">Hier gibt es keine Unterordner</string>
+</resources>

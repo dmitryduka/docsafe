@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Avbryt</string>
+    <string name="action_save">Lagre</string>
+    <string name="action_add">Legg til</string>
+    <string name="action_remove">Fjern</string>
+    <string name="action_delete">Slett</string>
+    <string name="action_rename">Gi nytt navn</string>
+    <string name="action_share">Del</string>
+    <string name="action_open">Åpne</string>
+    <string name="action_close">Lukk</string>
+    <string name="action_continue">Fortsett</string>
+    <string name="action_enable">Slå på</string>
+    <string name="copied">Kopiert</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Opprett hvelvet ditt</string>
+    <string name="create_vault_subtitle">Velg et hovedpassord. Alle som deler dette hvelvet, bruker samme passord for å importere det. Du trenger ikke å skrive det inn igjen på denne enheten.</string>
+    <string name="master_password">Hovedpassord</string>
+    <string name="confirm_password">Bekreft passord</string>
+    <string name="create_vault">Opprett hvelv</string>
+    <string name="import_shared_vault">Importer et delt hvelv i stedet</string>
+    <string name="password_warning">Husk dette passordet og skriv det ned på et trygt sted. Dokumentene dine er beskyttet med sterk AES-256-kryptering basert på dette passordet. Det finnes ingen måte å tilbakestille eller gjenopprette det på — hvis du glemmer det, kan hvelvet aldri åpnes igjen, og alt innholdet er tapt for godt.</string>
+    <string name="min_chars">Bruk minst %1$d tegn.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Sikre hvelvet ditt</string>
+    <string name="secure_vault_subtitle">Velg minst én måte å låse opp DocSafe på hver gang du åpner det.</string>
+    <string name="biometrics_title">Biometri / enhetslås</string>
+    <string name="biometrics_desc">Bruk fingeravtrykk, ansikt eller enhetens PIN.</string>
+    <string name="biometrics_unavailable">Ikke tilgjengelig på denne enheten. Sett opp en skjermlås for å aktivere.</string>
+    <string name="pin_title">PIN-kode</string>
+    <string name="pin_desc">En numerisk PIN som alternativ til biometri.</string>
+    <string name="set_pin">Angi PIN</string>
+    <string name="pin_hint">PIN (minst %1$d sifre)</string>
+    <string name="confirm_pin">Bekreft PIN</string>
+    <string name="set_a_pin">Angi en PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Lås opp DocSafe</string>
+    <string name="unlock_subtitle">Bekreft at det er deg for å åpne dokumentene dine.</string>
+    <string name="use_biometrics">Bruk biometri / enhetslås</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Lås opp med PIN</string>
+    <string name="incorrect_pin">Feil PIN.</string>
+    <string name="auth_failed">Autentisering mislyktes.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Importer hvelv</string>
+    <string name="import_vault_subtitle">Skriv inn det delte hovedpassordet for \"%1$s\". Dette blir denne enhetens hvelv og erstatter ethvert hvelv som er lagret her nå.</string>
+    <string name="import_vault">Importer hvelv</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Mitt hvelv</string>
+    <string name="search_hint">Søk i navn og etiketter</string>
+    <string name="starred">Stjernemerket</string>
+    <string name="section_all">Alle</string>
+    <string name="new_folder">Ny mappe</string>
+    <string name="new_document">Nytt dokument</string>
+    <string name="rename_folder">Gi mappen nytt navn</string>
+    <string name="reclaim_storage">Frigjør lagringsplass</string>
+    <string name="reclaiming">Frigjør plass…</string>
+    <string name="save_vault_to_device">Lagre hvelv på enheten</string>
+    <string name="share_vault">Del hvelv</string>
+    <string name="settings">Innstillinger</string>
+    <string name="nothing_here">Ingenting her ennå</string>
+    <string name="nothing_here_hint">Trykk + for å legge til en mappe eller et dokument.</string>
+    <string name="no_matches">Ingen treff</string>
+    <string name="folder">Mappe</string>
+    <string name="files_count">%1$d filer</string>
+    <string name="vault_saved">Hvelv lagret</string>
+    <string name="vault_save_failed">Kunne ikke lagre hvelvet</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Gi dokumentet nytt navn</string>
+    <string name="delete_document">Slett dokument</string>
+    <string name="add_text_field">Legg til tekstfelt</string>
+    <string name="add_tag">Legg til etikett</string>
+    <string name="add_tag_chip">+ Etikett</string>
+    <string name="scan_document">Skann dokument</string>
+    <string name="take_photo">Ta bilde</string>
+    <string name="photo_library">Bildebibliotek</string>
+    <string name="browse_files">Bla gjennom filer (alle typer)</string>
+    <string name="no_files_hint">Ingen filer ennå. Trykk Legg til for å skanne, ta et bilde eller importere filer.</string>
+    <string name="thumbnail_size">Miniatyrstørrelse</string>
+    <string name="details">Detaljer</string>
+    <string name="tap_value_copy">Trykk på en verdi for å kopiere den</string>
+    <string name="add_field">Legg til felt</string>
+    <string name="field_key">Nøkkel</string>
+    <string name="field_value">Verdi</string>
+    <string name="custom_key">Egendefinert nøkkel</string>
+    <string name="custom_option">Egendefinert…</string>
+    <string name="open_in_another_app">Åpne i en annen app</string>
+    <string name="copy_to_clipboard">Kopier til utklippstavlen</string>
+    <string name="select">Velg</string>
+    <string name="selected_count">%1$d valgt</string>
+    <string name="added_on">Lagt til %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Legg til %1$d element(er)</string>
+    <string name="share_choose_destination">Velg et dokument å legge de delte filene til, eller opprett et nytt.</string>
+    <string name="new_document_add_here">Nytt dokument (legg til her)</string>
+    <string name="tap_to_add_here">Trykk for å legge til her</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Innstillinger</string>
+    <string name="settings_security">Sikkerhet</string>
+    <string name="settings_language">Språk</string>
+    <string name="language_system_default">Systemstandard</string>
+    <string name="biometric_unlock">Biometrisk opplåsing</string>
+    <string name="change_pin">Endre PIN</string>
+    <string name="turn_off">Slå av</string>
+    <string name="keep_one_method">Behold minst én opplåsingsmetode.</string>
+    <string name="enabled">Aktivert</string>
+    <string name="disabled">Av</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Åpne med</string>
+    <string name="share_via">Del via</string>
+    <string name="count_folders">%1$d mapper</string>
+    <string name="count_documents">%1$d dok.</string>
+    <string name="empty">Tom</string>
+    <string name="share_selected">Del valgte</string>
+    <string name="remove_selected">Fjern valgte</string>
+    <string name="err_cant_open">Kunne ikke åpne denne filen</string>
+    <string name="err_no_app">Ingen app kan åpne denne filtypen</string>
+    <string name="err_cant_share">Kunne ikke dele denne filen</string>
+    <string name="err_cant_copy">Kunne ikke kopiere denne filen</string>
+    <string name="err_scanner">Dokumentskanner er ikke tilgjengelig på denne enheten</string>
+    <string name="err_no_camera">Ingen kameraapp tilgjengelig</string>
+    <string name="cd_back">Tilbake</string>
+    <string name="cd_new">Ny</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Trekk ut tekst</string>
+    <string name="ocr_select_area">Velg et område</string>
+    <string name="ocr_hint_auto">Trykk på et uthevet nummer eller en kode for å lagre det som et felt.</string>
+    <string name="ocr_hint_region">Dra en boks over et nummer eller en kode for å trekke det ut.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Trekk ut data (samlet)</string>
+    <string name="batch_title">Trekk ut data</string>
+    <string name="batch_progress">%1$d av %2$d</string>
+    <string name="batch_no_docs">Ingen dokumenter med bilder å skanne her.</string>
+    <string name="batch_scanning">Skanner…</string>
+    <string name="batch_no_candidates">Ingen numre eller koder funnet i dette dokumentet.</string>
+    <string name="batch_previous">Forrige</string>
+    <string name="batch_next">Neste</string>
+    <string name="batch_finish">Fullfør</string>
+    <string name="field_added">Lagt til</string>
+    <string name="field_added_undo">Lagt til — trykk for å angre</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Flytt</string>
+    <string name="move_to_title">Flytt til…</string>
+    <string name="move_here">Flytt hit</string>
+    <string name="move_to_root">Flytt til Mitt hvelv (rot)</string>
+    <string name="new_folder_here">Ny mappe her</string>
+    <string name="no_subfolders">Ingen undermapper her</string>
+</resources>

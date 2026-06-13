@@ -1,0 +1,160 @@
+<resources>
+    <!-- Common actions -->
+    <string name="action_cancel">Չեղարկել</string>
+    <string name="action_save">Պահպանել</string>
+    <string name="action_add">Ավելացնել</string>
+    <string name="action_remove">Հեռացնել</string>
+    <string name="action_delete">Ջնջել</string>
+    <string name="action_rename">Վերանվանել</string>
+    <string name="action_share">Կիսվել</string>
+    <string name="action_open">Բացել</string>
+    <string name="action_close">Փակել</string>
+    <string name="action_continue">Շարունակել</string>
+    <string name="action_enable">Միացնել</string>
+    <string name="copied">Պատճենվեց</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Ստեղծեք ձեր պահոցը</string>
+    <string name="create_vault_subtitle">Ընտրեք գլխավոր գաղտնաբառ։ Բոլորը, ովքեր կիսում են այս պահոցը, օգտագործում են նույն գաղտնաբառը՝ այն ներմուծելու համար։ Այս սարքում այն կրկին մուտքագրելու կարիք չի լինի։</string>
+    <string name="master_password">Գլխավոր գաղտնաբառ</string>
+    <string name="confirm_password">Հաստատեք գաղտնաբառը</string>
+    <string name="create_vault">Ստեղծել պահոց</string>
+    <string name="import_shared_vault">Փոխարենը ներմուծել ընդհանուր պահոց</string>
+    <string name="password_warning">Հիշեք այս գաղտնաբառը և գրեք այն ապահով տեղում։ Ձեր փաստաթղթերը պաշտպանված են այս գաղտնաբառի վրա հիմնված հզոր AES-256 գաղտնագրմամբ։ Այն վերակայելու կամ վերականգնելու հնարավորություն չկա. եթե մոռանաք այն, պահոցն այլևս երբեք հնարավոր չի լինի բացել, և դրա ողջ պարունակությունը կկորչի ընդմիշտ։</string>
+    <string name="min_chars">Օգտագործեք առնվազն %1$d նիշ։</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Պաշտպանեք ձեր պահոցը</string>
+    <string name="secure_vault_subtitle">Ընտրեք առնվազն մեկ եղանակ՝ DocSafe-ն ամեն անգամ բացելիս ապակողպելու համար։</string>
+    <string name="biometrics_title">Կենսաչափություն / սարքով ապակողպում</string>
+    <string name="biometrics_desc">Օգտագործեք մատնահետք, դեմք կամ սարքի PIN-ը։</string>
+    <string name="biometrics_unavailable">Հասանելի չէ այս սարքում։ Միացնելու համար կարգավորեք էկրանի կողպումը։</string>
+    <string name="pin_title">PIN կոդ</string>
+    <string name="pin_desc">Թվային PIN՝ որպես կենսաչափության այլընտրանք։</string>
+    <string name="set_pin">Սահմանել PIN</string>
+    <string name="pin_hint">PIN (առնվազն %1$d նիշ)</string>
+    <string name="confirm_pin">Հաստատեք PIN-ը</string>
+    <string name="set_a_pin">Սահմանել PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Ապակողպել DocSafe-ը</string>
+    <string name="unlock_subtitle">Հաստատեք, որ դա դուք եք՝ ձեր փաստաթղթերը բացելու համար։</string>
+    <string name="use_biometrics">Կենսաչափություն / սարքով ապակողպում</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Ապակողպել PIN-ով</string>
+    <string name="incorrect_pin">Սխալ PIN։</string>
+    <string name="auth_failed">Չհաջողվեց անցնել նույնականացումը։</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Պահոցի ներմուծում</string>
+    <string name="import_vault_subtitle">Մուտքագրեք «%1$s»-ի ընդհանուր գլխավոր գաղտնաբառը։ Այն կդառնա այս սարքի պահոցը՝ փոխարինելով այստեղ ներկայումս պահվող ցանկացած պահոց։</string>
+    <string name="import_vault">Ներմուծել պահոց</string>
+
+    <!-- Browser -->
+    <string name="my_vault">Իմ պահոցը</string>
+    <string name="search_hint">Որոնում անունների և պիտակների մեջ</string>
+    <string name="starred">Ընտրված</string>
+    <string name="section_all">Բոլորը</string>
+    <string name="new_folder">Նոր թղթապանակ</string>
+    <string name="new_document">Նոր փաստաթուղթ</string>
+    <string name="rename_folder">Վերանվանել թղթապանակը</string>
+    <string name="reclaim_storage">Ազատել տարածք</string>
+    <string name="reclaiming">Տարածքի ազատում…</string>
+    <string name="save_vault_to_device">Պահպանել պահոցը սարքում</string>
+    <string name="share_vault">Կիսվել պահոցով</string>
+    <string name="settings">Կարգավորումներ</string>
+    <string name="nothing_here">Այստեղ դեռ ոչինչ չկա</string>
+    <string name="nothing_here_hint">Հպեք +՝ թղթապանակ կամ փաստաթուղթ ավելացնելու համար։</string>
+    <string name="no_matches">Համընկնումներ չկան</string>
+    <string name="folder">Թղթապանակ</string>
+    <string name="files_count">%1$d ֆայլ</string>
+    <string name="vault_saved">Պահոցը պահպանվեց</string>
+    <string name="vault_save_failed">Չհաջողվեց պահպանել պահոցը</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Վերանվանել փաստաթուղթը</string>
+    <string name="delete_document">Ջնջել փաստաթուղթը</string>
+    <string name="add_text_field">Ավելացնել տեքստի դաշտ</string>
+    <string name="add_tag">Ավելացնել պիտակ</string>
+    <string name="add_tag_chip">+ Պիտակ</string>
+    <string name="scan_document">Սկանավորել փաստաթուղթը</string>
+    <string name="take_photo">Լուսանկարել</string>
+    <string name="photo_library">Լուսանկարների պատկերասրահ</string>
+    <string name="browse_files">Ընտրել ֆայլեր (ցանկացած տեսակ)</string>
+    <string name="no_files_hint">Ֆայլեր դեռ չկան։ Հպեք «Ավելացնել»՝ սկանավորելու, լուսանկարելու կամ ֆայլեր ներմուծելու համար։</string>
+    <string name="thumbnail_size">Մանրապատկերի չափ</string>
+    <string name="details">Մանրամասներ</string>
+    <string name="tap_value_copy">Հպեք արժեքին՝ այն պատճենելու համար</string>
+    <string name="add_field">Ավելացնել դաշտ</string>
+    <string name="field_key">Բանալի</string>
+    <string name="field_value">Արժեք</string>
+    <string name="custom_key">Հատուկ բանալի</string>
+    <string name="custom_option">Այլ…</string>
+    <string name="open_in_another_app">Բացել այլ հավելվածում</string>
+    <string name="copy_to_clipboard">Պատճենել սեղմատախտակ</string>
+    <string name="select">Ընտրել</string>
+    <string name="selected_count">Ընտրված է՝ %1$d</string>
+    <string name="added_on">Ավելացվել է %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Ավելացնել %1$d տարր</string>
+    <string name="share_choose_destination">Ընտրեք փաստաթուղթ՝ ուղարկված ֆայլերն ավելացնելու համար, կամ ստեղծեք նորը։</string>
+    <string name="new_document_add_here">Նոր փաստաթուղթ (ավելացնել այստեղ)</string>
+    <string name="tap_to_add_here">Հպեք՝ այստեղ ավելացնելու համար</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Կարգավորումներ</string>
+    <string name="settings_security">Անվտանգություն</string>
+    <string name="settings_language">Լեզու</string>
+    <string name="language_system_default">Համակարգի լռելյայն</string>
+    <string name="biometric_unlock">Ապակողպում կենսաչափությամբ</string>
+    <string name="change_pin">Փոխել PIN-ը</string>
+    <string name="turn_off">Անջատել</string>
+    <string name="keep_one_method">Թողեք առնվազն մեկ ապակողպման եղանակ։</string>
+    <string name="enabled">Միացված է</string>
+    <string name="disabled">Անջատ.</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Բացել հետևյալով</string>
+    <string name="share_via">Կիսվել միջոցով</string>
+    <string name="count_folders">թղթապանակ՝ %1$d</string>
+    <string name="count_documents">փաստ.՝ %1$d</string>
+    <string name="empty">Դատարկ</string>
+    <string name="share_selected">Կիսվել ընտրվածով</string>
+    <string name="remove_selected">Հեռացնել ընտրվածը</string>
+    <string name="err_cant_open">Չհաջողվեց բացել այս ֆայլը</string>
+    <string name="err_no_app">Ոչ մի հավելված չի կարող բացել այս տեսակի ֆայլը</string>
+    <string name="err_cant_share">Չհաջողվեց կիսվել այս ֆայլով</string>
+    <string name="err_cant_copy">Չհաջողվեց պատճենել այս ֆայլը</string>
+    <string name="err_scanner">Փաստաթղթերի սկաները հասանելի չէ այս սարքում</string>
+    <string name="err_no_camera">Տեսախցիկի հավելված չկա</string>
+    <string name="cd_back">Հետ</string>
+    <string name="cd_new">Նոր</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Քաղել տեքստը</string>
+    <string name="ocr_select_area">Ընտրել տարածք</string>
+    <string name="ocr_hint_auto">Հպեք ընդգծված համարին կամ կոդին՝ այն որպես դաշտ պահպանելու համար։</string>
+    <string name="ocr_hint_region">Շրջանակով ընդգծեք համարը կամ կոդը՝ այն քաղելու համար։</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Քաղել տվյալներ (խմբաքանակով)</string>
+    <string name="batch_title">Տվյալների քաղում</string>
+    <string name="batch_progress">%1$d-ը %2$d-ից</string>
+    <string name="batch_no_docs">Այստեղ սկանավորելու համար պատկերներով փաստաթղթեր չկան։</string>
+    <string name="batch_scanning">Սկանավորում…</string>
+    <string name="batch_no_candidates">Այս փաստաթղթում համարներ կամ կոդեր չեն հայտնաբերվել։</string>
+    <string name="batch_previous">Նախորդ</string>
+    <string name="batch_next">Հաջորդ</string>
+    <string name="batch_finish">Ավարտել</string>
+    <string name="field_added">Ավելացվեց</string>
+    <string name="field_added_undo">Ավելացվեց — հպեք՝ չեղարկելու համար</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Տեղափոխել</string>
+    <string name="move_to_title">Տեղափոխել…</string>
+    <string name="move_here">Տեղափոխել այստեղ</string>
+    <string name="move_to_root">Տեղափոխել «Իմ պահոց» (արմատ)</string>
+    <string name="new_folder_here">Նոր թղթապանակ այստեղ</string>
+    <string name="no_subfolders">Այստեղ ներդիր թղթապանակներ չկան</string>
+</resources>

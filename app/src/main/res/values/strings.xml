@@ -1,0 +1,162 @@
+<resources>
+    <string name="app_name" translatable="false">DocSafe</string>
+
+    <!-- Common actions -->
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
+    <string name="action_add">Add</string>
+    <string name="action_remove">Remove</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_share">Share</string>
+    <string name="action_open">Open</string>
+    <string name="action_close">Close</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_enable">Enable</string>
+    <string name="copied">Copied</string>
+
+    <!-- Create vault -->
+    <string name="create_vault_title">Create your vault</string>
+    <string name="create_vault_subtitle">Choose a master password. Everyone who shares this vault uses the same password to import it. You won\'t need to type it again on this device.</string>
+    <string name="master_password">Master password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="create_vault">Create vault</string>
+    <string name="import_shared_vault">Import a shared vault instead</string>
+    <string name="password_warning">Remember this password and write it down somewhere safe. Your documents are protected with strong AES-256 encryption based on this password. There is no way to reset or recover it — if you forget it, the vault can never be opened and everything inside is lost for good.</string>
+    <string name="min_chars">Use at least %1$d characters.</string>
+
+    <!-- Choose unlock methods -->
+    <string name="secure_vault_title">Secure your vault</string>
+    <string name="secure_vault_subtitle">Pick at least one way to unlock DocSafe each time you open it.</string>
+    <string name="biometrics_title">Biometrics / device unlock</string>
+    <string name="biometrics_desc">Use fingerprint, face, or your device PIN.</string>
+    <string name="biometrics_unavailable">Not available on this device. Set up a screen lock to enable.</string>
+    <string name="pin_title">PIN code</string>
+    <string name="pin_desc">A numeric PIN as an alternative to biometrics.</string>
+    <string name="set_pin">Set PIN</string>
+    <string name="pin_hint">PIN (min %1$d digits)</string>
+    <string name="confirm_pin">Confirm PIN</string>
+    <string name="set_a_pin">Set a PIN</string>
+
+    <!-- Unlock -->
+    <string name="unlock_title">Unlock DocSafe</string>
+    <string name="unlock_subtitle">Confirm it\'s you to open your documents.</string>
+    <string name="use_biometrics">Use biometrics / device unlock</string>
+    <string name="pin">PIN</string>
+    <string name="unlock_with_pin">Unlock with PIN</string>
+    <string name="incorrect_pin">Incorrect PIN.</string>
+    <string name="auth_failed">Authentication failed.</string>
+
+    <!-- Import vault -->
+    <string name="import_vault_title">Import vault</string>
+    <string name="import_vault_subtitle">Enter the shared master password for \"%1$s\". This becomes this device\'s vault, replacing any vault currently stored here.</string>
+    <string name="import_vault">Import vault</string>
+
+    <!-- Browser -->
+    <string name="my_vault">My Vault</string>
+    <string name="search_hint">Search names and tags</string>
+    <string name="starred">Starred</string>
+    <string name="section_all">All</string>
+    <string name="new_folder">New folder</string>
+    <string name="new_document">New document</string>
+    <string name="rename_folder">Rename folder</string>
+    <string name="reclaim_storage">Reclaim storage</string>
+    <string name="reclaiming">Reclaiming space…</string>
+    <string name="save_vault_to_device">Save vault to device</string>
+    <string name="share_vault">Share vault</string>
+    <string name="settings">Settings</string>
+    <string name="nothing_here">Nothing here yet</string>
+    <string name="nothing_here_hint">Tap + to add a folder or document.</string>
+    <string name="no_matches">No matches</string>
+    <string name="folder">Folder</string>
+    <string name="files_count">%1$d files</string>
+    <string name="vault_saved">Vault saved</string>
+    <string name="vault_save_failed">Couldn\'t save vault</string>
+
+    <!-- Document detail -->
+    <string name="rename_document">Rename document</string>
+    <string name="delete_document">Delete document</string>
+    <string name="add_text_field">Add text field</string>
+    <string name="add_tag">Add tag</string>
+    <string name="add_tag_chip">+ Tag</string>
+    <string name="scan_document">Scan document</string>
+    <string name="take_photo">Take photo</string>
+    <string name="photo_library">Photo library</string>
+    <string name="browse_files">Browse files (any type)</string>
+    <string name="no_files_hint">No files yet. Tap Add to scan, take a photo, or import files.</string>
+    <string name="thumbnail_size">Thumbnail size</string>
+    <string name="details">Details</string>
+    <string name="tap_value_copy">Tap a value to copy it</string>
+    <string name="add_field">Add field</string>
+    <string name="field_key">Key</string>
+    <string name="field_value">Value</string>
+    <string name="custom_key">Custom key</string>
+    <string name="custom_option">Custom…</string>
+    <string name="open_in_another_app">Open in another app</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="select">Select</string>
+    <string name="selected_count">%1$d selected</string>
+    <string name="added_on">Added %1$s</string>
+
+    <!-- Share into app -->
+    <string name="add_items">Add %1$d item(s)</string>
+    <string name="share_choose_destination">Choose a document to add the shared file(s) to, or create one.</string>
+    <string name="new_document_add_here">New document (add here)</string>
+    <string name="tap_to_add_here">Tap to add here</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_language">Language</string>
+    <string name="language_system_default">System default</string>
+    <string name="biometric_unlock">Biometric unlock</string>
+    <string name="change_pin">Change PIN</string>
+    <string name="turn_off">Turn off</string>
+    <string name="keep_one_method">Keep at least one unlock method.</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Off</string>
+
+    <!-- Choosers, counts, errors -->
+    <string name="open_with">Open with</string>
+    <string name="share_via">Share via</string>
+    <string name="count_folders">%1$d folders</string>
+    <string name="count_documents">%1$d docs</string>
+    <string name="empty">Empty</string>
+    <string name="share_selected">Share selected</string>
+    <string name="remove_selected">Remove selected</string>
+    <string name="err_cant_open">Couldn\'t open this file</string>
+    <string name="err_no_app">No app can open this file type</string>
+    <string name="err_cant_share">Couldn\'t share this file</string>
+    <string name="err_cant_copy">Couldn\'t copy this file</string>
+    <string name="err_scanner">Document scanner unavailable on this device</string>
+    <string name="err_no_camera">No camera app available</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_new">New</string>
+
+    <!-- OCR / field extraction -->
+    <string name="ocr_extract">Extract text</string>
+    <string name="ocr_select_area">Select an area</string>
+    <string name="ocr_hint_auto">Tap a highlighted number or code to save it as a field.</string>
+    <string name="ocr_hint_region">Drag a box over a number or code to extract it.</string>
+
+    <!-- Batch extraction -->
+    <string name="batch_extract">Extract data (batch)</string>
+    <string name="batch_title">Extract data</string>
+    <string name="batch_progress">%1$d of %2$d</string>
+    <string name="batch_no_docs">No documents with images to scan here.</string>
+    <string name="batch_scanning">Scanning…</string>
+    <string name="batch_no_candidates">No numbers or codes detected in this document.</string>
+    <string name="batch_previous">Previous</string>
+    <string name="batch_next">Next</string>
+    <string name="batch_finish">Finish</string>
+    <string name="field_added">Added</string>
+    <string name="field_added_undo">Added — tap to undo</string>
+
+    <!-- Move documents / folders -->
+    <string name="action_move">Move</string>
+    <string name="move_to_title">Move to…</string>
+    <string name="move_here">Move here</string>
+    <string name="move_to_root">Move to My Vault (root)</string>
+    <string name="new_folder_here">New folder here</string>
+    <string name="no_subfolders">No subfolders here</string>
+</resources>
