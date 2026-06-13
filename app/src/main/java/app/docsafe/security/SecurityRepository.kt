@@ -68,8 +68,12 @@ class SecurityRepository @Inject constructor(
     private val _state = MutableStateFlow(initialState())
     val state: StateFlow<SecurityState> = _state.asStateFlow()
 
-    val biometricEnabled: Boolean get() = secureStore.biometricEnabled
-    val pinEnabled: Boolean get() = secureStore.pinEnabled
+    // Reflect *any* available unlock method, including a pre-1.0.4 legacy wrap that has not yet
+    // been migrated to the master-key layout. Migration only runs during unlock, so before it the
+    // master-key wraps are absent — reading only those would leave the unlock screen with no
+    // biometric prompt and no PIN button, locking upgrading users out.
+    val biometricEnabled: Boolean get() = biometricWrappedBlob() != null
+    val pinEnabled: Boolean get() = pinWrappedBlob() != null
 
     /** Stable per-install id used as `modifiedBy` in the vault's merge clock. */
     fun deviceId(): String =
