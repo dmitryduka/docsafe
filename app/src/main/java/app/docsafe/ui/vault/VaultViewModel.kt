@@ -189,8 +189,8 @@ class VaultViewModel @Inject constructor(
         refreshVaults()
     }
 
-    /** Creates and switches to a new vault (Argon2 runs off the main thread). */
-    fun createVault(name: String, password: CharArray) = viewModelScope.launch {
+    /** Creates and switches to a new vault (Argon2 runs off the main thread); suspends until ready. */
+    suspend fun createVault(name: String, password: CharArray) {
         withContext(Dispatchers.Default) { securityRepository.createVault(name, password) }
         repository.refresh()
         refreshVaults()

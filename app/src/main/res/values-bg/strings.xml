@@ -179,6 +179,7 @@
     <string name="copy_to_title">Копирай в…</string>
     <string name="copy_here">Копирай тук</string>
     <string name="copied_documents">Копирани %1$d документа</string>
+    <string name="copied_conflict_suffix">%1$s от %2$s</string>
     <string name="merge_into_vault">Обедини текущия сейф в…</string>
     <string name="merge_here">Обедини тук</string>
     <string name="merge_warning">Това копира всичко от текущия сейф в избрания сейф. Да продължа ли?</string>

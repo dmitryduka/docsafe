@@ -179,6 +179,7 @@
     <string name="copy_to_title">Kopieren nach…</string>
     <string name="copy_here">Hierher kopieren</string>
     <string name="copied_documents">%1$d Dokument(e) kopiert</string>
+    <string name="copied_conflict_suffix">%1$s aus %2$s</string>
     <string name="merge_into_vault">Aktuellen Tresor zusammenführen mit…</string>
     <string name="merge_here">Hier zusammenführen</string>
     <string name="merge_warning">Dadurch wird alles aus dem aktuellen Tresor in den gewählten Tresor kopiert. Fortfahren?</string>

@@ -179,6 +179,7 @@
     <string name="copy_to_title">复制到…</string>
     <string name="copy_here">复制到此处</string>
     <string name="copied_documents">已复制 %1$d 个文档</string>
+    <string name="copied_conflict_suffix">%1$s 来自 %2$s</string>
     <string name="merge_into_vault">将当前保险库合并到…</string>
     <string name="merge_here">合并到此处</string>
     <string name="merge_warning">这会将当前保险库中的所有内容复制到所选保险库。是否继续？</string>

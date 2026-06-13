@@ -179,6 +179,7 @@
     <string name="copy_to_title">Скопировать в…</string>
     <string name="copy_here">Скопировать сюда</string>
     <string name="copied_documents">Скопировано документов: %1$d</string>
+    <string name="copied_conflict_suffix">%1$s из %2$s</string>
     <string name="merge_into_vault">Объединить текущее хранилище с…</string>
     <string name="merge_here">Объединить сюда</string>
     <string name="merge_warning">Всё содержимое текущего хранилища будет скопировано в выбранное. Продолжить?</string>

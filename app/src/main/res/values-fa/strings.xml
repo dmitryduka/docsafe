@@ -179,6 +179,7 @@
     <string name="copy_to_title">کپی در…</string>
     <string name="copy_here">کپی در اینجا</string>
     <string name="copied_documents">%1$d سند کپی شد</string>
+    <string name="copied_conflict_suffix">%1$s از %2$s</string>
     <string name="merge_into_vault">ادغام صندوق فعلی در…</string>
     <string name="merge_here">ادغام در اینجا</string>
     <string name="merge_warning">این کار همه محتویات صندوق فعلی را در صندوق انتخاب‌شده کپی می‌کند. ادامه می‌دهید؟</string>

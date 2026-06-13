@@ -1,5 +1,7 @@
 package app.docsafe.vault
 
+import android.content.Context
+import app.docsafe.R
 import app.docsafe.security.SecurityRepository
 import app.docsafe.vault.model.Attachment
 import app.docsafe.vault.model.AttachmentKind
@@ -14,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,6 +31,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class VaultRepository @Inject constructor(
+    @ApplicationContext private val appContext: Context,
     private val session: VaultSession,
     private val securityRepository: SecurityRepository,
     private val thumbnailGenerator: ThumbnailGenerator,
@@ -295,6 +299,10 @@ class VaultRepository @Inject constructor(
         mutex.withLock {
             val source = session.require()
             val srcIndex = source.snapshot()
+            // Items copied into a folder that already holds a same-named item are renamed
+            // "<name> from <source vault>" so nothing is silently overwritten or duplicated.
+            val sourceVaultName = securityRepository.activeVaultName().orEmpty()
+            val rename = { name: String -> appContext.getString(R.string.copied_conflict_suffix, name, sourceVaultName) }
             withVault(destVaultId) { dest ->
                 val result = VaultCopier.copy(
                     source = source,
@@ -309,6 +317,7 @@ class VaultRepository @Inject constructor(
                     now = ::now,
                     by = me(),
                     thumbnailFor = { bytes, kind -> thumbnailGenerator.generateJpeg(bytes, kind) },
+                    conflictRename = rename,
                 )
                 dest.commit(result.folders, result.documents)
                 result.copiedDocuments

@@ -100,4 +100,40 @@ class VaultCopierTest {
 
         source.close(); dest.close()
     }
+
+    @Test
+    fun mergeUnionsSameNamedFoldersAndRenamesConflictingDocuments() {
+        val source = buildSource() // "Travel" / "Sub", docs "Boarding" (in Travel) and "Hotel" (in Sub)
+        val dest = VaultFile.create(InMemoryVaultStore(), "q".toCharArray(), fastKdf())
+        // Destination already has its own "Travel" folder holding a doc also named "Boarding".
+        val destTravel = Folder("dt", null, "Travel", false, 1L, 1L, "dev")
+        val destBoarding = Document("db", "dt", "Boarding", createdAt = 1L, modifiedAt = 1L, modifiedBy = "dev")
+        dest.commit(mapOf("dt" to destTravel), mapOf("db" to destBoarding))
+        var seq = 0
+
+        val result = VaultCopier.copy(
+            source = source, sourceIndex = source.snapshot(), dest = dest,
+            destFolders = dest.snapshot().folders, destDocuments = dest.snapshot().documents,
+            folderIds = setOf("f1"), docIds = emptySet(), destParentId = null,
+            newId = { "n${seq++}" }, now = { 100L }, by = "dev", thumbnailFor = { _, _ -> null },
+            conflictRename = { "$it from Travel vault" },
+        )
+        dest.commit(result.folders, result.documents)
+
+        // Only ONE "Travel" folder at the root — the source folder unioned into the existing one.
+        val rootTravel = result.folders.values.filter { !it.deleted && it.parentId == null && it.name == "Travel" }
+        assertThat(rootTravel).hasSize(1)
+        assertThat(rootTravel.single().id).isEqualTo("dt") // reused the existing destination folder
+        // "Sub" recreated under the unioned Travel folder.
+        val sub = result.folders.values.single { it.name == "Sub" }
+        assertThat(sub.parentId).isEqualTo("dt")
+
+        // Two "Boarding" docs now live in Travel: the original and the renamed incoming one.
+        val inTravel = result.documents.values.filter { !it.deleted && it.folderId == "dt" }
+        assertThat(inTravel.map { it.name }).containsExactly("Boarding", "Boarding from Travel vault")
+        // "Hotel" had no conflict — name preserved.
+        assertThat(result.documents.values.any { it.name == "Hotel" && it.folderId == sub.id }).isTrue()
+
+        source.close(); dest.close()
+    }
 }

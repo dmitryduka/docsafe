@@ -179,6 +179,7 @@
     <string name="copy_to_title">Kopiera till…</string>
     <string name="copy_here">Kopiera hit</string>
     <string name="copied_documents">Kopierade %1$d dokument</string>
+    <string name="copied_conflict_suffix">%1$s från %2$s</string>
     <string name="merge_into_vault">Slå samman aktuellt valv med…</string>
     <string name="merge_here">Slå samman hit</string>
     <string name="merge_warning">Detta kopierar allt från det aktuella valvet till det valda valvet. Vill du fortsätta?</string>

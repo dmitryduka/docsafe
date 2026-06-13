@@ -179,6 +179,7 @@
     <string name="copy_to_title">Copiar para…</string>
     <string name="copy_here">Copiar para aqui</string>
     <string name="copied_documents">%1$d documento(s) copiado(s)</string>
+    <string name="copied_conflict_suffix">%1$s de %2$s</string>
     <string name="merge_into_vault">Unir o cofre atual a…</string>
     <string name="merge_here">Unir aqui</string>
     <string name="merge_warning">Isto copia tudo do cofre atual para o cofre escolhido. Continuar?</string>

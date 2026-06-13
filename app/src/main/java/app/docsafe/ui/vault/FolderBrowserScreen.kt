@@ -106,10 +106,14 @@ fun FolderBrowserScreen(
     onNavigateUp: () -> Unit,
 ) {
     val index by viewModel.index.collectAsStateWithLifecycle()
+    val vaults by viewModel.vaultList.collectAsStateWithLifecycle()
+    val activeVaultId by viewModel.activeVaultId.collectAsStateWithLifecycle()
     val folders = index.childFolders(folderId)
     val documents = index.childDocuments(folderId)
     val trail = index.breadcrumb(folderId)
-    val title = trail.lastOrNull()?.name ?: stringResource(R.string.my_vault)
+    // At the root the title/breadcrumb is the active vault's name (not a fixed "My Vault").
+    val vaultName = vaults.firstOrNull { it.id == activeVaultId }?.name ?: stringResource(R.string.my_vault)
+    val title = trail.lastOrNull()?.name ?: vaultName
 
     var fabMenuOpen by remember { mutableStateOf(false) }
     var topMenuOpen by remember { mutableStateOf(false) }
@@ -300,7 +304,7 @@ fun FolderBrowserScreen(
             val showStarred = !searching && folderId == null && index.hasStarred()
 
             if (trail.isNotEmpty() && !searching) {
-                Breadcrumb(trail.map { it.id to it.name }, onRoot = { /* up nav */ }, onCrumb = onOpenFolder)
+                Breadcrumb(vaultName, trail.map { it.id to it.name }, onRoot = { /* up nav */ }, onCrumb = onOpenFolder)
             }
 
             val shownFolders = if (searching) index.searchFolders(query) else folders
@@ -493,7 +497,7 @@ private fun folderSubtitle(index: VaultIndex, folder: Folder): String {
 }
 
 @Composable
-private fun Breadcrumb(crumbs: List<Pair<String, String>>, onRoot: () -> Unit, onCrumb: (String) -> Unit) {
+private fun Breadcrumb(rootName: String, crumbs: List<Pair<String, String>>, onRoot: () -> Unit, onCrumb: (String) -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -501,7 +505,7 @@ private fun Breadcrumb(crumbs: List<Pair<String, String>>, onRoot: () -> Unit, o
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(stringResource(R.string.my_vault), style = MaterialTheme.typography.labelLarge, modifier = Modifier.clickable { onRoot() })
+        Text(rootName, style = MaterialTheme.typography.labelLarge, modifier = Modifier.clickable { onRoot() })
         crumbs.forEach { (id, name) ->
             Text("  ›  ", style = MaterialTheme.typography.labelLarge)
             Text(name, style = MaterialTheme.typography.labelLarge, modifier = Modifier.clickable { onCrumb(id) })

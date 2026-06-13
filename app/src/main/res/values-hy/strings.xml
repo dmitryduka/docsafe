@@ -179,6 +179,7 @@
     <string name="copy_to_title">Պատճենել…</string>
     <string name="copy_here">Պատճենել այստեղ</string>
     <string name="copied_documents">Պատճենվեց %1$d փաստաթուղթ</string>
+    <string name="copied_conflict_suffix">%1$s %2$s-ից</string>
     <string name="merge_into_vault">Միաձուլել ընթացիկ պահոցը…</string>
     <string name="merge_here">Միաձուլել այստեղ</string>
     <string name="merge_warning">Սա պատճենում է ընթացիկ պահոցի ողջ պարունակությունն ընտրված պահոցի մեջ։ Շարունակե՞լ։</string>

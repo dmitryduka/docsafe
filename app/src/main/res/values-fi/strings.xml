@@ -179,6 +179,7 @@
     <string name="copy_to_title">Kopioi kohteeseen…</string>
     <string name="copy_here">Kopioi tähän</string>
     <string name="copied_documents">Kopioitu %1$d asiakirjaa</string>
+    <string name="copied_conflict_suffix">%1$s kohteesta %2$s</string>
     <string name="merge_into_vault">Yhdistä nykyinen holvi kohteeseen…</string>
     <string name="merge_here">Yhdistä tähän</string>
     <string name="merge_warning">Tämä kopioi kaiken nykyisestä holvista valittuun holviin. Jatketaanko?</string>

@@ -179,6 +179,7 @@
     <string name="copy_to_title">Copia in…</string>
     <string name="copy_here">Copia qui</string>
     <string name="copied_documents">Copiati %1$d documento/i</string>
+    <string name="copied_conflict_suffix">%1$s da %2$s</string>
     <string name="merge_into_vault">Unisci l\'archivio corrente in…</string>
     <string name="merge_here">Unisci qui</string>
     <string name="merge_warning">Questa operazione copia tutto il contenuto dell\'archivio corrente nell\'archivio scelto. Continuare?</string>

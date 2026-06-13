@@ -179,6 +179,7 @@
     <string name="copy_to_title">Copier vers…</string>
     <string name="copy_here">Copier ici</string>
     <string name="copied_documents">%1$d document(s) copié(s)</string>
+    <string name="copied_conflict_suffix">%1$s de %2$s</string>
     <string name="merge_into_vault">Fusionner le coffre actuel dans…</string>
     <string name="merge_here">Fusionner ici</string>
     <string name="merge_warning">Cette action copie tout le contenu du coffre actuel dans le coffre choisi. Continuer ?</string>

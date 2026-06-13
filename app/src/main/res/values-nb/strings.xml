@@ -179,6 +179,7 @@
     <string name="copy_to_title">Kopier til…</string>
     <string name="copy_here">Kopier hit</string>
     <string name="copied_documents">Kopierte %1$d dokument(er)</string>
+    <string name="copied_conflict_suffix">%1$s fra %2$s</string>
     <string name="merge_into_vault">Slå sammen gjeldende hvelv med…</string>
     <string name="merge_here">Slå sammen her</string>
     <string name="merge_warning">Dette kopierer alt fra det gjeldende hvelvet inn i det valgte hvelvet. Vil du fortsette?</string>

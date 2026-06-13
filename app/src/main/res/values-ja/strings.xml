@@ -179,6 +179,7 @@
     <string name="copy_to_title">コピー先…</string>
     <string name="copy_here">ここにコピー</string>
     <string name="copied_documents">%1$d 件のドキュメントをコピーしました</string>
+    <string name="copied_conflict_suffix">%1$s（%2$s より）</string>
     <string name="merge_into_vault">現在の保管庫を統合…</string>
     <string name="merge_here">ここに統合</string>
     <string name="merge_warning">現在の保管庫の内容をすべて、選択した保管庫にコピーします。続行しますか？</string>

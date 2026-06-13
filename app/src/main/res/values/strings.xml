@@ -181,6 +181,7 @@
     <string name="copy_to_title">Copy to…</string>
     <string name="copy_here">Copy here</string>
     <string name="copied_documents">Copied %1$d document(s)</string>
+    <string name="copied_conflict_suffix">%1$s from %2$s</string>
     <string name="merge_into_vault">Merge current vault into…</string>
     <string name="merge_here">Merge here</string>
     <string name="merge_warning">This copies everything from the current vault into the chosen vault. Continue?</string>

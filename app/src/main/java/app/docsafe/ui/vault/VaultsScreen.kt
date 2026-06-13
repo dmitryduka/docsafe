@@ -142,9 +142,13 @@ fun VaultsScreen(
             requireConfirmPassword = true,
             onDismiss = { showCreate = false },
             onConfirm = { name, password ->
-                viewModel.createVault(name, password)
-                toast(context, context.getString(R.string.vault_created))
-                showCreate = false
+                scope.launch {
+                    viewModel.createVault(name, password)
+                    showCreate = false
+                    toast(context, context.getString(R.string.vault_created))
+                    // The new vault is now active and open — drop the user straight into it.
+                    onVaultSwitched()
+                }
             },
         )
     }
@@ -162,6 +166,8 @@ fun VaultsScreen(
                     if (ok) {
                         toast(context, context.getString(R.string.vault_created))
                         file.delete(); importFile = null
+                        // The imported vault is now active and open — enter it.
+                        onVaultSwitched()
                     } else {
                         toast(context, context.getString(R.string.import_failed))
                     }

@@ -179,6 +179,7 @@
     <string name="copy_to_title">კოპირება…</string>
     <string name="copy_here">აქ კოპირება</string>
     <string name="copied_documents">დაკოპირდა %1$d დოკუმენტი</string>
+    <string name="copied_conflict_suffix">%1$s — %2$s-დან</string>
     <string name="merge_into_vault">მიმდინარე საცავის გაერთიანება…</string>
     <string name="merge_here">აქ გაერთიანება</string>
     <string name="merge_warning">ეს დააკოპირებს ყველაფერს მიმდინარე საცავიდან არჩეულ საცავში. გავაგრძელოთ?</string>
