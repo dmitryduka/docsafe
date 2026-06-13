@@ -69,12 +69,6 @@ class AuthViewModel @Inject constructor(
         securityRepository.createVault(password)
     }
 
-    fun importVault(password: CharArray) = runHeavy {
-        if (!securityRepository.importWithPassword(password)) {
-            _ui.value = _ui.value.copy(error = "Wrong password or not a valid vault.")
-        }
-    }
-
     // --- Importing a shared .dsvault file ----------------------------------------------
 
     /** Reads a picked/opened `.dsvault` [uri] into a temp file and shows the import prompt. */

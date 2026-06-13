@@ -84,7 +84,10 @@
     <string name="no_files_hint">Ancora nessun file. Tocca Aggiungi per scansionare, scattare una foto o importare file.</string>
     <string name="thumbnail_size">Dimensione miniature</string>
     <string name="details">Dettagli</string>
-    <string name="tap_value_copy">Tocca un valore per copiarlo</string>
+    <string name="tap_value_copy">Tocca un valore per copiarlo · tieni premuto per selezionarne una parte</string>
+    <string name="save_to_device">Salva sul dispositivo</string>
+    <string name="file_saved">Salvato sul dispositivo</string>
+    <string name="err_cant_save_file">Impossibile salvare questo file</string>
     <string name="add_field">Aggiungi campo</string>
     <string name="field_key">Chiave</string>
     <string name="field_value">Valore</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Sposta in Il mio archivio (radice)</string>
     <string name="new_folder_here">Nuova cartella qui</string>
     <string name="no_subfolders">Nessuna sottocartella qui</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Archivi</string>
+    <string name="active_label">Attivo</string>
+    <string name="switch_vault">Passa a questo archivio</string>
+    <string name="create_new_vault">Crea nuovo archivio</string>
+    <string name="import_new_vault">Importa un archivio</string>
+    <string name="vault_name">Nome archivio</string>
+    <string name="remove_vault">Rimuovi archivio</string>
+    <string name="remove_vault_warning">La rimozione di “%1$s” lo elimina definitivamente, insieme a tutto il suo contenuto, da questo dispositivo. L\'operazione non può essere annullata: l\'archivio è recuperabile solo se ne possiedi una copia esportata e la relativa password.</string>
+    <string name="remove_vault_confirm">Elimina definitivamente</string>
+    <string name="vault_created">Archivio creato</string>
+    <string name="vault_removed">Archivio rimosso</string>
+    <string name="import_failed">Password errata o archivio non valido</string>
+    <string name="copy_to_vault">Copia in un altro archivio</string>
+    <string name="choose_target_vault">Scegli un archivio in cui copiare</string>
+    <string name="copy_to_title">Copia in…</string>
+    <string name="copy_here">Copia qui</string>
+    <string name="copied_documents">Copiati %1$d documento/i</string>
+    <string name="merge_into_vault">Unisci l\'archivio corrente in…</string>
+    <string name="merge_here">Unisci qui</string>
+    <string name="merge_warning">Questa operazione copia tutto il contenuto dell\'archivio corrente nell\'archivio scelto. Continuare?</string>
+    <string name="change_master_password">Cambia password principale</string>
+    <string name="new_password">Nuova password</string>
+    <string name="confirm_new_password">Conferma nuova password</string>
+    <string name="password_changed">Password principale modificata</string>
+    <string name="nothing_selected">Nessuna selezione</string>
 </resources>

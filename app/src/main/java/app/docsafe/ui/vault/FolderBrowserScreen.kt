@@ -29,7 +29,9 @@ import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.IosShare
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.NoteAdd
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -100,6 +102,7 @@ fun FolderBrowserScreen(
     onOpenDocument: (String) -> Unit,
     onOpenSettings: () -> Unit,
     onOpenBatchExtract: () -> Unit,
+    onOpenVaults: () -> Unit,
     onNavigateUp: () -> Unit,
 ) {
     val index by viewModel.index.collectAsStateWithLifecycle()
@@ -115,6 +118,9 @@ fun FolderBrowserScreen(
     var selectedDocs by remember { mutableStateOf(emptySet<String>()) }
     var selectedFolders by remember { mutableStateOf(emptySet<String>()) }
     var pendingMove by remember { mutableStateOf<MoveTargets?>(null) }
+    var chooseCopyVault by remember { mutableStateOf(false) }
+    var copyTarget by remember { mutableStateOf<app.docsafe.security.VaultMeta?>(null) }
+    var copyTargetIndex by remember { mutableStateOf<app.docsafe.vault.model.VaultIndex?>(null) }
     val selectionMode = selectedDocs.isNotEmpty() || selectedFolders.isNotEmpty()
     fun clearSelection() { selectedDocs = emptySet(); selectedFolders = emptySet() }
     fun toggleFolder(id: String) { selectedFolders = if (id in selectedFolders) selectedFolders - id else selectedFolders + id }
@@ -153,6 +159,9 @@ fun FolderBrowserScreen(
                     actions = {
                         IconButton(onClick = { pendingMove = MoveTargets(selectedFolders, selectedDocs) }) {
                             Icon(Icons.AutoMirrored.Filled.DriveFileMove, contentDescription = stringResource(R.string.action_move))
+                        }
+                        IconButton(onClick = { chooseCopyVault = true }) {
+                            Icon(Icons.Filled.ContentCopy, contentDescription = stringResource(R.string.copy_to_vault))
                         }
                         IconButton(onClick = {
                             selectedFolders.forEach { viewModel.deleteFolder(it) }
@@ -202,6 +211,14 @@ fun FolderBrowserScreen(
                                 onClick = {
                                     topMenuOpen = false
                                     onOpenBatchExtract()
+                                },
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.vaults_title)) },
+                                leadingIcon = { Icon(Icons.Filled.Lock, null) },
+                                onClick = {
+                                    topMenuOpen = false
+                                    onOpenVaults()
                                 },
                             )
                             DropdownMenuItem(
@@ -411,6 +428,39 @@ fun FolderBrowserScreen(
                 selectedFolders = emptySet()
             },
         )
+    }
+
+    // Copy selected items into another vault: choose the target vault, then a destination folder.
+    if (chooseCopyVault) {
+        val allVaults by viewModel.vaultList.collectAsStateWithLifecycle()
+        val active by viewModel.activeVaultId.collectAsStateWithLifecycle()
+        VaultChooserDialog(
+            vaults = allVaults.filter { it.id != active },
+            onDismiss = { chooseCopyVault = false },
+            onPick = { chooseCopyVault = false; copyTarget = it },
+        )
+    }
+    copyTarget?.let { target ->
+        LaunchedEffect(target.id) { copyTargetIndex = viewModel.vaultIndexOf(target.id) }
+        copyTargetIndex?.let { targetIndex ->
+            val docs = selectedDocs
+            val folders = selectedFolders
+            MoveDestinationDialog(
+                index = targetIndex,
+                movingFolderIds = emptySet(),
+                title = stringResource(R.string.copy_to_title),
+                confirmLabel = stringResource(R.string.copy_here),
+                onDismiss = { copyTarget = null; copyTargetIndex = null },
+                onConfirm = { dest ->
+                    scope.launch {
+                        val n = viewModel.copyToVault(target.id, docs, folders, dest)
+                        Toast.makeText(context, context.getString(R.string.copied_documents, n), Toast.LENGTH_SHORT).show()
+                    }
+                    copyTarget = null; copyTargetIndex = null
+                    selectedDocs = emptySet(); selectedFolders = emptySet()
+                },
+            )
+        }
     }
 }
 

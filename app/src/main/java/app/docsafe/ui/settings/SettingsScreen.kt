@@ -62,6 +62,7 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
 
     var showPinDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
+    var showChangePassword by remember { mutableStateOf(false) }
 
     fun enableBiometric() {
         scope.launch {
@@ -143,6 +144,10 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
                     modifier = Modifier.clickable(enabled = !busy) { showPinDialog = true },
                 )
             }
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.change_master_password)) },
+                modifier = Modifier.clickable(enabled = !busy) { showChangePassword = true },
+            )
 
             HorizontalDivider()
             SectionTitle(stringResource(R.string.settings_language))
@@ -160,6 +165,17 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
         PinDialog(
             onDismiss = { showPinDialog = false },
             onConfirm = { pin -> viewModel.setPin(pin.toCharArray()); showPinDialog = false },
+        )
+    }
+    if (showChangePassword) {
+        ChangePasswordDialog(
+            onDismiss = { showChangePassword = false },
+            onConfirm = { pw ->
+                showChangePassword = false
+                viewModel.changeMasterPassword(pw.toCharArray()) {
+                    Toast.makeText(context, context.getString(R.string.password_changed), Toast.LENGTH_SHORT).show()
+                }
+            },
         )
     }
     if (showLanguageDialog) {
@@ -219,6 +235,47 @@ private fun PinDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
             }
         },
         confirmButton = { TextButton(onClick = { onConfirm(pin) }, enabled = valid) { Text(stringResource(R.string.action_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+    )
+}
+
+@Composable
+private fun ChangePasswordDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
+    val minLen = 8
+    var password by remember { mutableStateOf("") }
+    var confirm by remember { mutableStateOf("") }
+    val valid = password.length >= minLen && password == confirm
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.change_master_password)) },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text(stringResource(R.string.new_password)) },
+                    singleLine = true,
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                OutlinedTextField(
+                    value = confirm,
+                    onValueChange = { confirm = it },
+                    label = { Text(stringResource(R.string.confirm_new_password)) },
+                    singleLine = true,
+                    isError = confirm.isNotEmpty() && confirm != password,
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                )
+                Text(
+                    stringResource(R.string.min_chars, minLen),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+            }
+        },
+        confirmButton = { TextButton(onClick = { onConfirm(password) }, enabled = valid) { Text(stringResource(R.string.action_save)) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
     )
 }

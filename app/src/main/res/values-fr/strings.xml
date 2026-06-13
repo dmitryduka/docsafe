@@ -84,7 +84,10 @@
     <string name="no_files_hint">Aucun fichier pour l\'instant. Appuyez sur Ajouter pour numériser, prendre une photo ou importer des fichiers.</string>
     <string name="thumbnail_size">Taille des miniatures</string>
     <string name="details">Détails</string>
-    <string name="tap_value_copy">Appuyez sur une valeur pour la copier</string>
+    <string name="tap_value_copy">Appuyez sur une valeur pour la copier · appui long pour en sélectionner une partie</string>
+    <string name="save_to_device">Enregistrer sur l\'appareil</string>
+    <string name="file_saved">Enregistré sur l\'appareil</string>
+    <string name="err_cant_save_file">Impossible d\'enregistrer ce fichier</string>
     <string name="add_field">Ajouter un champ</string>
     <string name="field_key">Clé</string>
     <string name="field_value">Valeur</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Déplacer vers « Mon coffre » (racine)</string>
     <string name="new_folder_here">Nouveau dossier ici</string>
     <string name="no_subfolders">Aucun sous-dossier ici</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Coffres</string>
+    <string name="active_label">Actif</string>
+    <string name="switch_vault">Basculer vers ce coffre</string>
+    <string name="create_new_vault">Créer un nouveau coffre</string>
+    <string name="import_new_vault">Importer un coffre</string>
+    <string name="vault_name">Nom du coffre</string>
+    <string name="remove_vault">Retirer le coffre</string>
+    <string name="remove_vault_warning">Retirer « %1$s » le supprime définitivement, ainsi que tout son contenu, de cet appareil. Cette action est irréversible — le coffre n\'est récupérable que si vous disposez d\'une copie exportée et de son mot de passe.</string>
+    <string name="remove_vault_confirm">Supprimer définitivement</string>
+    <string name="vault_created">Coffre créé</string>
+    <string name="vault_removed">Coffre retiré</string>
+    <string name="import_failed">Mot de passe incorrect ou coffre non valide</string>
+    <string name="copy_to_vault">Copier vers un autre coffre</string>
+    <string name="choose_target_vault">Choisissez un coffre de destination</string>
+    <string name="copy_to_title">Copier vers…</string>
+    <string name="copy_here">Copier ici</string>
+    <string name="copied_documents">%1$d document(s) copié(s)</string>
+    <string name="merge_into_vault">Fusionner le coffre actuel dans…</string>
+    <string name="merge_here">Fusionner ici</string>
+    <string name="merge_warning">Cette action copie tout le contenu du coffre actuel dans le coffre choisi. Continuer ?</string>
+    <string name="change_master_password">Modifier le mot de passe principal</string>
+    <string name="new_password">Nouveau mot de passe</string>
+    <string name="confirm_new_password">Confirmez le nouveau mot de passe</string>
+    <string name="password_changed">Mot de passe principal modifié</string>
+    <string name="nothing_selected">Aucune sélection</string>
 </resources>

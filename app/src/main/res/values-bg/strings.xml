@@ -84,7 +84,10 @@
     <string name="no_files_hint">Все още няма файлове. Докоснете „Добави“, за да сканирате, направите снимка или импортирате файлове.</string>
     <string name="thumbnail_size">Размер на миниатюрите</string>
     <string name="details">Подробности</string>
-    <string name="tap_value_copy">Докоснете стойност, за да я копирате</string>
+    <string name="tap_value_copy">Докоснете стойност, за да я копирате · задръжте, за да изберете част от нея</string>
+    <string name="save_to_device">Запази на устройството</string>
+    <string name="file_saved">Запазено на устройството</string>
+    <string name="err_cant_save_file">Този файл не можа да бъде запазен</string>
     <string name="add_field">Добави поле</string>
     <string name="field_key">Ключ</string>
     <string name="field_value">Стойност</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Премести в „Моят сейф“ (корен)</string>
     <string name="new_folder_here">Нова папка тук</string>
     <string name="no_subfolders">Тук няма подпапки</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Сейфове</string>
+    <string name="active_label">Активен</string>
+    <string name="switch_vault">Превключи към този сейф</string>
+    <string name="create_new_vault">Създай нов сейф</string>
+    <string name="import_new_vault">Импортирай сейф</string>
+    <string name="vault_name">Име на сейфа</string>
+    <string name="remove_vault">Премахни сейфа</string>
+    <string name="remove_vault_warning">Премахването на „%1$s“ го изтрива завинаги заедно с всичко в него от това устройство. Това действие е необратимо — сейфът може да бъде възстановен само ако имате експортирано копие и неговата парола.</string>
+    <string name="remove_vault_confirm">Изтрий завинаги</string>
+    <string name="vault_created">Сейфът е създаден</string>
+    <string name="vault_removed">Сейфът е премахнат</string>
+    <string name="import_failed">Грешна парола или невалиден сейф</string>
+    <string name="copy_to_vault">Копирай в друг сейф</string>
+    <string name="choose_target_vault">Изберете сейф, в който да копирате</string>
+    <string name="copy_to_title">Копирай в…</string>
+    <string name="copy_here">Копирай тук</string>
+    <string name="copied_documents">Копирани %1$d документа</string>
+    <string name="merge_into_vault">Обедини текущия сейф в…</string>
+    <string name="merge_here">Обедини тук</string>
+    <string name="merge_warning">Това копира всичко от текущия сейф в избрания сейф. Да продължа ли?</string>
+    <string name="change_master_password">Промени главната парола</string>
+    <string name="new_password">Нова парола</string>
+    <string name="confirm_new_password">Потвърдете новата парола</string>
+    <string name="password_changed">Главната парола е променена</string>
+    <string name="nothing_selected">Нищо не е избрано</string>
 </resources>

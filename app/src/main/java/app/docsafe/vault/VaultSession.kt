@@ -14,20 +14,28 @@ data class CompactionResult(val beforeBytes: Long, val afterBytes: Long) {
 }
 
 /**
- * Holds the single decrypted-while-unlocked [VaultFile] for the app. The portable encrypted
- * `.dsvault` lives in app-private storage; this opens it with a DEK (after unlock) or a
- * password (on import), and closes it when the app locks.
+ * Holds the single **active** decrypted [VaultFile] (the vault the user is currently viewing).
+ * Each vault is a `.dsvault` in app-private storage; this opens one with a DEK (after unlock) or
+ * a password (create/import) and closes it on lock. A second vault can be opened *transiently*
+ * via [openTransient] for cross-vault copy/merge without disturbing the active session.
  */
 @Singleton
 class VaultSession @Inject constructor(
     @ApplicationContext context: Context,
 ) {
-    private val file: File = File(context.filesDir, VAULT_FILE_NAME)
+    private val filesDir: File = context.filesDir
+
+    @Volatile
+    private var activeFile: File? = null
 
     @Volatile
     private var vault: VaultFile? = null
 
-    fun fileExists(): Boolean = file.exists()
+    /** Resolves a vault file name to its absolute path in app-private storage. */
+    fun fileFor(fileName: String): File = File(filesDir, fileName)
+
+    /** Legacy single-vault file from versions before multi-vault. */
+    fun legacyFile(): File = File(filesDir, LEGACY_VAULT_FILE_NAME)
 
     fun current(): VaultFile? = vault
 
@@ -35,45 +43,61 @@ class VaultSession @Inject constructor(
 
     val isOpen: Boolean get() = vault != null
 
-    /** Creates a fresh vault protected by [password]; returns its DEK (kept by the caller). */
-    fun create(password: CharArray): ByteArray {
+    /** Creates a fresh vault in [file] protected by [password]; opens it active. Returns its DEK. */
+    fun create(file: File, password: CharArray): ByteArray {
         close()
         val opened = VaultFile.create(LocalFileVaultStore(file), password)
         vault = opened
+        activeFile = file
         return opened.dataKey
     }
 
-    /** Opens the existing vault with a previously-unwrapped [dek] (normal unlock). */
-    fun openWithDek(dek: ByteArray) {
+    /** Opens [file] active with a previously-unwrapped [dek] (normal unlock / vault switch). */
+    fun openWithDek(file: File, dek: ByteArray) {
         close()
         vault = VaultFile.openWithDek(LocalFileVaultStore(file), dek)
+        activeFile = file
     }
-
-    /** Opens the existing vault with the master [password] (import / recovery); returns its DEK. */
-    fun openWithPassword(password: CharArray): ByteArray {
-        close()
-        val opened = VaultFile.open(LocalFileVaultStore(file), password)
-        vault = opened
-        return opened.dataKey
-    }
-
-    /** Current size of the vault file on disk, or 0 if it doesn't exist. */
-    fun fileSizeBytes(): Long = if (file.exists()) file.length() else 0L
 
     /**
-     * Rewrites the vault, dropping unreferenced blobs (garbage left by removed attachments
-     * and superseded indexes) to reclaim disk space. The open vault is replaced in place and
-     * re-opened with the same key. Must be called while unlocked.
+     * Verifies [password] against the external [src] FIRST (so a wrong password is harmless),
+     * then copies it to [dest], opens it active, and returns its DEK — or null if the password
+     * is wrong. Used to import a `.dsvault` as a new vault.
+     */
+    fun importInto(dest: File, src: File, password: CharArray): ByteArray? {
+        val dek = try {
+            val probe = VaultFile.open(LocalFileVaultStore(src), password)
+            val key = probe.dataKey
+            probe.close()
+            key
+        } catch (e: DecryptionException) {
+            return null
+        }
+        close()
+        src.copyTo(dest, overwrite = true)
+        openWithDek(dest, dek)
+        return dek
+    }
+
+    /** Opens a non-active vault [file] with [dek] as a standalone handle; the caller must close it. */
+    fun openTransient(file: File, dek: ByteArray): VaultFile =
+        VaultFile.openWithDek(LocalFileVaultStore(file), dek)
+
+    /** Current size of the active vault file on disk, or 0 if none. */
+    fun fileSizeBytes(): Long = activeFile?.takeIf { it.exists() }?.length() ?: 0L
+
+    /**
+     * Rewrites the active vault, dropping unreferenced blobs to reclaim disk space, then re-opens
+     * it with the same key. Must be called while unlocked.
      */
     fun compact(): CompactionResult {
         val current = vault ?: error("Vault is locked")
+        val file = activeFile ?: error("No active vault file")
         val before = file.length()
         val dek = current.dataKey
-        val tempFile = File(file.parentFile, "$VAULT_FILE_NAME.compact")
+        val tempFile = File(file.parentFile, "${file.name}.compact")
         tempFile.delete()
         try {
-            // Read referenced blobs from the live file into a fresh one (ciphertext copied
-            // verbatim — position-independent — so no re-encryption), then swap it in.
             current.compactTo(LocalFileVaultStore(tempFile)).close()
             current.close()
             vault = null
@@ -89,43 +113,20 @@ class VaultSession @Inject constructor(
         }
     }
 
-    /** Copies the current vault file to [dest] (for export/sharing). */
+    /** Copies the active vault file to [dest] (for export/sharing). */
     fun copyVaultTo(dest: File) {
+        val file = requireNotNull(activeFile) { "No active vault to export" }
         require(file.exists()) { "No vault to export" }
         file.copyTo(dest, overwrite = true)
-    }
-
-    /** Replaces the local vault file with [src] (an imported `.dsvault`). Closes any open vault. */
-    fun replaceWith(src: File) {
-        close()
-        src.copyTo(file, overwrite = true)
-    }
-
-    /**
-     * Imports an external `.dsvault` [src]: verifies [password] against it FIRST (so a wrong
-     * password can't destroy the existing local vault), then adopts it as the device vault and
-     * opens it. Returns the DEK on success, or null if the password is wrong.
-     */
-    fun importExternal(src: File, password: CharArray): ByteArray? {
-        val dek = try {
-            val probe = VaultFile.open(LocalFileVaultStore(src), password)
-            val key = probe.dataKey
-            probe.close()
-            key
-        } catch (e: DecryptionException) {
-            return null
-        }
-        replaceWith(src)
-        openWithDek(dek)
-        return dek
     }
 
     fun close() {
         vault?.close()
         vault = null
+        activeFile = null
     }
 
     private companion object {
-        const val VAULT_FILE_NAME = "vault.dsvault"
+        const val LEGACY_VAULT_FILE_NAME = "vault.dsvault"
     }
 }

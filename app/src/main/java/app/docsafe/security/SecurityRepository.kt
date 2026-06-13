@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.util.Base64
 import java.util.UUID
 import javax.crypto.Cipher
 import javax.inject.Inject
@@ -26,18 +27,19 @@ enum class SecurityState {
     /** A vault is open (just created/imported) but no biometric/PIN unlock method is set. */
     NeedsUnlockMethod,
 
-    /** A vault exists with an unlock method, but the DEK is not in memory — show unlock. */
+    /** Vaults exist with an unlock method, but the master key is not in memory — show unlock. */
     Locked,
 
-    /** Vault open and usable. */
+    /** Master key in memory, active vault open and usable. */
     Unlocked,
 }
 
 /**
- * Coordinates the device-side security model: wrapping the vault DEK under a Keystore key
- * (biometric/device credential) and/or a PIN-derived key, and unwrapping it on unlock. The
- * master password is only ever used to create or import a vault — after that, unlock uses
- * biometric or PIN.
+ * Coordinates the device-side security model. A random **device master key** is wrapped under a
+ * Keystore key (biometric/device credential) and/or a PIN-derived key. Each vault's DEK is wrapped
+ * by the master key. One unlock unwraps the master key (held in memory while unlocked), from which
+ * any vault's DEK can be unwrapped — so the user can switch between, and copy across, vaults with
+ * no further prompts. A vault's master password is only ever used to create/import/export it.
  */
 @Singleton
 class SecurityRepository @Inject constructor(
@@ -45,20 +47,21 @@ class SecurityRepository @Inject constructor(
     private val keyManager: BiometricKeyManager,
     private val session: VaultSession,
 ) {
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
-    // The DEK held transiently between vault creation/import and choosing an unlock method.
-    private var pendingDek: ByteArray? = null
+    // Device master key, present only while unlocked.
+    private var masterKey: ByteArray? = null
+
+    // Master key held between first-vault creation/import and choosing an unlock method.
+    private var pendingMasterKey: ByteArray? = null
+
+    private var registry: VaultRegistry = loadRegistry()
 
     // An external .dsvault staged for import (opened/shared into the app), awaiting its password.
     private var pendingImportFile: File? = null
     var pendingImportName: String? = null
         private set
 
-    // Lock-on-background coordination. We must NOT lock when the app backgrounds only because
-    // *we* launched another activity (file picker, scanner, share sheet) — otherwise the user
-    // is forced to re-authenticate mid-task and the in-flight result (e.g. a picked file) is
-    // lost. A short grace period also prevents a brief alt-tab from forcing a re-unlock.
     private var suppressNextBackgroundLock = false
     private var backgroundedAtElapsedMs: Long? = null
 
@@ -72,61 +75,121 @@ class SecurityRepository @Inject constructor(
     fun deviceId(): String =
         secureStore.deviceId ?: UUID.randomUUID().toString().also { secureStore.deviceId = it }
 
-    private fun initialState(): SecurityState =
-        if (!secureStore.vaultImported || !session.fileExists()) {
-            SecurityState.Uninitialized
-        } else {
-            SecurityState.Locked
-        }
+    // --- Vault registry (read API for the UI) ------------------------------------------
+
+    fun vaults(): List<VaultMeta> = registry.vaults
+    fun activeVaultId(): String? = registry.activeVaultId
+    fun activeVaultName(): String? = registry.active?.name
+    val isUnlocked: Boolean get() = masterKey != null
+
+    private fun loadRegistry(): VaultRegistry =
+        secureStore.vaultsJson?.let {
+            runCatching { json.decodeFromString(VaultRegistry.serializer(), it) }.getOrNull()
+        } ?: VaultRegistry()
+
+    private fun persistRegistry() {
+        secureStore.vaultsJson = json.encodeToString(VaultRegistry.serializer(), registry)
+    }
+
+    private fun needsMigration(): Boolean =
+        !secureStore.anyMethodEnabled &&
+            secureStore.legacyVaultImported &&
+            (secureStore.legacyBiometricWrappedDek != null || secureStore.legacyPinWrappedDek != null) &&
+            session.legacyFile().exists()
+
+    private fun initialState(): SecurityState = when {
+        secureStore.anyMethodEnabled && registry.active != null -> SecurityState.Locked
+        needsMigration() -> SecurityState.Locked
+        else -> SecurityState.Uninitialized
+    }
 
     // --- Vault creation / import -------------------------------------------------------
 
-    fun createVault(password: CharArray) {
-        deviceId() // ensure assigned
-        pendingDek = session.create(password)
-        _state.value = SecurityState.NeedsUnlockMethod
+    fun createVault(password: CharArray) = createVault(DEFAULT_VAULT_NAME, password)
+
+    /** Creates a new vault. If unlocked, it is added and becomes active; otherwise it begins onboarding. */
+    fun createVault(name: String, password: CharArray) {
+        deviceId()
+        val unlocked = masterKey != null
+        val mk = masterKey ?: pendingMasterKey ?: KeyEnvelope.generateDek().also { pendingMasterKey = it }
+        val id = UUID.randomUUID().toString()
+        val fileName = vaultFileName(id)
+        val dek = session.create(session.fileFor(fileName), password)
+        try {
+            registerVault(id, name, fileName, KeyEnvelope.wrap(mk, dek), unlocked)
+        } finally {
+            dek.fill(0)
+        }
+        if (!unlocked) _state.value = SecurityState.NeedsUnlockMethod
     }
 
-    /** Imports an existing vault file already placed at the session path. */
-    fun importWithPassword(password: CharArray): Boolean = try {
-        pendingDek = session.openWithPassword(password)
-        _state.value = SecurityState.NeedsUnlockMethod
-        true
-    } catch (e: DecryptionException) {
-        false
+    /** Imports an external [src] `.dsvault` as a new vault. Returns false on a wrong password. */
+    fun importVault(name: String, src: File, password: CharArray): Boolean {
+        deviceId()
+        val unlocked = masterKey != null
+        val mk = masterKey ?: pendingMasterKey ?: KeyEnvelope.generateDek()
+        val id = UUID.randomUUID().toString()
+        val fileName = vaultFileName(id)
+        val dek = session.importInto(session.fileFor(fileName), src, password) ?: return false
+        if (masterKey == null) pendingMasterKey = mk
+        try {
+            registerVault(id, name, fileName, KeyEnvelope.wrap(mk, dek), unlocked)
+        } finally {
+            dek.fill(0)
+        }
+        if (!unlocked) _state.value = SecurityState.NeedsUnlockMethod
+        return true
+    }
+
+    private fun registerVault(id: String, name: String, fileName: String, wrappedDek: ByteArray, unlocked: Boolean) {
+        val meta = VaultMeta(id, name.ifBlank { DEFAULT_VAULT_NAME }, fileName, now())
+        registry = if (unlocked) {
+            registry.copy(
+                vaults = registry.vaults + meta,
+                activeVaultId = id,
+                wrappedDeks = registry.wrappedDeks + (id to b64(wrappedDek)),
+            )
+        } else {
+            // First vault during onboarding — start a fresh registry.
+            VaultRegistry(vaults = listOf(meta), activeVaultId = id, wrappedDeks = mapOf(id to b64(wrappedDek)))
+        }
+        persistRegistry()
     }
 
     // --- Importing a shared .dsvault file ----------------------------------------------
 
-    /** Stages an external `.dsvault` (opened/shared into the app) for import; shows the
-     *  password prompt. [displayName] is shown to the user. */
+    /** True while a shared `.dsvault` is staged and waiting to be unlocked before import. */
+    fun hasPendingImport(): Boolean = pendingImportFile != null
+
     fun beginImport(file: File, displayName: String?) {
         pendingImportFile = file
         pendingImportName = displayName
-        _state.value = SecurityState.ImportPending
+        // If vaults already exist but we're locked, the user must unlock first to add a vault.
+        _state.value = if (registry.vaults.isNotEmpty() && masterKey == null) {
+            SecurityState.Locked
+        } else {
+            SecurityState.ImportPending
+        }
     }
 
-    /**
-     * Confirms a pending import with the shared master [password]. Verifies it against the
-     * imported file before replacing the local vault; on success the imported vault becomes
-     * this device's vault and the user re-chooses an unlock method. Returns false on wrong
-     * password (the existing vault is left untouched).
-     */
+    /** Once unlocked with a pending import present, move to the password prompt. */
+    fun promotePendingImport() {
+        if (pendingImportFile != null) _state.value = SecurityState.ImportPending
+    }
+
+    /** Confirms a pending shared-file import with its master [password]; adds it as a new vault. */
     fun confirmImport(password: CharArray): Boolean {
         val src = pendingImportFile ?: return false
-        val dek = session.importExternal(src, password) ?: return false
-        // The imported vault has a different DEK, so prior unlock methods no longer apply.
-        secureStore.clearUnlockMethods()
-        secureStore.vaultImported = false
-        pendingDek = dek
-        src.delete()
-        pendingImportFile = null
-        pendingImportName = null
-        _state.value = SecurityState.NeedsUnlockMethod
-        return true
+        val name = pendingImportName?.removeSuffix(".dsvault")?.ifBlank { null } ?: DEFAULT_IMPORTED_NAME
+        val ok = importVault(name, src, password)
+        if (ok) {
+            src.delete()
+            pendingImportFile = null
+            pendingImportName = null
+        }
+        return ok
     }
 
-    /** Abandons a pending import and returns to the prior state. */
     fun cancelImport() {
         pendingImportFile?.delete()
         pendingImportFile = null
@@ -142,95 +205,199 @@ class SecurityRepository @Inject constructor(
     }
 
     fun biometricDecryptCipher(): Cipher {
-        val wrapped = requireNotNull(secureStore.biometricWrappedDek) { "Biometric not set up" }
+        val wrapped = requireNotNull(biometricWrappedBlob()) { "Biometric not set up" }
         return keyManager.decryptCipher(wrapped.copyOf(GCM_IV_LEN))
     }
 
-    /** Completes biometric *setup*: wraps the pending DEK with the authenticated cipher. */
+    /** Completes biometric *setup*: wraps the (pending) master key with the authenticated cipher. */
     fun completeBiometricSetup(authenticatedCipher: Cipher) {
-        val dek = currentDek()
-        val ciphertext = authenticatedCipher.doFinal(dek)
-        secureStore.biometricWrappedDek = authenticatedCipher.iv + ciphertext
-        markMethodAdded()
+        val mk = currentMasterKey()
+        val ciphertext = authenticatedCipher.doFinal(mk)
+        secureStore.masterKeyBiometricWrapped = authenticatedCipher.iv + ciphertext
     }
 
-    /** Completes biometric *unlock*: unwraps the DEK and opens the vault. */
+    /** Completes biometric *unlock*: unwraps the master key, migrates if needed, opens active vault. */
     fun completeBiometricUnlock(authenticatedCipher: Cipher) {
-        val wrapped = requireNotNull(secureStore.biometricWrappedDek)
-        val dek = authenticatedCipher.doFinal(wrapped.copyOfRange(GCM_IV_LEN, wrapped.size))
-        session.openWithDek(dek)
-        _state.value = SecurityState.Unlocked
+        val wrapped = requireNotNull(biometricWrappedBlob())
+        val mk = authenticatedCipher.doFinal(wrapped.copyOfRange(GCM_IV_LEN, wrapped.size))
+        finishUnlock(mk)
     }
+
+    private fun biometricWrappedBlob(): ByteArray? =
+        secureStore.masterKeyBiometricWrapped ?: secureStore.legacyBiometricWrappedDek
 
     // --- PIN setup / unlock ------------------------------------------------------------
 
     fun enablePin(pin: CharArray) {
-        val dek = currentDek()
+        val mk = currentMasterKey()
         val params = PinKdf.newParams()
         val key = PinKdf.deriveKey(pin, params)
         try {
-            secureStore.pinWrappedDek = KeyEnvelope.wrap(key, dek)
+            secureStore.masterKeyPinWrapped = KeyEnvelope.wrap(key, mk)
             secureStore.pinKdfParams = json.encodeToString(KdfParamsDto.serializer(), KdfParamsDto.from(params))
                 .toByteArray(Charsets.UTF_8)
         } finally {
             key.fill(0)
         }
-        markMethodAdded()
     }
 
-    /** Removes the PIN method (only allowed if biometrics remain, so a method always stays). */
     fun disablePin(): Boolean {
         if (!secureStore.biometricEnabled) return false
-        secureStore.pinWrappedDek = null
+        secureStore.masterKeyPinWrapped = null
         secureStore.pinKdfParams = null
         return true
     }
 
-    /** Removes the biometric method (only allowed if a PIN remains). */
     fun disableBiometric(): Boolean {
         if (!secureStore.pinEnabled) return false
-        secureStore.biometricWrappedDek = null
+        secureStore.masterKeyBiometricWrapped = null
         keyManager.deleteKey()
         return true
     }
 
-    /** Attempts to unlock with [pin]; returns false on a wrong PIN. */
     fun unlockWithPin(pin: CharArray): Boolean {
         val paramsBytes = secureStore.pinKdfParams ?: return false
-        val wrapped = secureStore.pinWrappedDek ?: return false
+        val wrapped = pinWrappedBlob() ?: return false
         val params = json.decodeFromString(KdfParamsDto.serializer(), String(paramsBytes, Charsets.UTF_8)).toKdfParams()
         val key = PinKdf.deriveKey(pin, params)
-        val dek = try {
+        val mk = try {
             KeyEnvelope.unwrap(key, wrapped)
         } catch (e: DecryptionException) {
             return false
         } finally {
             key.fill(0)
         }
-        session.openWithDek(dek)
-        _state.value = SecurityState.Unlocked
+        finishUnlock(mk)
         return true
+    }
+
+    private fun pinWrappedBlob(): ByteArray? =
+        secureStore.masterKeyPinWrapped ?: secureStore.legacyPinWrappedDek
+
+    /** Common tail of every unlock: migrate legacy if needed, hold the master key, open active vault. */
+    private fun finishUnlock(mk: ByteArray) {
+        if (needsMigration()) migrateLegacyVault(mk)
+        masterKey = mk
+        openActiveVault()
+        // A shared file may have been opened while locked; let the UI prompt for its password now.
+        if (pendingImportFile != null) {
+            _state.value = SecurityState.ImportPending
+        } else {
+            _state.value = SecurityState.Unlocked
+        }
+    }
+
+    /**
+     * One-time upgrade from the pre-1.0.4 single-vault layout. At this point [mk] is the old DEK
+     * (the only thing the biometric/PIN keys wrapped). We adopt it as the device master key: the
+     * existing biometric/PIN wraps now wrap the master key, the existing vault's DEK (== mk) is
+     * wrapped under the master key, and the file is registered. Old keys are cleared last.
+     */
+    private fun migrateLegacyVault(mk: ByteArray) {
+        val id = UUID.randomUUID().toString()
+        val fileName = vaultFileName(id)
+        val dest = session.fileFor(fileName)
+        val legacy = session.legacyFile()
+        if (!dest.exists()) {
+            if (!legacy.renameTo(dest)) legacy.copyTo(dest, overwrite = true)
+        }
+        registry = VaultRegistry(
+            vaults = listOf(VaultMeta(id, DEFAULT_VAULT_NAME, fileName, now())),
+            activeVaultId = id,
+            wrappedDeks = mapOf(id to b64(KeyEnvelope.wrap(mk, mk))),
+        )
+        persistRegistry()
+        secureStore.legacyBiometricWrappedDek?.let { secureStore.masterKeyBiometricWrapped = it }
+        secureStore.legacyPinWrappedDek?.let { secureStore.masterKeyPinWrapped = it }
+        secureStore.clearLegacy()
+        if (legacy.exists() && dest.exists() && legacy != dest) legacy.delete()
+    }
+
+    // --- Vault switching / removal / DEK access ----------------------------------------
+
+    /** Opens the active vault using the in-memory master key. */
+    private fun openActiveVault() {
+        val mk = masterKey ?: error("Locked")
+        val meta = registry.active ?: error("No active vault")
+        val dek = unwrapDek(mk, meta.id)
+        try {
+            session.openWithDek(session.fileFor(meta.fileName), dek)
+        } finally {
+            dek.fill(0)
+        }
+    }
+
+    /** Switches the active vault (seamless — uses the master key already in memory). */
+    fun switchToVault(id: String) {
+        val mk = masterKey ?: error("Locked")
+        val meta = registry.meta(id) ?: return
+        val dek = unwrapDek(mk, id)
+        try {
+            session.openWithDek(session.fileFor(meta.fileName), dek)
+        } finally {
+            dek.fill(0)
+        }
+        registry = registry.copy(activeVaultId = id)
+        persistRegistry()
+    }
+
+    /** Removes a vault (deletes its file + keys). If it was the last one, returns to onboarding. */
+    fun removeVault(id: String) {
+        val meta = registry.meta(id) ?: return
+        val wasActive = registry.activeVaultId == id
+        session.fileFor(meta.fileName).delete()
+        registry = registry.copy(
+            vaults = registry.vaults.filterNot { it.id == id },
+            wrappedDeks = registry.wrappedDeks - id,
+            activeVaultId = if (wasActive) null else registry.activeVaultId,
+        )
+        if (registry.vaults.isEmpty()) {
+            // Last vault gone — wipe everything and return to onboarding.
+            session.close()
+            masterKey?.fill(0); masterKey = null
+            keyManager.deleteKey()
+            secureStore.clearAll()
+            registry = VaultRegistry()
+            _state.value = SecurityState.Uninitialized
+            return
+        }
+        if (wasActive) {
+            val next = registry.vaults.first()
+            registry = registry.copy(activeVaultId = next.id)
+            if (masterKey != null) openActiveVault()
+        }
+        persistRegistry()
+    }
+
+    /** Unwraps a vault's DEK for cross-vault copy/merge (requires unlocked). Caller zeroes it. */
+    fun dekFor(id: String): ByteArray {
+        val mk = masterKey ?: error("Locked")
+        return unwrapDek(mk, id)
+    }
+
+    private fun unwrapDek(mk: ByteArray, vaultId: String): ByteArray {
+        val wrapped = requireNotNull(registry.wrappedDeks[vaultId]) { "No key for vault $vaultId" }
+        return KeyEnvelope.unwrap(mk, Base64.getDecoder().decode(wrapped))
+    }
+
+    /** Changes the active vault's master password (re-wraps its DEK under a new password). */
+    fun changeActiveVaultPassword(newPassword: CharArray) {
+        session.require().changePassword(newPassword)
     }
 
     // --- Lock lifecycle ----------------------------------------------------------------
 
-    /**
-     * Call right before launching an external activity that keeps our process alive (system
-     * file picker, document scanner, share sheet). The next background event will not lock.
-     */
     fun notifyExternalActivityStarting() {
         suppressNextBackgroundLock = true
     }
 
-    /** The whole app went to the background. */
     fun onAppBackgrounded() {
-        if (suppressNextBackgroundLock) return // we launched a picker/scanner; stay unlocked
+        if (suppressNextBackgroundLock) return
         if (_state.value == SecurityState.Unlocked) {
             backgroundedAtElapsedMs = SystemClock.elapsedRealtime()
         }
     }
 
-    /** The app returned to the foreground; re-lock if it was away longer than the grace period. */
     fun onAppForegrounded() {
         val suppressed = suppressNextBackgroundLock
         suppressNextBackgroundLock = false
@@ -245,37 +412,33 @@ class SecurityRepository @Inject constructor(
         }
     }
 
-    /** Immediately lock the vault (clears the DEK from memory and closes the file). */
     fun lock() {
         session.close()
-        pendingDek?.fill(0)
-        pendingDek = null
+        masterKey?.fill(0); masterKey = null
+        pendingMasterKey?.fill(0); pendingMasterKey = null
         backgroundedAtElapsedMs = null
-        if (secureStore.vaultImported) _state.value = SecurityState.Locked
+        if (secureStore.anyMethodEnabled && registry.active != null) _state.value = SecurityState.Locked
     }
 
-    private fun currentDek(): ByteArray =
-        pendingDek ?: session.current()?.dataKey ?: error("No DEK available for setup")
-
-    /** A method was wrapped; the vault is now recoverable on this device. Stay in setup so
-     *  the user may add the second method before finishing. */
-    private fun markMethodAdded() {
-        secureStore.vaultImported = true
-    }
+    private fun currentMasterKey(): ByteArray =
+        masterKey ?: pendingMasterKey ?: error("No master key available for setup")
 
     /** Leaves onboarding once at least one unlock method is configured. */
     fun completeOnboarding() {
         if (!secureStore.anyMethodEnabled) return
-        pendingDek?.fill(0)
-        pendingDek = null
+        masterKey = pendingMasterKey
+        pendingMasterKey = null
         _state.value = SecurityState.Unlocked
     }
 
+    private fun b64(bytes: ByteArray): String = Base64.getEncoder().encodeToString(bytes)
+    private fun now(): Long = System.currentTimeMillis()
+    private fun vaultFileName(id: String): String = "vault-$id.dsvault"
+
     private companion object {
         const val GCM_IV_LEN = 12
-
-        // Re-lock only if the app was in the background at least this long. Brief task switches
-        // (alt-tab, returning from a picker) within this window keep the vault open.
         const val LOCK_GRACE_MS = 30_000L
+        const val DEFAULT_VAULT_NAME = "My Vault"
+        const val DEFAULT_IMPORTED_NAME = "Imported vault"
     }
 }

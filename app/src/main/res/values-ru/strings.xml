@@ -160,4 +160,31 @@
     <string name="move_to_root">Переместить в «Моё хранилище» (корень)</string>
     <string name="new_folder_here">Новая папка здесь</string>
     <string name="no_subfolders">Здесь нет вложенных папок</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Хранилища</string>
+    <string name="active_label">Активное</string>
+    <string name="switch_vault">Переключиться на это хранилище</string>
+    <string name="create_new_vault">Создать новое хранилище</string>
+    <string name="import_new_vault">Импортировать хранилище</string>
+    <string name="vault_name">Имя хранилища</string>
+    <string name="remove_vault">Удалить хранилище</string>
+    <string name="remove_vault_warning">Удаление «%1$s» безвозвратно стирает его и всё его содержимое с этого устройства. Это действие нельзя отменить — хранилище можно восстановить только при наличии экспортированной копии и пароля к ней.</string>
+    <string name="remove_vault_confirm">Удалить навсегда</string>
+    <string name="vault_created">Хранилище создано</string>
+    <string name="vault_removed">Хранилище удалено</string>
+    <string name="import_failed">Неверный пароль или недействительное хранилище</string>
+    <string name="copy_to_vault">Скопировать в другое хранилище</string>
+    <string name="choose_target_vault">Выберите хранилище для копирования</string>
+    <string name="copy_to_title">Скопировать в…</string>
+    <string name="copy_here">Скопировать сюда</string>
+    <string name="copied_documents">Скопировано документов: %1$d</string>
+    <string name="merge_into_vault">Объединить текущее хранилище с…</string>
+    <string name="merge_here">Объединить сюда</string>
+    <string name="merge_warning">Всё содержимое текущего хранилища будет скопировано в выбранное. Продолжить?</string>
+    <string name="change_master_password">Изменить мастер-пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_new_password">Подтвердите новый пароль</string>
+    <string name="password_changed">Мастер-пароль изменён</string>
+    <string name="nothing_selected">Ничего не выбрано</string>
 </resources>

@@ -162,4 +162,31 @@
     <string name="move_to_root">Move to My Vault (root)</string>
     <string name="new_folder_here">New folder here</string>
     <string name="no_subfolders">No subfolders here</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Vaults</string>
+    <string name="active_label">Active</string>
+    <string name="switch_vault">Switch to this vault</string>
+    <string name="create_new_vault">Create new vault</string>
+    <string name="import_new_vault">Import a vault</string>
+    <string name="vault_name">Vault name</string>
+    <string name="remove_vault">Remove vault</string>
+    <string name="remove_vault_warning">Removing “%1$s” permanently deletes it and everything inside from this device. This cannot be undone — the vault is only recoverable if you have an exported copy and its password.</string>
+    <string name="remove_vault_confirm">Delete permanently</string>
+    <string name="vault_created">Vault created</string>
+    <string name="vault_removed">Vault removed</string>
+    <string name="import_failed">Wrong password or not a valid vault</string>
+    <string name="copy_to_vault">Copy to another vault</string>
+    <string name="choose_target_vault">Choose a vault to copy into</string>
+    <string name="copy_to_title">Copy to…</string>
+    <string name="copy_here">Copy here</string>
+    <string name="copied_documents">Copied %1$d document(s)</string>
+    <string name="merge_into_vault">Merge current vault into…</string>
+    <string name="merge_here">Merge here</string>
+    <string name="merge_warning">This copies everything from the current vault into the chosen vault. Continue?</string>
+    <string name="change_master_password">Change master password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="password_changed">Master password changed</string>
+    <string name="nothing_selected">Nothing selected</string>
 </resources>

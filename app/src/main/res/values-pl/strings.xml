@@ -84,7 +84,10 @@
     <string name="no_files_hint">Brak plików. Dotknij Dodaj, aby zeskanować, zrobić zdjęcie lub zaimportować pliki.</string>
     <string name="thumbnail_size">Rozmiar miniatur</string>
     <string name="details">Szczegóły</string>
-    <string name="tap_value_copy">Dotknij wartość, aby ją skopiować</string>
+    <string name="tap_value_copy">Dotknij wartość, aby ją skopiować · przytrzymaj, aby zaznaczyć jej część</string>
+    <string name="save_to_device">Zapisz na urządzeniu</string>
+    <string name="file_saved">Zapisano na urządzeniu</string>
+    <string name="err_cant_save_file">Nie udało się zapisać tego pliku</string>
     <string name="add_field">Dodaj pole</string>
     <string name="field_key">Klucz</string>
     <string name="field_value">Wartość</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Przenieś do „Mój sejf” (katalog główny)</string>
     <string name="new_folder_here">Nowy folder tutaj</string>
     <string name="no_subfolders">Brak podfolderów</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Sejfy</string>
+    <string name="active_label">Aktywny</string>
+    <string name="switch_vault">Przełącz na ten sejf</string>
+    <string name="create_new_vault">Utwórz nowy sejf</string>
+    <string name="import_new_vault">Importuj sejf</string>
+    <string name="vault_name">Nazwa sejfu</string>
+    <string name="remove_vault">Usuń sejf</string>
+    <string name="remove_vault_warning">Usunięcie „%1$s” trwale kasuje go wraz z całą zawartością z tego urządzenia. Tej operacji nie można cofnąć — sejf można odzyskać tylko wtedy, gdy masz wyeksportowaną kopię i jej hasło.</string>
+    <string name="remove_vault_confirm">Usuń trwale</string>
+    <string name="vault_created">Sejf utworzony</string>
+    <string name="vault_removed">Sejf usunięty</string>
+    <string name="import_failed">Nieprawidłowe hasło lub nieprawidłowy sejf</string>
+    <string name="copy_to_vault">Kopiuj do innego sejfu</string>
+    <string name="choose_target_vault">Wybierz sejf, do którego skopiować</string>
+    <string name="copy_to_title">Kopiuj do…</string>
+    <string name="copy_here">Kopiuj tutaj</string>
+    <string name="copied_documents">Skopiowano dokumenty: %1$d</string>
+    <string name="merge_into_vault">Scal bieżący sejf z…</string>
+    <string name="merge_here">Scal tutaj</string>
+    <string name="merge_warning">Spowoduje to skopiowanie całej zawartości bieżącego sejfu do wybranego sejfu. Kontynuować?</string>
+    <string name="change_master_password">Zmień hasło główne</string>
+    <string name="new_password">Nowe hasło</string>
+    <string name="confirm_new_password">Potwierdź nowe hasło</string>
+    <string name="password_changed">Hasło główne zmienione</string>
+    <string name="nothing_selected">Nic nie wybrano</string>
 </resources>

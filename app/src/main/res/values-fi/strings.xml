@@ -84,7 +84,10 @@
     <string name="no_files_hint">Ei vielä tiedostoja. Napauta Lisää skannataksesi, ottaaksesi kuvan tai tuodaksesi tiedostoja.</string>
     <string name="thumbnail_size">Pikkukuvan koko</string>
     <string name="details">Tiedot</string>
-    <string name="tap_value_copy">Kopioi arvo napauttamalla sitä</string>
+    <string name="tap_value_copy">Kopioi arvo napauttamalla sitä · valitse osa siitä pitkällä painalluksella</string>
+    <string name="save_to_device">Tallenna laitteelle</string>
+    <string name="file_saved">Tallennettu laitteelle</string>
+    <string name="err_cant_save_file">Tämän tiedoston tallennus epäonnistui</string>
     <string name="add_field">Lisää kenttä</string>
     <string name="field_key">Avain</string>
     <string name="field_value">Arvo</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Siirrä kohteeseen Oma holvi (juuri)</string>
     <string name="new_folder_here">Uusi kansio tähän</string>
     <string name="no_subfolders">Täällä ei ole alikansioita</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Holvit</string>
+    <string name="active_label">Aktiivinen</string>
+    <string name="switch_vault">Vaihda tähän holviin</string>
+    <string name="create_new_vault">Luo uusi holvi</string>
+    <string name="import_new_vault">Tuo holvi</string>
+    <string name="vault_name">Holvin nimi</string>
+    <string name="remove_vault">Poista holvi</string>
+    <string name="remove_vault_warning">Holvin “%1$s” poistaminen poistaa sen ja kaiken sen sisällön pysyvästi tältä laitteelta. Tätä ei voi kumota — holvin voi palauttaa vain, jos sinulla on siitä viety kopio ja sen salasana.</string>
+    <string name="remove_vault_confirm">Poista pysyvästi</string>
+    <string name="vault_created">Holvi luotu</string>
+    <string name="vault_removed">Holvi poistettu</string>
+    <string name="import_failed">Väärä salasana tai virheellinen holvi</string>
+    <string name="copy_to_vault">Kopioi toiseen holviin</string>
+    <string name="choose_target_vault">Valitse holvi, johon kopioidaan</string>
+    <string name="copy_to_title">Kopioi kohteeseen…</string>
+    <string name="copy_here">Kopioi tähän</string>
+    <string name="copied_documents">Kopioitu %1$d asiakirjaa</string>
+    <string name="merge_into_vault">Yhdistä nykyinen holvi kohteeseen…</string>
+    <string name="merge_here">Yhdistä tähän</string>
+    <string name="merge_warning">Tämä kopioi kaiken nykyisestä holvista valittuun holviin. Jatketaanko?</string>
+    <string name="change_master_password">Vaihda pääsalasana</string>
+    <string name="new_password">Uusi salasana</string>
+    <string name="confirm_new_password">Vahvista uusi salasana</string>
+    <string name="password_changed">Pääsalasana vaihdettu</string>
+    <string name="nothing_selected">Ei mitään valittuna</string>
 </resources>

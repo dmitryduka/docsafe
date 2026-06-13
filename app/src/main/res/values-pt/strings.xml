@@ -84,7 +84,10 @@
     <string name="no_files_hint">Ainda não há ficheiros. Toque em Adicionar para digitalizar, tirar uma fotografia ou importar ficheiros.</string>
     <string name="thumbnail_size">Tamanho das miniaturas</string>
     <string name="details">Detalhes</string>
-    <string name="tap_value_copy">Toque num valor para o copiar</string>
+    <string name="tap_value_copy">Toque num valor para o copiar · prima sem soltar para selecionar parte dele</string>
+    <string name="save_to_device">Guardar no dispositivo</string>
+    <string name="file_saved">Guardado no dispositivo</string>
+    <string name="err_cant_save_file">Não foi possível guardar este ficheiro</string>
     <string name="add_field">Adicionar campo</string>
     <string name="field_key">Chave</string>
     <string name="field_value">Valor</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Mover para O meu cofre (raiz)</string>
     <string name="new_folder_here">Nova pasta aqui</string>
     <string name="no_subfolders">Não há subpastas aqui</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Cofres</string>
+    <string name="active_label">Ativo</string>
+    <string name="switch_vault">Mudar para este cofre</string>
+    <string name="create_new_vault">Criar novo cofre</string>
+    <string name="import_new_vault">Importar um cofre</string>
+    <string name="vault_name">Nome do cofre</string>
+    <string name="remove_vault">Remover cofre</string>
+    <string name="remove_vault_warning">Remover \"%1$s\" elimina-o permanentemente, juntamente com todo o seu conteúdo, deste dispositivo. Esta ação não pode ser anulada — o cofre só é recuperável se tiver uma cópia exportada e a respetiva palavra-passe.</string>
+    <string name="remove_vault_confirm">Eliminar permanentemente</string>
+    <string name="vault_created">Cofre criado</string>
+    <string name="vault_removed">Cofre removido</string>
+    <string name="import_failed">Palavra-passe incorreta ou cofre inválido</string>
+    <string name="copy_to_vault">Copiar para outro cofre</string>
+    <string name="choose_target_vault">Escolha um cofre para onde copiar</string>
+    <string name="copy_to_title">Copiar para…</string>
+    <string name="copy_here">Copiar para aqui</string>
+    <string name="copied_documents">%1$d documento(s) copiado(s)</string>
+    <string name="merge_into_vault">Unir o cofre atual a…</string>
+    <string name="merge_here">Unir aqui</string>
+    <string name="merge_warning">Isto copia tudo do cofre atual para o cofre escolhido. Continuar?</string>
+    <string name="change_master_password">Alterar palavra-passe principal</string>
+    <string name="new_password">Nova palavra-passe</string>
+    <string name="confirm_new_password">Confirme a nova palavra-passe</string>
+    <string name="password_changed">Palavra-passe principal alterada</string>
+    <string name="nothing_selected">Nada selecionado</string>
 </resources>

@@ -93,6 +93,28 @@ class VaultFile private constructor(
         return blobCipher.decrypt(Hashing.fromHex(blobId), ciphertext, entry.chunkSize)
     }
 
+    /**
+     * Changes the vault's master password. Derives a fresh KEK from [newPassword] (new KDF
+     * params + random salt) and re-wraps the **current DEK** under it, then rewrites the fixed
+     * cleartext header. The DEK and all blobs are untouched — only the header's wrapped-DEK and
+     * KDF params change — so this is cheap regardless of vault size. The vault must be open
+     * (the DEK is already in memory); the old password is not required.
+     */
+    fun changePassword(newPassword: CharArray) {
+        val params = KdfParams.newRandom()
+        val kek = Argon2idKdf.deriveKey(newPassword, params)
+        val wrapped = try {
+            KeyEnvelope.wrap(kek, dek)
+        } finally {
+            kek.fill(0)
+        }
+        header = header.copy(
+            kdf = KdfParamsDto.from(params),
+            wrappedDek = Base64.getEncoder().encodeToString(wrapped),
+        )
+        store.writeAt(0, VaultHeaderCodec.encode(header))
+    }
+
     /** Replaces folders + documents (keeping the blob table) and persists. */
     fun commit(folders: Map<String, Folder>, documents: Map<String, Document>) {
         currentIndex = currentIndex.copy(folders = folders, documents = documents)

@@ -168,6 +168,61 @@ class VaultViewModel @Inject constructor(
         else -> AttachmentKind.OTHER
     }
 
+    // --- Multiple vaults ---------------------------------------------------------------
+
+    private val _vaults = MutableStateFlow(securityRepository.vaults())
+    val vaultList: StateFlow<List<app.docsafe.security.VaultMeta>> = _vaults.asStateFlow()
+    private val _activeVaultId = MutableStateFlow(securityRepository.activeVaultId())
+    val activeVaultId: StateFlow<String?> = _activeVaultId.asStateFlow()
+
+    private fun refreshVaults() {
+        _vaults.value = securityRepository.vaults()
+        _activeVaultId.value = securityRepository.activeVaultId()
+    }
+
+    fun activeVaultName(): String? = securityRepository.activeVaultName()
+
+    /** Seamless switch (no re-auth): uses the master key already in memory, then reloads the UI. */
+    fun switchToVault(id: String) = viewModelScope.launch {
+        withContext(Dispatchers.Default) { securityRepository.switchToVault(id) }
+        repository.refresh()
+        refreshVaults()
+    }
+
+    /** Creates and switches to a new vault (Argon2 runs off the main thread). */
+    fun createVault(name: String, password: CharArray) = viewModelScope.launch {
+        withContext(Dispatchers.Default) { securityRepository.createVault(name, password) }
+        repository.refresh()
+        refreshVaults()
+    }
+
+    /** Imports [file] as a new vault. Returns true on success (false = wrong password). */
+    suspend fun importVault(name: String, file: java.io.File, password: CharArray): Boolean =
+        withContext(Dispatchers.Default) {
+            securityRepository.importVault(name, file, password).also {
+                if (it) { repository.refresh(); refreshVaults() }
+            }
+        }
+
+    fun removeVault(id: String) = viewModelScope.launch {
+        withContext(Dispatchers.IO) { securityRepository.removeVault(id) }
+        repository.refresh()
+        refreshVaults()
+    }
+
+    fun changeVaultPassword(newPassword: CharArray) = viewModelScope.launch {
+        withContext(Dispatchers.Default) { securityRepository.changeActiveVaultPassword(newPassword) }
+    }
+
+    /** Snapshot of another vault, to browse it as a copy/merge destination. */
+    suspend fun vaultIndexOf(id: String): VaultIndex = repository.vaultIndexOf(id)
+
+    suspend fun copyToVault(destVaultId: String, docIds: Set<String>, folderIds: Set<String>, destFolderId: String?): Int =
+        repository.copyToVault(destVaultId, docIds, folderIds, destFolderId)
+
+    suspend fun mergeActiveInto(destVaultId: String, destFolderId: String?): Int =
+        repository.mergeActiveInto(destVaultId, destFolderId)
+
     fun addTag(documentId: String, tag: String) = viewModelScope.launch { repository.addTag(documentId, tag) }
     fun removeTag(documentId: String, tag: String) = viewModelScope.launch { repository.removeTag(documentId, tag) }
     fun setDocumentStarred(documentId: String, starred: Boolean) =

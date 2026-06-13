@@ -84,7 +84,10 @@
     <string name="no_files_hint">还没有文件。点按"添加"以扫描、拍照或导入文件。</string>
     <string name="thumbnail_size">缩略图大小</string>
     <string name="details">详情</string>
-    <string name="tap_value_copy">点按某个值即可复制</string>
+    <string name="tap_value_copy">点按某个值即可复制 · 长按可选择其中一部分</string>
+    <string name="save_to_device">保存到设备</string>
+    <string name="file_saved">已保存到设备</string>
+    <string name="err_cant_save_file">无法保存此文件</string>
     <string name="add_field">添加字段</string>
     <string name="field_key">键</string>
     <string name="field_value">值</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">移动到"我的保险库"（根目录）</string>
     <string name="new_folder_here">在此处新建文件夹</string>
     <string name="no_subfolders">此处没有子文件夹</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">保险库</string>
+    <string name="active_label">当前使用</string>
+    <string name="switch_vault">切换到此保险库</string>
+    <string name="create_new_vault">创建新保险库</string>
+    <string name="import_new_vault">导入保险库</string>
+    <string name="vault_name">保险库名称</string>
+    <string name="remove_vault">移除保险库</string>
+    <string name="remove_vault_warning">移除“%1$s”将从本设备永久删除它及其中的所有内容。此操作无法撤销——仅当您拥有导出副本及其密码时，保险库才可恢复。</string>
+    <string name="remove_vault_confirm">永久删除</string>
+    <string name="vault_created">保险库已创建</string>
+    <string name="vault_removed">保险库已移除</string>
+    <string name="import_failed">密码错误或不是有效的保险库</string>
+    <string name="copy_to_vault">复制到其他保险库</string>
+    <string name="choose_target_vault">选择要复制到的保险库</string>
+    <string name="copy_to_title">复制到…</string>
+    <string name="copy_here">复制到此处</string>
+    <string name="copied_documents">已复制 %1$d 个文档</string>
+    <string name="merge_into_vault">将当前保险库合并到…</string>
+    <string name="merge_here">合并到此处</string>
+    <string name="merge_warning">这会将当前保险库中的所有内容复制到所选保险库。是否继续？</string>
+    <string name="change_master_password">更改主密码</string>
+    <string name="new_password">新密码</string>
+    <string name="confirm_new_password">确认新密码</string>
+    <string name="password_changed">主密码已更改</string>
+    <string name="nothing_selected">未选择任何内容</string>
 </resources>

@@ -84,7 +84,10 @@
     <string name="no_files_hint">Ֆայլեր դեռ չկան։ Հպեք «Ավելացնել»՝ սկանավորելու, լուսանկարելու կամ ֆայլեր ներմուծելու համար։</string>
     <string name="thumbnail_size">Մանրապատկերի չափ</string>
     <string name="details">Մանրամասներ</string>
-    <string name="tap_value_copy">Հպեք արժեքին՝ այն պատճենելու համար</string>
+    <string name="tap_value_copy">Հպեք արժեքին՝ այն պատճենելու համար · երկար սեղմեք՝ դրա մի մասն ընտրելու համար</string>
+    <string name="save_to_device">Պահպանել սարքում</string>
+    <string name="file_saved">Պահպանվեց սարքում</string>
+    <string name="err_cant_save_file">Չհաջողվեց պահպանել այս ֆայլը</string>
     <string name="add_field">Ավելացնել դաշտ</string>
     <string name="field_key">Բանալի</string>
     <string name="field_value">Արժեք</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Տեղափոխել «Իմ պահոց» (արմատ)</string>
     <string name="new_folder_here">Նոր թղթապանակ այստեղ</string>
     <string name="no_subfolders">Այստեղ ներդիր թղթապանակներ չկան</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Պահոցներ</string>
+    <string name="active_label">Ակտիվ</string>
+    <string name="switch_vault">Անցնել այս պահոցին</string>
+    <string name="create_new_vault">Ստեղծել նոր պահոց</string>
+    <string name="import_new_vault">Ներմուծել պահոց</string>
+    <string name="vault_name">Պահոցի անվանում</string>
+    <string name="remove_vault">Հեռացնել պահոցը</string>
+    <string name="remove_vault_warning">«%1$s»-ի հեռացումը ընդմիշտ ջնջում է այն և դրա ողջ պարունակությունն այս սարքից։ Սա հնարավոր չէ հետարկել. պահոցը վերականգնելի է միայն այն դեպքում, եթե ունեք արտահանված պատճենը և դրա գաղտնաբառը։</string>
+    <string name="remove_vault_confirm">Ջնջել ընդմիշտ</string>
+    <string name="vault_created">Պահոցը ստեղծվեց</string>
+    <string name="vault_removed">Պահոցը հեռացվեց</string>
+    <string name="import_failed">Սխալ գաղտնաբառ կամ վավեր պահոց չէ</string>
+    <string name="copy_to_vault">Պատճենել այլ պահոց</string>
+    <string name="choose_target_vault">Ընտրեք պահոց՝ որի մեջ պատճենելու համար</string>
+    <string name="copy_to_title">Պատճենել…</string>
+    <string name="copy_here">Պատճենել այստեղ</string>
+    <string name="copied_documents">Պատճենվեց %1$d փաստաթուղթ</string>
+    <string name="merge_into_vault">Միաձուլել ընթացիկ պահոցը…</string>
+    <string name="merge_here">Միաձուլել այստեղ</string>
+    <string name="merge_warning">Սա պատճենում է ընթացիկ պահոցի ողջ պարունակությունն ընտրված պահոցի մեջ։ Շարունակե՞լ։</string>
+    <string name="change_master_password">Փոխել գլխավոր գաղտնաբառը</string>
+    <string name="new_password">Նոր գաղտնաբառ</string>
+    <string name="confirm_new_password">Հաստատեք նոր գաղտնաբառը</string>
+    <string name="password_changed">Գլխավոր գաղտնաբառը փոխվեց</string>
+    <string name="nothing_selected">Ոչինչ ընտրված չէ</string>
 </resources>

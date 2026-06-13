@@ -47,8 +47,10 @@ fun MoveDestinationDialog(
     index: VaultIndex,
     movingFolderIds: Set<String>,
     onDismiss: () -> Unit,
-    onCreateFolder: (name: String, parentId: String?) -> Unit,
     onConfirm: (destFolderId: String?) -> Unit,
+    title: String = stringResource(R.string.move_to_title),
+    confirmLabel: String = stringResource(R.string.move_here),
+    onCreateFolder: ((name: String, parentId: String?) -> Unit)? = null,
 ) {
     var browseId by remember { mutableStateOf<String?>(null) }
     var creating by remember { mutableStateOf(false) }
@@ -63,7 +65,7 @@ fun MoveDestinationDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.move_to_title)) },
+        title = { Text(title) },
         text = {
             Column(Modifier.fillMaxWidth()) {
                 // Current location breadcrumb (tap a crumb to jump there).
@@ -110,19 +112,21 @@ fun MoveDestinationDialog(
                         )
                     }
                 }
-                HorizontalDivider()
-                TextButton(onClick = { creating = true }, modifier = Modifier.padding(top = 4.dp)) {
-                    Icon(Icons.Filled.CreateNewFolder, contentDescription = null)
-                    Spacer(Modifier.padding(4.dp))
-                    Text(stringResource(R.string.new_folder_here))
+                if (onCreateFolder != null) {
+                    HorizontalDivider()
+                    TextButton(onClick = { creating = true }, modifier = Modifier.padding(top = 4.dp)) {
+                        Icon(Icons.Filled.CreateNewFolder, contentDescription = null)
+                        Spacer(Modifier.padding(4.dp))
+                        Text(stringResource(R.string.new_folder_here))
+                    }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = { onConfirm(browseId) }) { Text(stringResource(R.string.move_here)) } },
+        confirmButton = { TextButton(onClick = { onConfirm(browseId) }) { Text(confirmLabel) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
     )
 
-    if (creating) {
+    if (creating && onCreateFolder != null) {
         NameInputDialog(
             title = stringResource(R.string.new_folder),
             initial = "",

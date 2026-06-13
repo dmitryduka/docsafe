@@ -63,4 +63,12 @@ class SettingsViewModel @Inject constructor(
     fun setLanguage(tag: String?) {
         localePrefs.languageTag = tag
     }
+
+    /** Changes the current vault's master password (re-wraps its DEK; Argon2 off the main thread). */
+    fun changeMasterPassword(newPassword: CharArray, onDone: () -> Unit) = viewModelScope.launch {
+        _busy.value = true
+        withContext(Dispatchers.Default) { securityRepository.changeActiveVaultPassword(newPassword) }
+        _busy.value = false
+        onDone()
+    }
 }

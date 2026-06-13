@@ -274,6 +274,70 @@ class VaultRepository @Inject constructor(
         }
     }
 
+    // --- Cross-vault copy / merge ------------------------------------------------------
+
+    /** Snapshot of another (non-active) vault, e.g. to browse it as a copy destination. */
+    suspend fun vaultIndexOf(vaultId: String): VaultIndex = withContext(Dispatchers.IO) {
+        withVault(vaultId) { it.snapshot() }
+    }
+
+    /**
+     * Copies [docIds] and [folderIds] (with their subtrees) from the **active** vault into vault
+     * [destVaultId] under [destFolderId], re-encrypting every blob + thumbnail. Returns the number
+     * of documents copied.
+     */
+    suspend fun copyToVault(
+        destVaultId: String,
+        docIds: Set<String>,
+        folderIds: Set<String>,
+        destFolderId: String?,
+    ): Int = withContext(Dispatchers.IO) {
+        mutex.withLock {
+            val source = session.require()
+            val srcIndex = source.snapshot()
+            withVault(destVaultId) { dest ->
+                val result = VaultCopier.copy(
+                    source = source,
+                    sourceIndex = srcIndex,
+                    dest = dest,
+                    destFolders = dest.snapshot().folders,
+                    destDocuments = dest.snapshot().documents,
+                    folderIds = folderIds,
+                    docIds = docIds,
+                    destParentId = destFolderId,
+                    newId = ::newId,
+                    now = ::now,
+                    by = me(),
+                    thumbnailFor = { bytes, kind -> thumbnailGenerator.generateJpeg(bytes, kind) },
+                )
+                dest.commit(result.folders, result.documents)
+                result.copiedDocuments
+            }
+        }
+    }
+
+    /** Merges the entire active vault into [destVaultId] (at [destFolderId], or its root if null). */
+    suspend fun mergeActiveInto(destVaultId: String, destFolderId: String?): Int {
+        val idx = session.require().snapshot()
+        val rootFolders = idx.folders.values.filter { !it.deleted && it.parentId == null }.map { it.id }.toSet()
+        val rootDocs = idx.documents.values.filter { !it.deleted && it.folderId == null }.map { it.id }.toSet()
+        return copyToVault(destVaultId, rootDocs, rootFolders, destFolderId)
+    }
+
+    /** Opens a non-active vault transiently (via its master-key-unwrapped DEK), runs [block], closes it. */
+    private inline fun <T> withVault(vaultId: String, block: (VaultFile) -> T): T {
+        val fileName = securityRepository.vaults().firstOrNull { it.id == vaultId }?.fileName
+            ?: error("Unknown vault $vaultId")
+        val dek = securityRepository.dekFor(vaultId)
+        val vault = session.openTransient(session.fileFor(fileName), dek)
+        dek.fill(0)
+        return try {
+            block(vault)
+        } finally {
+            vault.close()
+        }
+    }
+
     // --- helpers -----------------------------------------------------------------------
 
     private suspend fun <T> mutate(block: (VaultFile, VaultIndex) -> T): T = withContext(Dispatchers.IO) {

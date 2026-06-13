@@ -84,7 +84,10 @@
     <string name="no_files_hint">Inga filer ännu. Tryck på Lägg till för att skanna, ta ett foto eller importera filer.</string>
     <string name="thumbnail_size">Miniatyrstorlek</string>
     <string name="details">Detaljer</string>
-    <string name="tap_value_copy">Tryck på ett värde för att kopiera det</string>
+    <string name="tap_value_copy">Tryck på ett värde för att kopiera det · tryck och håll för att markera en del av det</string>
+    <string name="save_to_device">Spara på enheten</string>
+    <string name="file_saved">Sparat på enheten</string>
+    <string name="err_cant_save_file">Det gick inte att spara filen</string>
     <string name="add_field">Lägg till fält</string>
     <string name="field_key">Nyckel</string>
     <string name="field_value">Värde</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Flytta till Mitt valv (rot)</string>
     <string name="new_folder_here">Ny mapp här</string>
     <string name="no_subfolders">Inga undermappar här</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Valv</string>
+    <string name="active_label">Aktivt</string>
+    <string name="switch_vault">Byt till detta valv</string>
+    <string name="create_new_vault">Skapa nytt valv</string>
+    <string name="import_new_vault">Importera ett valv</string>
+    <string name="vault_name">Valvnamn</string>
+    <string name="remove_vault">Ta bort valv</string>
+    <string name="remove_vault_warning">Om du tar bort ”%1$s” raderas det permanent tillsammans med allt innehåll från den här enheten. Detta kan inte ångras — valvet kan bara återställas om du har en exporterad kopia och dess lösenord.</string>
+    <string name="remove_vault_confirm">Radera permanent</string>
+    <string name="vault_created">Valv skapat</string>
+    <string name="vault_removed">Valv borttaget</string>
+    <string name="import_failed">Fel lösenord eller inte ett giltigt valv</string>
+    <string name="copy_to_vault">Kopiera till ett annat valv</string>
+    <string name="choose_target_vault">Välj ett valv att kopiera till</string>
+    <string name="copy_to_title">Kopiera till…</string>
+    <string name="copy_here">Kopiera hit</string>
+    <string name="copied_documents">Kopierade %1$d dokument</string>
+    <string name="merge_into_vault">Slå samman aktuellt valv med…</string>
+    <string name="merge_here">Slå samman hit</string>
+    <string name="merge_warning">Detta kopierar allt från det aktuella valvet till det valda valvet. Vill du fortsätta?</string>
+    <string name="change_master_password">Ändra huvudlösenord</string>
+    <string name="new_password">Nytt lösenord</string>
+    <string name="confirm_new_password">Bekräfta nytt lösenord</string>
+    <string name="password_changed">Huvudlösenordet ändrades</string>
+    <string name="nothing_selected">Inget valt</string>
 </resources>

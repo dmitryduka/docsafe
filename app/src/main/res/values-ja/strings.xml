@@ -84,7 +84,10 @@
     <string name="no_files_hint">ファイルはまだありません。「追加」をタップしてスキャン、撮影、またはファイルをインポートします。</string>
     <string name="thumbnail_size">サムネイルのサイズ</string>
     <string name="details">詳細</string>
-    <string name="tap_value_copy">値をタップするとコピーできます</string>
+    <string name="tap_value_copy">値をタップするとコピーできます・長押しで一部を選択できます</string>
+    <string name="save_to_device">端末に保存</string>
+    <string name="file_saved">端末に保存しました</string>
+    <string name="err_cant_save_file">このファイルを保存できませんでした</string>
     <string name="add_field">フィールドを追加</string>
     <string name="field_key">キー</string>
     <string name="field_value">値</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">「マイ保管庫」（ルート）に移動</string>
     <string name="new_folder_here">ここに新しいフォルダ</string>
     <string name="no_subfolders">ここにサブフォルダはありません</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">保管庫</string>
+    <string name="active_label">アクティブ</string>
+    <string name="switch_vault">この保管庫に切り替える</string>
+    <string name="create_new_vault">新しい保管庫を作成</string>
+    <string name="import_new_vault">保管庫をインポート</string>
+    <string name="vault_name">保管庫の名前</string>
+    <string name="remove_vault">保管庫を削除</string>
+    <string name="remove_vault_warning">「%1$s」を削除すると、この端末から保管庫とその中身がすべて完全に削除されます。この操作は取り消せません。エクスポートしたコピーとそのパスワードがある場合にのみ復元できます。</string>
+    <string name="remove_vault_confirm">完全に削除</string>
+    <string name="vault_created">保管庫を作成しました</string>
+    <string name="vault_removed">保管庫を削除しました</string>
+    <string name="import_failed">パスワードが正しくないか、有効な保管庫ではありません</string>
+    <string name="copy_to_vault">別の保管庫にコピー</string>
+    <string name="choose_target_vault">コピー先の保管庫を選択</string>
+    <string name="copy_to_title">コピー先…</string>
+    <string name="copy_here">ここにコピー</string>
+    <string name="copied_documents">%1$d 件のドキュメントをコピーしました</string>
+    <string name="merge_into_vault">現在の保管庫を統合…</string>
+    <string name="merge_here">ここに統合</string>
+    <string name="merge_warning">現在の保管庫の内容をすべて、選択した保管庫にコピーします。続行しますか？</string>
+    <string name="change_master_password">マスターパスワードを変更</string>
+    <string name="new_password">新しいパスワード</string>
+    <string name="confirm_new_password">新しいパスワードを確認</string>
+    <string name="password_changed">マスターパスワードを変更しました</string>
+    <string name="nothing_selected">何も選択されていません</string>
 </resources>

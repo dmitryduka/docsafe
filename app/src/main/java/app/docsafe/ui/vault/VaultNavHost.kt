@@ -30,7 +30,18 @@ fun VaultNavHost() {
                 onOpenDocument = { navController.navigate("document/$it") },
                 onOpenSettings = { navController.navigate("settings") },
                 onOpenBatchExtract = { navController.navigate("batch/${folderId ?: ROOT}") },
+                onOpenVaults = { navController.navigate("vaults") },
                 onNavigateUp = { navController.popBackStack() },
+            )
+        }
+        composable(route = "vaults") {
+            VaultsScreen(
+                viewModel = viewModel,
+                onNavigateUp = { navController.popBackStack() },
+                // After switching vaults, reset the stack to the (new vault's) browser root.
+                onVaultSwitched = {
+                    navController.navigate("browser/$ROOT") { popUpTo(0) { inclusive = true } }
+                },
             )
         }
         composable(

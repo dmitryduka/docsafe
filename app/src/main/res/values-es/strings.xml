@@ -84,7 +84,10 @@
     <string name="no_files_hint">Aún no hay archivos. Toca Añadir para escanear, tomar una foto o importar archivos.</string>
     <string name="thumbnail_size">Tamaño de miniaturas</string>
     <string name="details">Detalles</string>
-    <string name="tap_value_copy">Toca un valor para copiarlo</string>
+    <string name="tap_value_copy">Toca un valor para copiarlo · mantén pulsado para seleccionar una parte</string>
+    <string name="save_to_device">Guardar en el dispositivo</string>
+    <string name="file_saved">Guardado en el dispositivo</string>
+    <string name="err_cant_save_file">No se pudo guardar este archivo</string>
     <string name="add_field">Añadir campo</string>
     <string name="field_key">Clave</string>
     <string name="field_value">Valor</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Mover a Mi bóveda (raíz)</string>
     <string name="new_folder_here">Nueva carpeta aquí</string>
     <string name="no_subfolders">No hay subcarpetas aquí</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Bóvedas</string>
+    <string name="active_label">Activa</string>
+    <string name="switch_vault">Cambiar a esta bóveda</string>
+    <string name="create_new_vault">Crear nueva bóveda</string>
+    <string name="import_new_vault">Importar una bóveda</string>
+    <string name="vault_name">Nombre de la bóveda</string>
+    <string name="remove_vault">Quitar bóveda</string>
+    <string name="remove_vault_warning">Al quitar «%1$s» se elimina de forma permanente, junto con todo su contenido, de este dispositivo. Esto no se puede deshacer: la bóveda solo se podrá recuperar si tienes una copia exportada y su contraseña.</string>
+    <string name="remove_vault_confirm">Eliminar permanentemente</string>
+    <string name="vault_created">Bóveda creada</string>
+    <string name="vault_removed">Bóveda eliminada</string>
+    <string name="import_failed">Contraseña incorrecta o no es una bóveda válida</string>
+    <string name="copy_to_vault">Copiar a otra bóveda</string>
+    <string name="choose_target_vault">Elige una bóveda en la que copiar</string>
+    <string name="copy_to_title">Copiar a…</string>
+    <string name="copy_here">Copiar aquí</string>
+    <string name="copied_documents">Se copiaron %1$d documento(s)</string>
+    <string name="merge_into_vault">Fusionar la bóveda actual en…</string>
+    <string name="merge_here">Fusionar aquí</string>
+    <string name="merge_warning">Esto copia todo el contenido de la bóveda actual en la bóveda elegida. ¿Continuar?</string>
+    <string name="change_master_password">Cambiar contraseña maestra</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="confirm_new_password">Confirmar nueva contraseña</string>
+    <string name="password_changed">Contraseña maestra cambiada</string>
+    <string name="nothing_selected">No hay nada seleccionado</string>
 </resources>

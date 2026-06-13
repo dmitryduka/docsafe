@@ -84,7 +84,10 @@
     <string name="no_files_hint">Ingen filer ennå. Trykk Legg til for å skanne, ta et bilde eller importere filer.</string>
     <string name="thumbnail_size">Miniatyrstørrelse</string>
     <string name="details">Detaljer</string>
-    <string name="tap_value_copy">Trykk på en verdi for å kopiere den</string>
+    <string name="tap_value_copy">Trykk på en verdi for å kopiere den · trykk lenge for å velge en del av den</string>
+    <string name="save_to_device">Lagre på enheten</string>
+    <string name="file_saved">Lagret på enheten</string>
+    <string name="err_cant_save_file">Kunne ikke lagre denne filen</string>
     <string name="add_field">Legg til felt</string>
     <string name="field_key">Nøkkel</string>
     <string name="field_value">Verdi</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Flytt til Mitt hvelv (rot)</string>
     <string name="new_folder_here">Ny mappe her</string>
     <string name="no_subfolders">Ingen undermapper her</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Hvelv</string>
+    <string name="active_label">Aktivt</string>
+    <string name="switch_vault">Bytt til dette hvelvet</string>
+    <string name="create_new_vault">Opprett nytt hvelv</string>
+    <string name="import_new_vault">Importer et hvelv</string>
+    <string name="vault_name">Hvelvnavn</string>
+    <string name="remove_vault">Fjern hvelv</string>
+    <string name="remove_vault_warning">Når du fjerner «%1$s», slettes det permanent sammen med alt innholdet fra denne enheten. Dette kan ikke angres — hvelvet kan bare gjenopprettes hvis du har en eksportert kopi og passordet til den.</string>
+    <string name="remove_vault_confirm">Slett permanent</string>
+    <string name="vault_created">Hvelv opprettet</string>
+    <string name="vault_removed">Hvelv fjernet</string>
+    <string name="import_failed">Feil passord eller ikke et gyldig hvelv</string>
+    <string name="copy_to_vault">Kopier til et annet hvelv</string>
+    <string name="choose_target_vault">Velg et hvelv å kopiere til</string>
+    <string name="copy_to_title">Kopier til…</string>
+    <string name="copy_here">Kopier hit</string>
+    <string name="copied_documents">Kopierte %1$d dokument(er)</string>
+    <string name="merge_into_vault">Slå sammen gjeldende hvelv med…</string>
+    <string name="merge_here">Slå sammen her</string>
+    <string name="merge_warning">Dette kopierer alt fra det gjeldende hvelvet inn i det valgte hvelvet. Vil du fortsette?</string>
+    <string name="change_master_password">Endre hovedpassord</string>
+    <string name="new_password">Nytt passord</string>
+    <string name="confirm_new_password">Bekreft nytt passord</string>
+    <string name="password_changed">Hovedpassord endret</string>
+    <string name="nothing_selected">Ingenting valgt</string>
 </resources>

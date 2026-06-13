@@ -84,7 +84,10 @@
     <string name="no_files_hint">هنوز فایلی نیست. برای اسکن، گرفتن عکس یا وارد کردن فایل‌ها، روی افزودن ضربه بزنید.</string>
     <string name="thumbnail_size">اندازه بندانگشتی</string>
     <string name="details">جزئیات</string>
-    <string name="tap_value_copy">برای کپی کردن یک مقدار، روی آن ضربه بزنید</string>
+    <string name="tap_value_copy">برای کپی کردن یک مقدار، روی آن ضربه بزنید · برای انتخاب بخشی از آن، فشار طولانی کنید</string>
+    <string name="save_to_device">ذخیره در دستگاه</string>
+    <string name="file_saved">در دستگاه ذخیره شد</string>
+    <string name="err_cant_save_file">ذخیره این فایل ممکن نشد</string>
     <string name="add_field">افزودن فیلد</string>
     <string name="field_key">کلید</string>
     <string name="field_value">مقدار</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">انتقال به «صندوق من» (ریشه)</string>
     <string name="new_folder_here">پوشه جدید در اینجا</string>
     <string name="no_subfolders">اینجا زیرپوشه‌ای نیست</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">صندوق‌ها</string>
+    <string name="active_label">فعال</string>
+    <string name="switch_vault">رفتن به این صندوق</string>
+    <string name="create_new_vault">ساخت صندوق جدید</string>
+    <string name="import_new_vault">وارد کردن یک صندوق</string>
+    <string name="vault_name">نام صندوق</string>
+    <string name="remove_vault">برداشتن صندوق</string>
+    <string name="remove_vault_warning">برداشتن «%1$s» آن و همه محتویاتش را برای همیشه از این دستگاه حذف می‌کند. این کار قابل بازگشت نیست — صندوق فقط در صورتی قابل بازیابی است که نسخه‌ای صادرشده از آن و گذرواژه‌اش را داشته باشید.</string>
+    <string name="remove_vault_confirm">حذف دائمی</string>
+    <string name="vault_created">صندوق ساخته شد</string>
+    <string name="vault_removed">صندوق برداشته شد</string>
+    <string name="import_failed">گذرواژه نادرست است یا صندوق معتبر نیست</string>
+    <string name="copy_to_vault">کپی در صندوق دیگر</string>
+    <string name="choose_target_vault">صندوقی را برای کپی کردن در آن انتخاب کنید</string>
+    <string name="copy_to_title">کپی در…</string>
+    <string name="copy_here">کپی در اینجا</string>
+    <string name="copied_documents">%1$d سند کپی شد</string>
+    <string name="merge_into_vault">ادغام صندوق فعلی در…</string>
+    <string name="merge_here">ادغام در اینجا</string>
+    <string name="merge_warning">این کار همه محتویات صندوق فعلی را در صندوق انتخاب‌شده کپی می‌کند. ادامه می‌دهید؟</string>
+    <string name="change_master_password">تغییر گذرواژه اصلی</string>
+    <string name="new_password">گذرواژه جدید</string>
+    <string name="confirm_new_password">تأیید گذرواژه جدید</string>
+    <string name="password_changed">گذرواژه اصلی تغییر کرد</string>
+    <string name="nothing_selected">چیزی انتخاب نشده است</string>
 </resources>

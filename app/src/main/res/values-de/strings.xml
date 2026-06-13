@@ -84,7 +84,10 @@
     <string name="no_files_hint">Noch keine Dateien. Tippe auf Hinzufügen, um zu scannen, ein Foto aufzunehmen oder Dateien zu importieren.</string>
     <string name="thumbnail_size">Miniaturansichtsgröße</string>
     <string name="details">Details</string>
-    <string name="tap_value_copy">Tippe auf einen Wert, um ihn zu kopieren</string>
+    <string name="tap_value_copy">Tippe auf einen Wert, um ihn zu kopieren · gedrückt halten, um einen Teil davon auszuwählen</string>
+    <string name="save_to_device">Auf Gerät speichern</string>
+    <string name="file_saved">Auf Gerät gespeichert</string>
+    <string name="err_cant_save_file">Diese Datei konnte nicht gespeichert werden</string>
     <string name="add_field">Feld hinzufügen</string>
     <string name="field_key">Schlüssel</string>
     <string name="field_value">Wert</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">Nach „Mein Tresor“ (Stammordner) verschieben</string>
     <string name="new_folder_here">Neuer Ordner hier</string>
     <string name="no_subfolders">Hier gibt es keine Unterordner</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">Tresore</string>
+    <string name="active_label">Aktiv</string>
+    <string name="switch_vault">Zu diesem Tresor wechseln</string>
+    <string name="create_new_vault">Neuen Tresor erstellen</string>
+    <string name="import_new_vault">Einen Tresor importieren</string>
+    <string name="vault_name">Tresorname</string>
+    <string name="remove_vault">Tresor entfernen</string>
+    <string name="remove_vault_warning">Durch das Entfernen von „%1$s“ wird er samt allen Inhalten endgültig von diesem Gerät gelöscht. Dies kann nicht rückgängig gemacht werden — der Tresor ist nur wiederherstellbar, wenn du eine exportierte Kopie und das zugehörige Passwort hast.</string>
+    <string name="remove_vault_confirm">Endgültig löschen</string>
+    <string name="vault_created">Tresor erstellt</string>
+    <string name="vault_removed">Tresor entfernt</string>
+    <string name="import_failed">Falsches Passwort oder kein gültiger Tresor</string>
+    <string name="copy_to_vault">In anderen Tresor kopieren</string>
+    <string name="choose_target_vault">Wähle einen Tresor zum Hineinkopieren</string>
+    <string name="copy_to_title">Kopieren nach…</string>
+    <string name="copy_here">Hierher kopieren</string>
+    <string name="copied_documents">%1$d Dokument(e) kopiert</string>
+    <string name="merge_into_vault">Aktuellen Tresor zusammenführen mit…</string>
+    <string name="merge_here">Hier zusammenführen</string>
+    <string name="merge_warning">Dadurch wird alles aus dem aktuellen Tresor in den gewählten Tresor kopiert. Fortfahren?</string>
+    <string name="change_master_password">Master-Passwort ändern</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="confirm_new_password">Neues Passwort bestätigen</string>
+    <string name="password_changed">Master-Passwort geändert</string>
+    <string name="nothing_selected">Nichts ausgewählt</string>
 </resources>

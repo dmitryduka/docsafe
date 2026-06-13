@@ -84,7 +84,10 @@
     <string name="no_files_hint">ფაილები ჯერ არ არის. დასასკანერებლად, ფოტოს გადასაღებად ან ფაილების იმპორტისთვის შეეხეთ „დამატება“.</string>
     <string name="thumbnail_size">მინიატურის ზომა</string>
     <string name="details">დეტალები</string>
-    <string name="tap_value_copy">დასაკოპირებლად შეეხეთ მნიშვნელობას</string>
+    <string name="tap_value_copy">შეეხეთ მნიშვნელობას მის დასაკოპირებლად · დიდხანს დააჭირეთ ნაწილის ამოსარჩევად</string>
+    <string name="save_to_device">მოწყობილობაზე შენახვა</string>
+    <string name="file_saved">შენახულია მოწყობილობაზე</string>
+    <string name="err_cant_save_file">ამ ფაილის შენახვა ვერ მოხერხდა</string>
     <string name="add_field">ველის დამატება</string>
     <string name="field_key">გასაღები</string>
     <string name="field_value">მნიშვნელობა</string>
@@ -157,4 +160,31 @@
     <string name="move_to_root">გადატანა „ჩემს საცავში“ (ფესვი)</string>
     <string name="new_folder_here">ახალი საქაღალდე აქ</string>
     <string name="no_subfolders">აქ ქვესაქაღალდეები არ არის</string>
+
+    <!-- Multiple vaults -->
+    <string name="vaults_title">საცავები</string>
+    <string name="active_label">აქტიური</string>
+    <string name="switch_vault">ამ საცავზე გადართვა</string>
+    <string name="create_new_vault">ახალი საცავის შექმნა</string>
+    <string name="import_new_vault">საცავის იმპორტი</string>
+    <string name="vault_name">საცავის სახელი</string>
+    <string name="remove_vault">საცავის მოშორება</string>
+    <string name="remove_vault_warning">„%1$s“-ის მოშორება სამუდამოდ წაშლის მას და მთელ მის შიგთავსს ამ მოწყობილობიდან. ამის გაუქმება შეუძლებელია — საცავი მხოლოდ მაშინ აღდგება, თუ გაქვთ ექსპორტირებული ასლი და მისი პაროლი.</string>
+    <string name="remove_vault_confirm">სამუდამოდ წაშლა</string>
+    <string name="vault_created">საცავი შეიქმნა</string>
+    <string name="vault_removed">საცავი მოშორებულია</string>
+    <string name="import_failed">არასწორი პაროლი ან არასწორი საცავი</string>
+    <string name="copy_to_vault">სხვა საცავში კოპირება</string>
+    <string name="choose_target_vault">აირჩიეთ საცავი, რომელშიც დააკოპირებთ</string>
+    <string name="copy_to_title">კოპირება…</string>
+    <string name="copy_here">აქ კოპირება</string>
+    <string name="copied_documents">დაკოპირდა %1$d დოკუმენტი</string>
+    <string name="merge_into_vault">მიმდინარე საცავის გაერთიანება…</string>
+    <string name="merge_here">აქ გაერთიანება</string>
+    <string name="merge_warning">ეს დააკოპირებს ყველაფერს მიმდინარე საცავიდან არჩეულ საცავში. გავაგრძელოთ?</string>
+    <string name="change_master_password">მთავარი პაროლის შეცვლა</string>
+    <string name="new_password">ახალი პაროლი</string>
+    <string name="confirm_new_password">დაადასტურეთ ახალი პაროლი</string>
+    <string name="password_changed">მთავარი პაროლი შეიცვალა</string>
+    <string name="nothing_selected">არაფერია არჩეული</string>
 </resources>
