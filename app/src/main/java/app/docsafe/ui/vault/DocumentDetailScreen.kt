@@ -38,6 +38,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -595,27 +596,31 @@ private fun iconFor(kind: AttachmentKind): ImageVector = when (kind) {
 
 @Composable
 private fun FieldsTable(fields: List<DocField>, onCopyValue: (String) -> Unit, onRemove: (String) -> Unit) {
-    Column(Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
-        Text(stringResource(R.string.details), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium, modifier = Modifier.padding(bottom = 4.dp))
-        fields.forEach { field ->
-            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(field.key, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(0.34f))
-                // Wrapped in a SelectionContainer so a long-press lets you select & copy part of
-                // the value; a plain tap still copies the whole value.
-                SelectionContainer(modifier = Modifier.weight(0.66f)) {
+    // The whole table sits in one SelectionContainer: a long-press selects & copies part of any
+    // value (or key); a plain tap on a value still copies the whole value. Wrapping the parent
+    // (rather than each value) keeps the key / value / delete Row layout intact.
+    SelectionContainer {
+        Column(Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+            Text(stringResource(R.string.details), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium, modifier = Modifier.padding(bottom = 4.dp))
+            fields.forEach { field ->
+                Row(modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(field.key, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(0.34f))
                     Text(
                         field.value,
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.fillMaxWidth().clickable { onCopyValue(field.value) }.padding(vertical = 6.dp),
+                        modifier = Modifier.weight(0.66f).clickable { onCopyValue(field.value) }.padding(vertical = 6.dp),
                     )
+                    // Exclude the delete button from text selection so it stays tappable.
+                    DisableSelection {
+                        IconButton(onClick = { onRemove(field.id) }, modifier = Modifier.size(32.dp)) {
+                            Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.action_remove), modifier = Modifier.size(18.dp))
+                        }
+                    }
                 }
-                IconButton(onClick = { onRemove(field.id) }, modifier = Modifier.size(32.dp)) {
-                    Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.action_remove), modifier = Modifier.size(18.dp))
-                }
+                HorizontalDivider()
             }
-            HorizontalDivider()
+            Text(stringResource(R.string.tap_value_copy), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
         }
-        Text(stringResource(R.string.tap_value_copy), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
     }
 }
 
