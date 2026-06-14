@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Exporter vers un nouveau coffre</string>
     <string name="export_new_vault_message">Les éléments sélectionnés sont copiés dans un tout nouveau fichier de coffre avec le mot de passe défini ici. Votre coffre actuel reste inchangé.</string>
     <string name="exported_documents">%1$d document(s) exporté(s)</string>
-    <string name="recovery_codes">Codes de récupération</string>
-    <string name="recovery_codes_warning">Ces codes sont stockés dans le fichier de ce coffre. Sauvegardez le coffre maintenant (Enregistrer sur l’appareil) — la récupération se fait en réimportant cette sauvegarde et en saisissant un code au lieu du mot de passe ; une sauvegarde antérieure n’acceptera donc pas ces codes. Conservez les codes en lieu sûr, séparément de cet appareil. Chaque code fonctionne une fois, ils ne seront plus affichés, de nouveaux codes remplacent les anciens, et changer le mot de passe les annule tous.</string>
-    <string name="recovery_codes_saved">Je les ai enregistrés</string>
-    <string name="copy_all">Tout copier</string>
-    <string name="recovery_code">Code de récupération</string>
-    <string name="use_recovery_code">Utiliser un code de récupération</string>
-    <string name="use_password_instead">Utiliser le mot de passe</string>
-    <string name="recovery_code_invalid">Code de récupération invalide ou coffre non récupérable</string>
-    <string name="generating">Génération…</string>
     <string name="reclaimed_space">Récupéré %1$s · maintenant %2$s</string>
     <string name="already_compact">Déjà compact · %1$s</string>
     <string name="reclaim_failed">Impossible de récupérer de l’espace</string>

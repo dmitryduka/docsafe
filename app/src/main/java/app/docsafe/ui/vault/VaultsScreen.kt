@@ -20,14 +20,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CreateNewFolder
-import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,7 +53,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -64,7 +61,6 @@ import app.docsafe.security.VaultMeta
 import app.docsafe.vault.model.VaultIndex
 import kotlinx.coroutines.launch
 import java.io.File
-import app.docsafe.ui.copyTextToClipboard
 import app.docsafe.ui.formatDate
 import app.docsafe.ui.rememberStepUp
 import app.docsafe.ui.toast
@@ -94,8 +90,6 @@ fun VaultsScreen(
     var removeTarget by remember { mutableStateOf<VaultMeta?>(null) }
     var mergeTarget by remember { mutableStateOf<VaultMeta?>(null) }
     var mergeIndex by remember { mutableStateOf<VaultIndex?>(null) }
-    var generatingFor by remember { mutableStateOf<String?>(null) }
-    var recoveryCodes by remember { mutableStateOf<List<String>?>(null) }
 
     val pickVault = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) {
@@ -130,15 +124,6 @@ fun VaultsScreen(
                         },
                         onMerge = {
                             mergeTarget = vault
-                        },
-                        onRecoveryCodes = {
-                            stepUp {
-                                scope.launch {
-                                    generatingFor = vault.id
-                                    recoveryCodes = viewModel.generateRecoveryCodes(vault.id)
-                                    generatingFor = null
-                                }
-                            }
                         },
                         onRemove = { removeTarget = vault },
                     )
@@ -196,18 +181,6 @@ fun VaultsScreen(
                     }
                 }
             },
-            onConfirmRecovery = { name, code ->
-                scope.launch {
-                    val ok = runCatching { viewModel.importVaultWithRecovery(name, file, code) }.getOrDefault(false)
-                    if (ok) {
-                        toast(context, context.getString(R.string.vault_created))
-                        file.delete(); importFile = null
-                        onVaultSwitched()
-                    } else {
-                        toast(context, context.getString(R.string.recovery_code_invalid))
-                    }
-                }
-            },
         )
     }
 
@@ -255,50 +228,6 @@ fun VaultsScreen(
             )
         }
     }
-
-    if (generatingFor != null) {
-        AlertDialog(
-            onDismissRequest = {},
-            title = { Text(stringResource(R.string.recovery_codes)) },
-            text = {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    CircularProgressIndicator()
-                    Spacer(Modifier.padding(start = 16.dp))
-                    Text(stringResource(R.string.generating))
-                }
-            },
-            confirmButton = {},
-        )
-    }
-
-    recoveryCodes?.let { codes ->
-        RecoveryCodesDialog(codes = codes, onDismiss = { recoveryCodes = null })
-    }
-}
-
-/** Shows freshly generated recovery codes once, with a copy-all action and a save-them warning. */
-@Composable
-private fun RecoveryCodesDialog(codes: List<String>, onDismiss: () -> Unit) {
-    val context = LocalContext.current
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        icon = { Icon(Icons.Filled.Key, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
-        title = { Text(stringResource(R.string.recovery_codes)) },
-        text = {
-            Column {
-                Text(stringResource(R.string.recovery_codes_warning), style = MaterialTheme.typography.bodyMedium)
-                Spacer(Modifier.height(12.dp))
-                codes.forEach { code ->
-                    Text(code, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
-                }
-                Spacer(Modifier.height(8.dp))
-                OutlinedButton(onClick = { copyTextToClipboard(context, "recovery", codes.joinToString("\n")) }) {
-                    Text(stringResource(R.string.copy_all))
-                }
-            }
-        },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.recovery_codes_saved)) } },
-    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -308,7 +237,6 @@ private fun VaultRow(
     isActive: Boolean,
     onSwitch: () -> Unit,
     onMerge: () -> Unit,
-    onRecoveryCodes: () -> Unit,
     onRemove: () -> Unit,
 ) {
     var menuOpen by remember { mutableStateOf(false) }
@@ -343,11 +271,6 @@ private fun VaultRow(
                                 )
                             }
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.recovery_codes)) },
-                                leadingIcon = { Icon(Icons.Filled.Key, null) },
-                                onClick = { menuOpen = false; onRecoveryCodes() },
-                            )
-                            DropdownMenuItem(
                                 text = { Text(stringResource(R.string.remove_vault), color = MaterialTheme.colorScheme.error) },
                                 onClick = { menuOpen = false; onRemove() },
                             )
@@ -360,11 +283,7 @@ private fun VaultRow(
     }
 }
 
-/**
- * Dialog asking for a vault name + password (with optional confirm field for new vaults). When
- * [onConfirmRecovery] is provided, an import dialog also offers a "use a recovery code instead"
- * toggle that swaps the password field for a recovery-code field.
- */
+/** Dialog asking for a vault name + password (with optional confirm field for new vaults). */
 @Composable
 internal fun NameAndPasswordDialog(
     title: String,
@@ -373,18 +292,12 @@ internal fun NameAndPasswordDialog(
     onDismiss: () -> Unit,
     onConfirm: (name: String, password: CharArray) -> Unit,
     initialName: String = "",
-    onConfirmRecovery: ((name: String, code: CharArray) -> Unit)? = null,
 ) {
     var name by remember { mutableStateOf(initialName) }
     var password by remember { mutableStateOf("") }
     var confirm by remember { mutableStateOf("") }
-    var recoveryMode by remember { mutableStateOf(false) }
     val minLen = 8
-    val valid = name.isNotBlank() && if (recoveryMode) {
-        password.isNotBlank()
-    } else {
-        password.length >= minLen && (!requireConfirmPassword || password == confirm)
-    }
+    val valid = name.isNotBlank() && password.length >= minLen && (!requireConfirmPassword || password == confirm)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -395,10 +308,9 @@ internal fun NameAndPasswordDialog(
                     label = { Text(stringResource(R.string.vault_name)) }, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(value = password, onValueChange = { password = it }, singleLine = true,
-                    label = { Text(stringResource(if (recoveryMode) R.string.recovery_code else R.string.master_password)) },
-                    visualTransformation = if (recoveryMode) VisualTransformation.None else PasswordVisualTransformation(),
-                    modifier = Modifier.fillMaxWidth())
-                if (requireConfirmPassword && !recoveryMode) {
+                    label = { Text(stringResource(R.string.master_password)) },
+                    visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
+                if (requireConfirmPassword) {
                     Spacer(Modifier.height(8.dp))
                     OutlinedTextField(value = confirm, onValueChange = { confirm = it }, singleLine = true,
                         label = { Text(stringResource(R.string.confirm_password)) },
@@ -407,21 +319,10 @@ internal fun NameAndPasswordDialog(
                     Text(stringResource(R.string.min_chars, minLen), style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-                if (onConfirmRecovery != null) {
-                    TextButton(onClick = { recoveryMode = !recoveryMode; password = ""; confirm = "" }) {
-                        Text(stringResource(if (recoveryMode) R.string.use_password_instead else R.string.use_recovery_code))
-                    }
-                }
             }
         },
         confirmButton = {
-            TextButton(
-                onClick = {
-                    if (recoveryMode && onConfirmRecovery != null) onConfirmRecovery(name.trim(), password.toCharArray())
-                    else onConfirm(name.trim(), password.toCharArray())
-                },
-                enabled = valid,
-            ) { Text(confirmLabel) }
+            TextButton(onClick = { onConfirm(name.trim(), password.toCharArray()) }, enabled = valid) { Text(confirmLabel) }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
     )

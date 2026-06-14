@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Eksportuj do nowego sejfu</string>
     <string name="export_new_vault_message">Wybrane elementy są kopiowane do zupełnie nowego pliku sejfu z hasłem ustawionym tutaj. Twój bieżący sejf pozostaje bez zmian.</string>
     <string name="exported_documents">Wyeksportowano dokumenty: %1$d</string>
-    <string name="recovery_codes">Kody odzyskiwania</string>
-    <string name="recovery_codes_warning">Te kody są zapisane w pliku tego sejfu. Wykonaj teraz kopię zapasową sejfu (Zapisz na urządzeniu) — odzyskiwanie polega na ponownym zaimportowaniu tej kopii i wpisaniu kodu zamiast hasła, więc kopia wykonana wcześniej nie przyjmie tych kodów. Przechowuj kody w bezpiecznym miejscu, oddzielnie od urządzenia. Każdy kod działa raz, nie zostaną pokazane ponownie, nowe kody zastępują poprzednie, a zmiana hasła unieważnia je wszystkie.</string>
-    <string name="recovery_codes_saved">Zapisałem je</string>
-    <string name="copy_all">Kopiuj wszystko</string>
-    <string name="recovery_code">Kod odzyskiwania</string>
-    <string name="use_recovery_code">Użyj kodu odzyskiwania</string>
-    <string name="use_password_instead">Użyj hasła</string>
-    <string name="recovery_code_invalid">Nieprawidłowy kod odzyskiwania lub sejf nie do odzyskania</string>
-    <string name="generating">Generowanie…</string>
     <string name="reclaimed_space">Odzyskano %1$s · teraz %2$s</string>
     <string name="already_compact">Już skompaktowano · %1$s</string>
     <string name="reclaim_failed">Nie udało się odzyskać miejsca</string>

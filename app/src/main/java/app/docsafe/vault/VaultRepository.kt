@@ -344,25 +344,6 @@ class VaultRepository @Inject constructor(
         }
     }
 
-    /**
-     * Generates and stores a fresh set of recovery codes for [vaultId], returning the plaintext
-     * codes to show the user **once**. For the active vault the codes are set on the open handle
-     * (so a later index write won't clobber the header); other vaults are opened transiently.
-     * The heavy Argon2 derivations run off the main thread.
-     */
-    suspend fun generateRecoveryCodes(vaultId: String): List<String> = withContext(Dispatchers.Default) {
-        val codes = RecoveryCodes.generate()
-        mutex.withLock {
-            val charCodes = codes.map { it.toCharArray() }
-            if (vaultId == securityRepository.activeVaultId()) {
-                session.require().setRecoveryCodes(charCodes)
-            } else {
-                withVault(vaultId) { it.setRecoveryCodes(charCodes) }
-            }
-        }
-        codes
-    }
-
     /** Opens a non-active vault transiently (via its master-key-unwrapped DEK), runs [block], closes it. */
     private inline fun <T> withVault(vaultId: String, block: (VaultFile) -> T): T {
         val fileName = securityRepository.vaults().firstOrNull { it.id == vaultId }?.fileName

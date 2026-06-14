@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Exportera till nytt valv</string>
     <string name="export_new_vault_message">De valda objekten kopieras till en helt ny valvfil med lösenordet du anger här. Ditt nuvarande valv ändras inte.</string>
     <string name="exported_documents">%1$d dokument exporterade</string>
-    <string name="recovery_codes">Återställningskoder</string>
-    <string name="recovery_codes_warning">Dessa koder lagras i den här valvfilen. Säkerhetskopiera valvet nu (Spara till enhet) — återställning sker genom att återimportera den säkerhetskopian och ange en kod i stället för lösenordet, så en kopia gjord tidigare godtar inte dessa koder. Förvara koderna säkert och skilt från enheten. Varje kod fungerar en gång, de visas inte igen, nya koder ersätter de gamla och att byta lösenord upphäver alla.</string>
-    <string name="recovery_codes_saved">Jag har sparat dem</string>
-    <string name="copy_all">Kopiera alla</string>
-    <string name="recovery_code">Återställningskod</string>
-    <string name="use_recovery_code">Använd en återställningskod</string>
-    <string name="use_password_instead">Använd lösenord</string>
-    <string name="recovery_code_invalid">Ogiltig återställningskod eller ej återställningsbart valv</string>
-    <string name="generating">Skapar…</string>
     <string name="reclaimed_space">Återvann %1$s · nu %2$s</string>
     <string name="already_compact">Redan kompakt · %1$s</string>
     <string name="reclaim_failed">Det gick inte att frigöra utrymme</string>

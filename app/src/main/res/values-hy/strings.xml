@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Արտահանել նոր պահոց</string>
     <string name="export_new_vault_message">Ընտրված տարրերը պատճենվում են բոլորովին նոր պահոցի ֆայլ՝ այստեղ սահմանված գաղտնաբառով։ Ընթացիկ պահոցը մնում է անփոփոխ։</string>
     <string name="exported_documents">Արտահանվել է %1$d փաստաթուղթ</string>
-    <string name="recovery_codes">Վերականգնման կոդեր</string>
-    <string name="recovery_codes_warning">Այս կոդերը պահվում են այս պահոցի ֆայլում։ Կրկնօրինակեք պահոցը հիմա (Պահել սարքում) — վերականգնումը կատարվում է այդ կրկնօրինակը վերաներմուծելով և գաղտնաբառի փոխարեն կոդ մուտքագրելով, ուստի ավելի վաղ արված կրկնօրինակը այս կոդերը չի ընդունի։ Կոդերը պահեք ապահով տեղում՝ սարքից առանձին։ Յուրաքանչյուր կոդ գործում է մեկ անգամ, դրանք այլևս չեն ցուցադրվի, նոր կոդերը փոխարինում են հները, իսկ գաղտնաբառը փոխելը չեղարկում է բոլորը։</string>
-    <string name="recovery_codes_saved">Պահպանել եմ</string>
-    <string name="copy_all">Պատճենել բոլորը</string>
-    <string name="recovery_code">Վերականգնման կոդ</string>
-    <string name="use_recovery_code">Օգտագործել վերականգնման կոդ</string>
-    <string name="use_password_instead">Օգտագործել գաղտնաբառ</string>
-    <string name="recovery_code_invalid">Անվավեր վերականգնման կոդ կամ ոչ վերականգնելի պահոց</string>
-    <string name="generating">Ստեղծվում է…</string>
     <string name="reclaimed_space">Ազատվեց %1$s · այժմ %2$s</string>
     <string name="already_compact">Արդեն սեղմված է · %1$s</string>
     <string name="reclaim_failed">Չհաջողվեց ազատել տարածք</string>

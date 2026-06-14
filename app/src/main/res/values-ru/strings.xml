@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Экспорт в новое хранилище</string>
     <string name="export_new_vault_message">Выбранные элементы копируются в совершенно новый файл хранилища с заданным здесь паролем. Текущее хранилище не изменяется.</string>
     <string name="exported_documents">Экспортировано документов: %1$d</string>
-    <string name="recovery_codes">Коды восстановления</string>
-    <string name="recovery_codes_warning">Эти коды хранятся внутри файла этого хранилища. Сделайте резервную копию хранилища сейчас (Сохранить на устройство) — восстановление работает через повторный импорт этой копии и ввод кода вместо пароля, поэтому копия, сделанная ранее, не примет эти коды. Храните коды в надёжном месте отдельно от устройства. Каждый код работает один раз, повторно они не показываются, новые коды заменяют прежние, а смена пароля отменяет их все.</string>
-    <string name="recovery_codes_saved">Я их сохранил</string>
-    <string name="copy_all">Копировать все</string>
-    <string name="recovery_code">Код восстановления</string>
-    <string name="use_recovery_code">Использовать код восстановления</string>
-    <string name="use_password_instead">Использовать пароль</string>
-    <string name="recovery_code_invalid">Неверный код восстановления или хранилище без восстановления</string>
-    <string name="generating">Создание…</string>
     <string name="reclaimed_space">Освобождено %1$s · теперь %2$s</string>
     <string name="already_compact">Уже сжато · %1$s</string>
     <string name="reclaim_failed">Не удалось освободить место</string>

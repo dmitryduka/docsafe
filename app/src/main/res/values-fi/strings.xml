@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Vie uuteen holviin</string>
     <string name="export_new_vault_message">Valitut kohteet kopioidaan aivan uuteen holvitiedostoon tässä asettamallasi salasanalla. Nykyinen holvisi ei muutu.</string>
     <string name="exported_documents">Viety %1$d asiakirjaa</string>
-    <string name="recovery_codes">Palautuskoodit</string>
-    <string name="recovery_codes_warning">Nämä koodit tallennetaan tämän holvin tiedostoon. Varmuuskopioi holvi nyt (Tallenna laitteelle) — palautus tapahtuu tuomalla varmuuskopio uudelleen ja syöttämällä koodi salasanan sijaan, joten aiemmin tehty varmuuskopio ei hyväksy näitä koodeja. Säilytä koodit turvallisessa paikassa erillään laitteesta. Kukin koodi toimii kerran, niitä ei näytetä uudelleen, uudet koodit korvaavat vanhat ja salasanan vaihto mitätöi ne kaikki.</string>
-    <string name="recovery_codes_saved">Olen tallentanut ne</string>
-    <string name="copy_all">Kopioi kaikki</string>
-    <string name="recovery_code">Palautuskoodi</string>
-    <string name="use_recovery_code">Käytä palautuskoodia</string>
-    <string name="use_password_instead">Käytä salasanaa</string>
-    <string name="recovery_code_invalid">Virheellinen palautuskoodi tai holvia ei voi palauttaa</string>
-    <string name="generating">Luodaan…</string>
     <string name="reclaimed_space">Vapautettu %1$s · nyt %2$s</string>
     <string name="already_compact">Jo tiivistetty · %1$s</string>
     <string name="reclaim_failed">Tilan vapautus epäonnistui</string>

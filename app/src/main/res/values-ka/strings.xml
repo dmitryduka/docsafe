@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">ექსპორტი ახალ სეიფში</string>
     <string name="export_new_vault_message">არჩეული ერთეულები იკოპირება სრულიად ახალ სეიფის ფაილში აქ დაყენებული პაროლით. მიმდინარე სეიფი უცვლელი რჩება.</string>
     <string name="exported_documents">ექსპორტირებულია %1$d დოკუმენტი</string>
-    <string name="recovery_codes">აღდგენის კოდები</string>
-    <string name="recovery_codes_warning">ეს კოდები ინახება ამ სეიფის ფაილში. შექმენით სეიფის სარეზერვო ასლი ახლა (მოწყობილობაში შენახვა) — აღდგენა ხდება ამ ასლის ხელახალი იმპორტით და პაროლის ნაცვლად კოდის შეყვანით, ამიტომ ადრე შექმნილი ასლი ამ კოდებს არ მიიღებს. შეინახეთ კოდები უსაფრთხო ადგილას, მოწყობილობისგან ცალკე. თითოეული კოდი მუშაობს ერთხელ, ისინი აღარ გამოჩნდება, ახალი კოდები ცვლის ძველებს, ხოლო პაროლის შეცვლა აუქმებს ყველას.</string>
-    <string name="recovery_codes_saved">შევინახე</string>
-    <string name="copy_all">ყველას კოპირება</string>
-    <string name="recovery_code">აღდგენის კოდი</string>
-    <string name="use_recovery_code">აღდგენის კოდის გამოყენება</string>
-    <string name="use_password_instead">პაროლის გამოყენება</string>
-    <string name="recovery_code_invalid">არასწორი აღდგენის კოდი ან აღუდგენელი სეიფი</string>
-    <string name="generating">იქმნება…</string>
     <string name="reclaimed_space">გათავისუფლდა %1$s · ახლა %2$s</string>
     <string name="already_compact">უკვე კომპაქტურია · %1$s</string>
     <string name="reclaim_failed">სივრცის გათავისუფლება ვერ მოხერხდა</string>

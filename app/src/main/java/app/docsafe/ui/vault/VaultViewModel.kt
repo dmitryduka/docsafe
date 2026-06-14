@@ -210,13 +210,6 @@ class VaultViewModel @Inject constructor(
             }
         }
 
-    /** Imports [file] using a recovery [code] instead of the password (false = invalid code). */
-    suspend fun importVaultWithRecovery(name: String, file: java.io.File, code: CharArray): Boolean =
-        withContext(Dispatchers.Default) {
-            securityRepository.importVaultWithRecovery(name, file, code).also {
-                if (it) { repository.refresh(); refreshVaults() }
-            }
-        }
 
     fun removeVault(id: String) = viewModelScope.launch {
         withContext(Dispatchers.IO) { securityRepository.removeVault(id) }
@@ -241,9 +234,6 @@ class VaultViewModel @Inject constructor(
     suspend fun exportToNewVault(folderIds: Set<String>, docIds: Set<String>, password: CharArray, dest: java.io.File): Int =
         repository.exportFoldersToNewVault(folderIds, docIds, password, dest)
 
-    /** Generates a fresh set of recovery codes for [vaultId]; returns them to show once. */
-    suspend fun generateRecoveryCodes(vaultId: String): List<String> =
-        repository.generateRecoveryCodes(vaultId)
 
     fun addTag(documentId: String, tag: String) = viewModelScope.launch { repository.addTag(documentId, tag) }
     fun removeTag(documentId: String, tag: String) = viewModelScope.launch { repository.removeTag(documentId, tag) }

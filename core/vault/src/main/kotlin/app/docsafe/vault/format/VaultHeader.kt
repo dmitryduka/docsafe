@@ -19,20 +19,6 @@ data class VaultHeader(
     val chunkSize: Int,
     val indexOffset: Long,
     val indexLength: Int,
-    /**
-     * Optional recovery block: the DEK wrapped under each recovery-code-derived key, plus the
-     * shared Argon2id params. Null when no recovery codes are set (the default for every
-     * pre-1.0.8 vault, so old files decode unchanged).
-     */
-    val recovery: RecoveryBlockDto? = null,
-)
-
-/** DEK wrapped under one-or-more recovery codes (see [app.docsafe.vault.RecoveryCodes]). */
-@Serializable
-data class RecoveryBlockDto(
-    val kdf: KdfParamsDto,
-    /** Base64 of `KeyEnvelope.wrap(Argon2id(code), dek)`, one per still-valid code. */
-    val wraps: List<String>,
 )
 
 @Serializable

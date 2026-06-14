@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Експортиране в нов трезор</string>
     <string name="export_new_vault_message">Избраните елементи се копират в съвсем нов файл на трезор с паролата, която зададете тук. Текущият ви трезор остава непроменен.</string>
     <string name="exported_documents">Експортирани %1$d документа</string>
-    <string name="recovery_codes">Кодове за възстановяване</string>
-    <string name="recovery_codes_warning">Тези кодове се съхраняват във файла на този трезор. Архивирайте трезора сега (Запис на устройството) — възстановяването става чрез повторно импортиране на този архив и въвеждане на код вместо парола, затова архив, направен преди това, няма да приеме тези кодове. Пазете кодовете на сигурно място, отделно от устройството. Всеки код работи веднъж, няма да бъдат показани отново, новите кодове заменят старите, а смяната на паролата отменя всички.</string>
-    <string name="recovery_codes_saved">Запазих ги</string>
-    <string name="copy_all">Копирай всички</string>
-    <string name="recovery_code">Код за възстановяване</string>
-    <string name="use_recovery_code">Използвай код за възстановяване</string>
-    <string name="use_password_instead">Използвай парола</string>
-    <string name="recovery_code_invalid">Невалиден код за възстановяване или невъзстановим трезор</string>
-    <string name="generating">Създаване…</string>
     <string name="reclaimed_space">Освободени %1$s · сега %2$s</string>
     <string name="already_compact">Вече е компактно · %1$s</string>
     <string name="reclaim_failed">Неуспешно освобождаване на място</string>

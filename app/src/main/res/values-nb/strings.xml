@@ -91,15 +91,6 @@
     <string name="export_to_new_vault">Eksporter til nytt hvelv</string>
     <string name="export_new_vault_message">De valgte elementene kopieres til en helt ny hvelvfil med passordet du angir her. Det nåværende hvelvet ditt forblir uendret.</string>
     <string name="exported_documents">Eksporterte %1$d dokument(er)</string>
-    <string name="recovery_codes">Gjenopprettingskoder</string>
-    <string name="recovery_codes_warning">Disse kodene lagres i denne hvelvfilen. Sikkerhetskopier hvelvet nå (Lagre til enhet) — gjenoppretting skjer ved å importere den sikkerhetskopien på nytt og skrive inn en kode i stedet for passordet, så en sikkerhetskopi laget tidligere godtar ikke disse kodene. Oppbevar kodene trygt og atskilt fra enheten. Hver kode virker én gang, de vises ikke igjen, nye koder erstatter de gamle, og å endre passordet opphever alle.</string>
-    <string name="recovery_codes_saved">Jeg har lagret dem</string>
-    <string name="copy_all">Kopier alle</string>
-    <string name="recovery_code">Gjenopprettingskode</string>
-    <string name="use_recovery_code">Bruk en gjenopprettingskode</string>
-    <string name="use_password_instead">Bruk passord</string>
-    <string name="recovery_code_invalid">Ugyldig gjenopprettingskode eller ikke-gjenopprettbart hvelv</string>
-    <string name="generating">Genererer…</string>
     <string name="reclaimed_space">Frigjorde %1$s · nå %2$s</string>
     <string name="already_compact">Allerede kompakt · %1$s</string>
     <string name="reclaim_failed">Kunne ikke frigjøre plass</string>

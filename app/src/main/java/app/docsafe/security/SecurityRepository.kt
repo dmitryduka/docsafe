@@ -153,25 +153,6 @@ class SecurityRepository @Inject constructor(
         return true
     }
 
-    /** Imports an external [src] `.dsvault` via a recovery [code]. Returns false on a wrong code. */
-    @Synchronized
-    fun importVaultWithRecovery(name: String, src: File, code: CharArray): Boolean {
-        deviceId()
-        val unlocked = masterKey != null
-        val mk = masterKey ?: pendingMasterKey ?: KeyEnvelope.generateDek()
-        val id = UUID.randomUUID().toString()
-        val fileName = vaultFileName(id)
-        val dek = session.importIntoWithRecovery(session.fileFor(fileName), src, code) ?: return false
-        if (masterKey == null) pendingMasterKey = mk
-        try {
-            registerVault(id, name, fileName, KeyEnvelope.wrap(mk, dek), unlocked)
-        } finally {
-            dek.fill(0)
-        }
-        if (!unlocked) _state.value = SecurityState.NeedsUnlockMethod
-        return true
-    }
-
     private fun registerVault(id: String, name: String, fileName: String, wrappedDek: ByteArray, unlocked: Boolean) {
         val meta = VaultMeta(id, name.ifBlank { DEFAULT_VAULT_NAME }, fileName, now())
         registry = if (unlocked) {
@@ -216,20 +197,6 @@ class SecurityRepository @Inject constructor(
         val src = pendingImportFile ?: return false
         val name = pendingImportName?.removeSuffix(".dsvault")?.ifBlank { null } ?: DEFAULT_IMPORTED_NAME
         val ok = importVault(name, src, password)
-        if (ok) {
-            src.delete()
-            pendingImportFile = null
-            pendingImportName = null
-        }
-        return ok
-    }
-
-    /** Confirms a pending shared-file import with a recovery [code] instead of the password. */
-    @Synchronized
-    fun confirmImportWithRecoveryCode(code: CharArray): Boolean {
-        val src = pendingImportFile ?: return false
-        val name = pendingImportName?.removeSuffix(".dsvault")?.ifBlank { null } ?: DEFAULT_IMPORTED_NAME
-        val ok = importVaultWithRecovery(name, src, code)
         if (ok) {
             src.delete()
             pendingImportFile = null
