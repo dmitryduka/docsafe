@@ -127,6 +127,7 @@
     <string name="keep_one_method">Keep at least one unlock method.</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Off</string>
+    <string name="version_label">Version %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">Open with</string>

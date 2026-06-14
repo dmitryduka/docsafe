@@ -124,6 +124,7 @@
     <string name="keep_one_method">请至少保留一种解锁方式。</string>
     <string name="enabled">已启用</string>
     <string name="disabled">已关闭</string>
+    <string name="version_label">版本 %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">打开方式</string>

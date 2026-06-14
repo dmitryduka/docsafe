@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -170,6 +171,18 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
                     Text(AppLocales.displayName(viewModel.languageTag) ?: stringResource(R.string.language_system_default))
                 },
                 modifier = Modifier.clickable { showLanguageDialog = true },
+            )
+
+            val versionName = remember {
+                runCatching { context.packageManager.getPackageInfo(context.packageName, 0).versionName }
+                    .getOrNull().orEmpty()
+            }
+            Text(
+                stringResource(R.string.version_label, versionName),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp),
             )
         }
     }

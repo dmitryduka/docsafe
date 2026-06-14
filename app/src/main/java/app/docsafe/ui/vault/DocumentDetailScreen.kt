@@ -126,6 +126,18 @@ private enum class ThumbSize(val cell: Dp, val label: String) {
     LARGE(190.dp, "L"),
 }
 
+private const val THUMB_SIZE_PREFS = "docsafe_thumb_size"
+
+/** The remembered thumbnail size for [documentId] (defaults to MEDIUM). App-private prefs. */
+private fun loadThumbSize(context: Context, documentId: String): ThumbSize =
+    context.getSharedPreferences(THUMB_SIZE_PREFS, Context.MODE_PRIVATE).getString(documentId, null)
+        ?.let { runCatching { ThumbSize.valueOf(it) }.getOrNull() } ?: ThumbSize.MEDIUM
+
+private fun saveThumbSize(context: Context, documentId: String, size: ThumbSize) {
+    context.getSharedPreferences(THUMB_SIZE_PREFS, Context.MODE_PRIVATE).edit()
+        .putString(documentId, size.name).apply()
+}
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun DocumentDetailScreen(
@@ -143,7 +155,8 @@ fun DocumentDetailScreen(
     var renaming by remember { mutableStateOf(false) }
     var showFieldDialog by remember { mutableStateOf(false) }
     var showTagDialog by remember { mutableStateOf(false) }
-    var thumbSize by remember { mutableStateOf(ThumbSize.MEDIUM) }
+    // Per-document thumbnail size, remembered across visits (app-private prefs keyed by doc id).
+    var thumbSize by remember(documentId) { mutableStateOf(loadThumbSize(context, documentId)) }
     var selected by remember { mutableStateOf(setOf<String>()) }
 
     if (document == null) {
@@ -438,7 +451,7 @@ fun DocumentDetailScreen(
                         ThumbSize.entries.forEach { size ->
                             FilterChip(
                                 selected = thumbSize == size,
-                                onClick = { thumbSize = size },
+                                onClick = { thumbSize = size; saveThumbSize(context, documentId, size) },
                                 label = { Text(size.label) },
                                 modifier = Modifier.padding(start = 6.dp),
                             )

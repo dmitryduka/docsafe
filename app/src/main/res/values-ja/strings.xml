@@ -124,6 +124,7 @@
     <string name="keep_one_method">ロック解除方法を 1 つ以上残してください。</string>
     <string name="enabled">有効</string>
     <string name="disabled">オフ</string>
+    <string name="version_label">バージョン %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">開くアプリを選択</string>

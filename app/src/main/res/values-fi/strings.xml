@@ -124,6 +124,7 @@
     <string name="keep_one_method">Säilytä vähintään yksi lukituksen avaustapa.</string>
     <string name="enabled">Käytössä</string>
     <string name="disabled">Pois</string>
+    <string name="version_label">Versio %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">Avaa sovelluksella</string>

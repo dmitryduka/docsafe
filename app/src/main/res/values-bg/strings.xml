@@ -124,6 +124,7 @@
     <string name="keep_one_method">Запазете поне един начин за отключване.</string>
     <string name="enabled">Включено</string>
     <string name="disabled">Изкл.</string>
+    <string name="version_label">Версия %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">Отвори с</string>

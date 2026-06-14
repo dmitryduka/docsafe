@@ -124,6 +124,7 @@
     <string name="keep_one_method">Mantén al menos un método de desbloqueo.</string>
     <string name="enabled">Activado</string>
     <string name="disabled">Desactivado</string>
+    <string name="version_label">Versión %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">Abrir con</string>

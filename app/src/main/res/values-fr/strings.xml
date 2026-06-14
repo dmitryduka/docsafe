@@ -124,6 +124,7 @@
     <string name="keep_one_method">Conservez au moins une méthode de déverrouillage.</string>
     <string name="enabled">Activé</string>
     <string name="disabled">Désactivé</string>
+    <string name="version_label">Version %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">Ouvrir avec</string>

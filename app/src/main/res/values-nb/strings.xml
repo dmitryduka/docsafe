@@ -124,6 +124,7 @@
     <string name="keep_one_method">Behold minst én opplåsingsmetode.</string>
     <string name="enabled">Aktivert</string>
     <string name="disabled">Av</string>
+    <string name="version_label">Versjon %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">Åpne med</string>

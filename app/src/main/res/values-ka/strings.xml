@@ -124,6 +124,7 @@
     <string name="keep_one_method">დატოვეთ განბლოკვის სულ მცირე ერთი ხერხი.</string>
     <string name="enabled">ჩართულია</string>
     <string name="disabled">გამორთ.</string>
+    <string name="version_label">ვერსია %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">გახსნა აპით</string>

@@ -124,6 +124,7 @@
     <string name="keep_one_method">Թողեք առնվազն մեկ ապակողպման եղանակ։</string>
     <string name="enabled">Միացված է</string>
     <string name="disabled">Անջատ.</string>
+    <string name="version_label">Տարբերակ %1$s</string>
 
     <!-- Choosers, counts, errors -->
     <string name="open_with">Բացել հետևյալով</string>
