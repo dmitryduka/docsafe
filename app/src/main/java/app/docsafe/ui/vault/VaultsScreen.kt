@@ -55,6 +55,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -192,6 +193,18 @@ fun VaultsScreen(
                         onVaultSwitched()
                     } else {
                         toast(context, context.getString(R.string.import_failed))
+                    }
+                }
+            },
+            onConfirmRecovery = { name, code ->
+                scope.launch {
+                    val ok = viewModel.importVaultWithRecovery(name, file, code)
+                    if (ok) {
+                        toast(context, context.getString(R.string.vault_created))
+                        file.delete(); importFile = null
+                        onVaultSwitched()
+                    } else {
+                        toast(context, context.getString(R.string.recovery_code_invalid))
                     }
                 }
             },
@@ -347,7 +360,11 @@ private fun VaultRow(
     }
 }
 
-/** Dialog asking for a vault name + password (with optional confirm field for new vaults). */
+/**
+ * Dialog asking for a vault name + password (with optional confirm field for new vaults). When
+ * [onConfirmRecovery] is provided, an import dialog also offers a "use a recovery code instead"
+ * toggle that swaps the password field for a recovery-code field.
+ */
 @Composable
 internal fun NameAndPasswordDialog(
     title: String,
@@ -356,12 +373,18 @@ internal fun NameAndPasswordDialog(
     onDismiss: () -> Unit,
     onConfirm: (name: String, password: CharArray) -> Unit,
     initialName: String = "",
+    onConfirmRecovery: ((name: String, code: CharArray) -> Unit)? = null,
 ) {
     var name by remember { mutableStateOf(initialName) }
     var password by remember { mutableStateOf("") }
     var confirm by remember { mutableStateOf("") }
+    var recoveryMode by remember { mutableStateOf(false) }
     val minLen = 8
-    val valid = name.isNotBlank() && password.length >= minLen && (!requireConfirmPassword || password == confirm)
+    val valid = name.isNotBlank() && if (recoveryMode) {
+        password.isNotBlank()
+    } else {
+        password.length >= minLen && (!requireConfirmPassword || password == confirm)
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -372,9 +395,10 @@ internal fun NameAndPasswordDialog(
                     label = { Text(stringResource(R.string.vault_name)) }, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(value = password, onValueChange = { password = it }, singleLine = true,
-                    label = { Text(stringResource(R.string.master_password)) },
-                    visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
-                if (requireConfirmPassword) {
+                    label = { Text(stringResource(if (recoveryMode) R.string.recovery_code else R.string.master_password)) },
+                    visualTransformation = if (recoveryMode) VisualTransformation.None else PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth())
+                if (requireConfirmPassword && !recoveryMode) {
                     Spacer(Modifier.height(8.dp))
                     OutlinedTextField(value = confirm, onValueChange = { confirm = it }, singleLine = true,
                         label = { Text(stringResource(R.string.confirm_password)) },
@@ -383,10 +407,21 @@ internal fun NameAndPasswordDialog(
                     Text(stringResource(R.string.min_chars, minLen), style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
+                if (onConfirmRecovery != null) {
+                    TextButton(onClick = { recoveryMode = !recoveryMode; password = ""; confirm = "" }) {
+                        Text(stringResource(if (recoveryMode) R.string.use_password_instead else R.string.use_recovery_code))
+                    }
+                }
             }
         },
         confirmButton = {
-            TextButton(onClick = { onConfirm(name.trim(), password.toCharArray()) }, enabled = valid) { Text(confirmLabel) }
+            TextButton(
+                onClick = {
+                    if (recoveryMode && onConfirmRecovery != null) onConfirmRecovery(name.trim(), password.toCharArray())
+                    else onConfirm(name.trim(), password.toCharArray())
+                },
+                enabled = valid,
+            ) { Text(confirmLabel) }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
     )
