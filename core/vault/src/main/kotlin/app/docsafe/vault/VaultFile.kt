@@ -3,10 +3,12 @@ package app.docsafe.vault
 import app.docsafe.crypto.Aead
 import app.docsafe.crypto.Argon2idKdf
 import app.docsafe.crypto.BlobCipher
+import app.docsafe.crypto.DecryptionException
 import app.docsafe.crypto.Hashing
 import app.docsafe.crypto.KdfParams
 import app.docsafe.crypto.KeyEnvelope
 import app.docsafe.vault.format.KdfParamsDto
+import app.docsafe.vault.format.RecoveryBlockDto
 import app.docsafe.vault.format.VaultHeader
 import app.docsafe.vault.format.VaultHeaderCodec
 import app.docsafe.vault.model.BlobEntry
@@ -111,7 +113,32 @@ class VaultFile private constructor(
         header = header.copy(
             kdf = KdfParamsDto.from(params),
             wrappedDek = Base64.getEncoder().encodeToString(wrapped),
+            // Changing the password invalidates every recovery code (they wrap the DEK and were
+            // handed out against the old credential set).
+            recovery = null,
         )
+        store.writeAt(0, VaultHeaderCodec.encode(header))
+    }
+
+    /** True if this vault currently has any valid recovery codes. */
+    fun hasRecoveryCodes(): Boolean = header.recovery != null
+
+    /**
+     * (Re)places the recovery codes: derives a key from each code with fresh shared Argon2id
+     * params and wraps the **current DEK** under it, then rewrites the header. Requires the vault
+     * to be open (DEK in memory). Replaces any previous set.
+     */
+    fun setRecoveryCodes(codes: List<CharArray>, params: KdfParams = KdfParams.newRandom()) {
+        require(codes.isNotEmpty()) { "No recovery codes provided" }
+        val wraps = codes.map { code ->
+            val key = Argon2idKdf.deriveKey(RecoveryCodes.normalize(String(code)).toCharArray(), params)
+            try {
+                Base64.getEncoder().encodeToString(KeyEnvelope.wrap(key, dek))
+            } finally {
+                key.fill(0)
+            }
+        }
+        header = header.copy(recovery = RecoveryBlockDto(kdf = KdfParamsDto.from(params), wraps = wraps))
         store.writeAt(0, VaultHeaderCodec.encode(header))
     }
 
@@ -207,6 +234,35 @@ class VaultFile private constructor(
                 kek.fill(0)
             }
             return openWith(store, header, dek)
+        }
+
+        /**
+         * Opens a vault using a **recovery code** instead of the password. On success the matched
+         * code is struck from the header (single-use) and the header is rewritten on [store], so
+         * [store] must be the writable copy you intend to keep. Returns null if there are no
+         * recovery codes or none matches [code].
+         */
+        fun openWithRecoveryCode(store: VaultStore, code: CharArray): VaultFile? {
+            val header = readHeader(store)
+            val recovery = header.recovery ?: return null
+            val key = Argon2idKdf.deriveKey(RecoveryCodes.normalize(String(code)).toCharArray(), recovery.kdf.toKdfParams())
+            try {
+                recovery.wraps.forEachIndexed { i, wrapB64 ->
+                    val dek = try {
+                        KeyEnvelope.unwrap(key, Base64.getDecoder().decode(wrapB64))
+                    } catch (e: DecryptionException) {
+                        return@forEachIndexed
+                    }
+                    // Match. Strike this code (single-use) before opening.
+                    val remaining = recovery.wraps.filterIndexed { j, _ -> j != i }
+                    val updated = header.copy(recovery = if (remaining.isEmpty()) null else recovery.copy(wraps = remaining))
+                    store.writeAt(0, VaultHeaderCodec.encode(updated))
+                    return openWith(store, updated, dek)
+                }
+            } finally {
+                key.fill(0)
+            }
+            return null
         }
 
         /** Opens an existing vault with an already-unwrapped DEK (local unlock, no password). */

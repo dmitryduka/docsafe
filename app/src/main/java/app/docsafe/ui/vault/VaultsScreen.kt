@@ -20,12 +20,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CreateNewFolder
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -61,6 +63,7 @@ import app.docsafe.security.VaultMeta
 import app.docsafe.vault.model.VaultIndex
 import kotlinx.coroutines.launch
 import java.io.File
+import app.docsafe.ui.copyTextToClipboard
 import app.docsafe.ui.formatDate
 import app.docsafe.ui.rememberStepUp
 import app.docsafe.ui.toast
@@ -90,6 +93,8 @@ fun VaultsScreen(
     var removeTarget by remember { mutableStateOf<VaultMeta?>(null) }
     var mergeTarget by remember { mutableStateOf<VaultMeta?>(null) }
     var mergeIndex by remember { mutableStateOf<VaultIndex?>(null) }
+    var generatingFor by remember { mutableStateOf<String?>(null) }
+    var recoveryCodes by remember { mutableStateOf<List<String>?>(null) }
 
     val pickVault = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) {
@@ -124,6 +129,15 @@ fun VaultsScreen(
                         },
                         onMerge = {
                             mergeTarget = vault
+                        },
+                        onRecoveryCodes = {
+                            stepUp {
+                                scope.launch {
+                                    generatingFor = vault.id
+                                    recoveryCodes = viewModel.generateRecoveryCodes(vault.id)
+                                    generatingFor = null
+                                }
+                            }
                         },
                         onRemove = { removeTarget = vault },
                     )
@@ -228,6 +242,50 @@ fun VaultsScreen(
             )
         }
     }
+
+    if (generatingFor != null) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text(stringResource(R.string.recovery_codes)) },
+            text = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    CircularProgressIndicator()
+                    Spacer(Modifier.padding(start = 16.dp))
+                    Text(stringResource(R.string.generating))
+                }
+            },
+            confirmButton = {},
+        )
+    }
+
+    recoveryCodes?.let { codes ->
+        RecoveryCodesDialog(codes = codes, onDismiss = { recoveryCodes = null })
+    }
+}
+
+/** Shows freshly generated recovery codes once, with a copy-all action and a save-them warning. */
+@Composable
+private fun RecoveryCodesDialog(codes: List<String>, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = { Icon(Icons.Filled.Key, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
+        title = { Text(stringResource(R.string.recovery_codes)) },
+        text = {
+            Column {
+                Text(stringResource(R.string.recovery_codes_warning), style = MaterialTheme.typography.bodyMedium)
+                Spacer(Modifier.height(12.dp))
+                codes.forEach { code ->
+                    Text(code, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                }
+                Spacer(Modifier.height(8.dp))
+                OutlinedButton(onClick = { copyTextToClipboard(context, "recovery", codes.joinToString("\n")) }) {
+                    Text(stringResource(R.string.copy_all))
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.recovery_codes_saved)) } },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -237,6 +295,7 @@ private fun VaultRow(
     isActive: Boolean,
     onSwitch: () -> Unit,
     onMerge: () -> Unit,
+    onRecoveryCodes: () -> Unit,
     onRemove: () -> Unit,
 ) {
     var menuOpen by remember { mutableStateOf(false) }
@@ -270,6 +329,11 @@ private fun VaultRow(
                                     onClick = { menuOpen = false; onMerge() },
                                 )
                             }
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.recovery_codes)) },
+                                leadingIcon = { Icon(Icons.Filled.Key, null) },
+                                onClick = { menuOpen = false; onRecoveryCodes() },
+                            )
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.remove_vault), color = MaterialTheme.colorScheme.error) },
                                 onClick = { menuOpen = false; onRemove() },

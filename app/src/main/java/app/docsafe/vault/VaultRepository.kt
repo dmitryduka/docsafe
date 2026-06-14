@@ -9,6 +9,7 @@ import app.docsafe.vault.model.DocField
 import app.docsafe.vault.model.Document
 import app.docsafe.vault.model.Folder
 import app.docsafe.vault.model.VaultIndex
+import app.docsafe.vault.store.LocalFileVaultStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -302,6 +303,64 @@ class VaultRepository @Inject constructor(
                 result.copiedDocuments
             }
         }
+    }
+
+    /**
+     * Exports [folderIds] (with subtrees) and [docIds] from the active vault into a brand-new
+     * standalone vault file [dest] protected by [password]. The new vault gets a fresh random DEK;
+     * every blob + thumbnail is decrypted from the source and re-encrypted under it. The source
+     * vault is unchanged. Returns the number of documents exported.
+     */
+    suspend fun exportFoldersToNewVault(
+        folderIds: Set<String>,
+        docIds: Set<String>,
+        password: CharArray,
+        dest: java.io.File,
+    ): Int = withContext(Dispatchers.Default) { // Argon2 for the new password
+        mutex.withLock {
+            val source = session.require()
+            val srcIndex = source.snapshot()
+            val newVault = VaultFile.create(LocalFileVaultStore(dest), password)
+            try {
+                val result = VaultCopier.copy(
+                    source = source,
+                    sourceIndex = srcIndex,
+                    dest = newVault,
+                    destFolders = emptyMap(),
+                    destDocuments = emptyMap(),
+                    folderIds = folderIds,
+                    docIds = docIds,
+                    destParentId = null,
+                    newId = ::newId,
+                    now = ::now,
+                    by = me(),
+                    thumbnailFor = { bytes, kind -> thumbnailGenerator.generateJpeg(bytes, kind) },
+                )
+                newVault.commit(result.folders, result.documents)
+                result.copiedDocuments
+            } finally {
+                newVault.close()
+            }
+        }
+    }
+
+    /**
+     * Generates and stores a fresh set of recovery codes for [vaultId], returning the plaintext
+     * codes to show the user **once**. For the active vault the codes are set on the open handle
+     * (so a later index write won't clobber the header); other vaults are opened transiently.
+     * The heavy Argon2 derivations run off the main thread.
+     */
+    suspend fun generateRecoveryCodes(vaultId: String): List<String> = withContext(Dispatchers.Default) {
+        val codes = RecoveryCodes.generate()
+        mutex.withLock {
+            val charCodes = codes.map { it.toCharArray() }
+            if (vaultId == securityRepository.activeVaultId()) {
+                session.require().setRecoveryCodes(charCodes)
+            } else {
+                withVault(vaultId) { it.setRecoveryCodes(charCodes) }
+            }
+        }
+        codes
     }
 
     /** Opens a non-active vault transiently (via its master-key-unwrapped DEK), runs [block], closes it. */

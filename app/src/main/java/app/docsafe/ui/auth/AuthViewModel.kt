@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.docsafe.R
 import app.docsafe.security.SecurityRepository
 import app.docsafe.security.SecurityState
 import app.docsafe.share.PendingShareStore
@@ -91,6 +92,13 @@ class AuthViewModel @Inject constructor(
     fun confirmImport(password: CharArray) = runHeavy {
         if (!securityRepository.confirmImport(password)) {
             _ui.value = _ui.value.copy(error = "Wrong password or not a valid DocSafe vault.")
+        }
+    }
+
+    /** Imports the pending shared file using a recovery code instead of the password. */
+    fun confirmImportWithRecoveryCode(code: CharArray) = runHeavy {
+        if (!securityRepository.confirmImportWithRecoveryCode(code)) {
+            _ui.value = _ui.value.copy(error = appContext.getString(R.string.recovery_code_invalid))
         }
     }
 

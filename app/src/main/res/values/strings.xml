@@ -92,6 +92,20 @@
     <string name="err_cant_save_file">Couldn\'t save this file</string>
     <string name="err_cant_save_vault">Couldn\'t save vault</string>
     <string name="confirm_identity">Confirm it\'s you</string>
+    <!-- Export selected folders to a new vault file -->
+    <string name="export_to_new_vault">Export to new vault</string>
+    <string name="export_new_vault_message">The selected items are copied into a brand-new vault file with the password you set here. Your current vault is unchanged.</string>
+    <string name="exported_documents">Exported %1$d document(s)</string>
+    <!-- Recovery codes -->
+    <string name="recovery_codes">Recovery codes</string>
+    <string name="recovery_codes_warning">Save these codes somewhere safe and separate from this device. Each code opens this vault once if you forget the password. They will not be shown again. Generating new codes replaces any previous ones, and changing the password cancels them all.</string>
+    <string name="recovery_codes_saved">I\'ve saved them</string>
+    <string name="copy_all">Copy all</string>
+    <string name="recovery_code">Recovery code</string>
+    <string name="use_recovery_code">Use a recovery code instead</string>
+    <string name="use_password_instead">Use password instead</string>
+    <string name="recovery_code_invalid">Invalid recovery code, or not a recoverable vault</string>
+    <string name="generating">Generating…</string>
     <string name="reclaimed_space">Reclaimed %1$s · now %2$s</string>
     <string name="already_compact">Already compact · %1$s</string>
     <string name="reclaim_failed">Couldn\'t reclaim space</string>

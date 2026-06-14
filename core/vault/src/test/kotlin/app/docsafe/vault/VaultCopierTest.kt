@@ -102,6 +102,43 @@ class VaultCopierTest {
     }
 
     @Test
+    fun exportsSelectedFoldersIntoANewVaultWithItsOwnPassword() {
+        // Mirrors VaultRepository.exportFoldersToNewVault: copy a folder subtree into a fresh
+        // vault created with a new password.
+        val source = buildSource()
+        val store = InMemoryVaultStore()
+        val newVault = VaultFile.create(store, "export-pw".toCharArray(), fastKdf())
+        var seq = 0
+        val result = VaultCopier.copy(
+            source = source, sourceIndex = source.snapshot(), dest = newVault,
+            destFolders = emptyMap(), destDocuments = emptyMap(),
+            folderIds = setOf("f1"), docIds = emptySet(), destParentId = null,
+            newId = { "x${seq++}" }, now = { 100L }, by = "dev", thumbnailFor = { _, _ -> null },
+        )
+        newVault.commit(result.folders, result.documents)
+        newVault.close()
+
+        // The new file opens with the new password and contains exactly the exported subtree.
+        val reopened = VaultFile.open(store, "export-pw".toCharArray())
+        val idx = reopened.snapshot()
+        assertThat(idx.folders.values.map { it.name }).containsExactly("Travel", "Sub")
+        val boarding = idx.documents.values.first { it.name == "Boarding" }
+        assertThat(reopened.readBlob(boarding.attachments.single().blobId)).isEqualTo("IMAGE-BYTES".toByteArray())
+
+        // A different password does not open it (independent DEK/KEK).
+        try {
+            VaultFile.open(store, "wrong-pw".toCharArray())
+            throw AssertionError("Expected wrong password to fail")
+        } catch (e: app.docsafe.crypto.DecryptionException) {
+            // expected
+        }
+
+        // Source vault is untouched.
+        assertThat(source.snapshot().folders.keys).containsExactly("f1", "f2")
+        source.close(); reopened.close()
+    }
+
+    @Test
     fun mergeUnionsSameNamedFoldersAndRenamesConflictingDocuments() {
         val source = buildSource() // "Travel" / "Sub", docs "Boarding" (in Travel) and "Hotel" (in Sub)
         val dest = VaultFile.create(InMemoryVaultStore(), "q".toCharArray(), fastKdf())

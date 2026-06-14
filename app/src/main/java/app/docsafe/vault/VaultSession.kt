@@ -90,6 +90,22 @@ class VaultSession @Inject constructor(
         dek
     }
 
+    /**
+     * Imports [src] using a recovery [code] instead of the password. Verifies the code against
+     * [src] FIRST (so a wrong code leaves the current session untouched), which also strikes the
+     * used code from [src]; then copies the (now-struck) file to [dest] and opens it active.
+     * Returns the DEK, or null if the code does not match.
+     */
+    fun importIntoWithRecovery(dest: File, src: File, code: CharArray): ByteArray? = lock.write {
+        val probe = VaultFile.openWithRecoveryCode(LocalFileVaultStore(src), code) ?: return@write null
+        val dek = probe.dataKey
+        probe.close()
+        close()
+        src.copyTo(dest, overwrite = true)
+        openWithDek(dest, dek)
+        dek
+    }
+
     /** Opens a non-active vault [file] with [dek] as a standalone handle; the caller must close it. */
     fun openTransient(file: File, dek: ByteArray): VaultFile =
         VaultFile.openWithDek(LocalFileVaultStore(file), dek)

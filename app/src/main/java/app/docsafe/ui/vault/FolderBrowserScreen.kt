@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.IosShare
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.NoteAdd
+import androidx.compose.material.icons.filled.Output
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
@@ -49,7 +50,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -127,6 +133,8 @@ fun FolderBrowserScreen(
     var chooseCopyVault by remember { mutableStateOf(false) }
     var copyTarget by remember { mutableStateOf<app.docsafe.security.VaultMeta?>(null) }
     var copyTargetIndex by remember { mutableStateOf<app.docsafe.vault.model.VaultIndex?>(null) }
+    var exportPasswordFor by remember { mutableStateOf<MoveTargets?>(null) }
+    var pendingExport by remember { mutableStateOf<Pair<MoveTargets, CharArray>?>(null) }
     val selectionMode = selectedDocs.isNotEmpty() || selectedFolders.isNotEmpty()
     fun clearSelection() { selectedDocs = emptySet(); selectedFolders = emptySet() }
     fun toggleFolder(id: String) { selectedFolders = if (id in selectedFolders) selectedFolders - id else selectedFolders + id }
@@ -150,6 +158,26 @@ fun FolderBrowserScreen(
         ActivityResultContracts.CreateDocument("application/octet-stream"),
     ) { uri ->
         if (uri != null) scope.launch { saveVaultToUri(context, viewModel, uri) }
+    }
+
+    // Export selected folders/docs into a brand-new vault file at a user-chosen location.
+    val exportLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/octet-stream"),
+    ) { uri ->
+        val req = pendingExport
+        pendingExport = null
+        if (req == null) return@rememberLauncherForActivityResult
+        val (targets, password) = req
+        if (uri == null) { password.fill(' '); return@rememberLauncherForActivityResult }
+        scope.launch {
+            val n = exportToNewVaultFile(context, viewModel, targets.folderIds, targets.docIds, password, uri)
+            password.fill(' ')
+            Toast.makeText(
+                context,
+                if (n >= 0) context.getString(R.string.exported_documents, n) else context.getString(R.string.err_cant_save_vault),
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
     }
 
     LaunchedEffect(compactionMessage) {
@@ -176,6 +204,13 @@ fun FolderBrowserScreen(
                         }
                         IconButton(onClick = { chooseCopyVault = true }) {
                             Icon(Icons.Filled.ContentCopy, contentDescription = stringResource(R.string.copy_to_vault))
+                        }
+                        IconButton(onClick = {
+                            val targets = MoveTargets(selectedFolders, selectedDocs)
+                            // Exporting copies data out — gate behind a fresh confirmation.
+                            stepUp { exportPasswordFor = targets }
+                        }) {
+                            Icon(Icons.Filled.Output, contentDescription = stringResource(R.string.export_to_new_vault))
                         }
                         IconButton(onClick = {
                             selectedFolders.forEach { viewModel.deleteFolder(it) }
@@ -447,6 +482,22 @@ fun FolderBrowserScreen(
         )
     }
 
+    // Export selected items to a brand-new vault file: pick a password, then a save location.
+    exportPasswordFor?.let { targets ->
+        NewPasswordDialog(
+            title = stringResource(R.string.export_to_new_vault),
+            message = stringResource(R.string.export_new_vault_message),
+            onDismiss = { exportPasswordFor = null },
+            onConfirm = { password ->
+                exportPasswordFor = null
+                pendingExport = targets to password
+                clearSelection()
+                viewModel.notifyExternalActivityStarting()
+                exportLauncher.launch("DocSafe-export.dsvault")
+            },
+        )
+    }
+
     // Copy selected items into another vault: choose the target vault, then a destination folder.
     if (chooseCopyVault) {
         val allVaults by viewModel.vaultList.collectAsStateWithLifecycle()
@@ -625,6 +676,75 @@ private suspend fun saveVaultToUri(context: Context, viewModel: VaultViewModel, 
         }.getOrDefault(false)
     }
     Toast.makeText(context, context.getString(if (ok) R.string.vault_saved else R.string.err_cant_save_vault), Toast.LENGTH_SHORT).show()
+}
+
+/** Asks for a new password (with confirmation) for the exported vault; returns it as a CharArray. */
+@Composable
+private fun NewPasswordDialog(
+    title: String,
+    message: String,
+    onDismiss: () -> Unit,
+    onConfirm: (CharArray) -> Unit,
+) {
+    val minLen = 8
+    var password by remember { mutableStateOf("") }
+    var confirm by remember { mutableStateOf("") }
+    val valid = password.length >= minLen && password == confirm
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(title) },
+        text = {
+            Column {
+                Text(message, style = MaterialTheme.typography.bodyMedium)
+                Spacer(Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = password, onValueChange = { password = it }, singleLine = true,
+                    label = { Text(stringResource(R.string.master_password)) },
+                    visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = confirm, onValueChange = { confirm = it }, singleLine = true,
+                    label = { Text(stringResource(R.string.confirm_password)) },
+                    isError = confirm.isNotEmpty() && confirm != password,
+                    visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    stringResource(R.string.min_chars, minLen),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        },
+        confirmButton = { TextButton(onClick = { onConfirm(password.toCharArray()) }, enabled = valid) { Text(stringResource(R.string.export_to_new_vault)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+    )
+}
+
+/**
+ * Builds a new vault from the selected items into a temp file, copies it to [dest], wipes the temp.
+ * Returns the number of documents exported, or -1 on failure.
+ */
+private suspend fun exportToNewVaultFile(
+    context: Context,
+    viewModel: VaultViewModel,
+    folderIds: Set<String>,
+    docIds: Set<String>,
+    password: CharArray,
+    dest: Uri,
+): Int = withContext(Dispatchers.IO) {
+    val tmp = File(File(context.cacheDir, "shared").apply { mkdirs() }, "export_${System.nanoTime()}.dsvault")
+    try {
+        val count = viewModel.exportToNewVault(folderIds, docIds, password, tmp)
+        context.contentResolver.openOutputStream(dest)?.use { out -> tmp.inputStream().use { it.copyTo(out) } }
+            ?: error("no output stream")
+        count
+    } catch (e: Exception) {
+        -1
+    } finally {
+        tmp.delete()
+    }
 }
 
 /** Exports the encrypted vault to cache and opens the system share sheet to send it anywhere. */

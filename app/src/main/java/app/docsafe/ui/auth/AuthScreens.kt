@@ -43,6 +43,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
@@ -128,6 +129,7 @@ fun CreateVaultScreen(viewModel: AuthViewModel) {
 fun ImportVaultScreen(viewModel: AuthViewModel) {
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     var password by remember { mutableStateOf("") }
+    var recoveryMode by remember { mutableStateOf(false) }
     val name = viewModel.pendingImportName ?: stringResource(R.string.import_vault_title)
 
     AuthScaffold(
@@ -138,21 +140,31 @@ fun ImportVaultScreen(viewModel: AuthViewModel) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text(stringResource(R.string.master_password)) },
+            label = { Text(stringResource(if (recoveryMode) R.string.recovery_code else R.string.master_password)) },
             singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (recoveryMode) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = if (recoveryMode) KeyboardType.Text else KeyboardType.Password),
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(20.dp))
         Button(
-            onClick = { viewModel.confirmImport(password.toCharArray()) },
+            onClick = {
+                if (recoveryMode) viewModel.confirmImportWithRecoveryCode(password.toCharArray())
+                else viewModel.confirmImport(password.toCharArray())
+            },
             enabled = password.isNotEmpty() && !ui.busy,
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(stringResource(R.string.import_vault))
         }
         Spacer(Modifier.height(8.dp))
+        TextButton(
+            onClick = { recoveryMode = !recoveryMode; password = ""; viewModel.clearError() },
+            enabled = !ui.busy,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(stringResource(if (recoveryMode) R.string.use_password_instead else R.string.use_recovery_code))
+        }
         OutlinedButton(
             onClick = { viewModel.cancelImport() },
             enabled = !ui.busy,

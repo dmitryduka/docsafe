@@ -229,6 +229,14 @@ class VaultViewModel @Inject constructor(
     suspend fun mergeActiveInto(destVaultId: String, destFolderId: String?): Int =
         repository.mergeActiveInto(destVaultId, destFolderId)
 
+    /** Exports selected folders/documents into a new standalone vault file with its own password. */
+    suspend fun exportToNewVault(folderIds: Set<String>, docIds: Set<String>, password: CharArray, dest: java.io.File): Int =
+        repository.exportFoldersToNewVault(folderIds, docIds, password, dest)
+
+    /** Generates a fresh set of recovery codes for [vaultId]; returns them to show once. */
+    suspend fun generateRecoveryCodes(vaultId: String): List<String> =
+        repository.generateRecoveryCodes(vaultId)
+
     fun addTag(documentId: String, tag: String) = viewModelScope.launch { repository.addTag(documentId, tag) }
     fun removeTag(documentId: String, tag: String) = viewModelScope.launch { repository.removeTag(documentId, tag) }
     fun setDocumentStarred(documentId: String, starred: Boolean) =
