@@ -92,7 +92,7 @@
     <string name="export_new_vault_message">Gli elementi selezionati vengono copiati in un file di caveau del tutto nuovo con la password impostata qui. Il caveau attuale resta invariato.</string>
     <string name="exported_documents">%1$d documento/i esportato/i</string>
     <string name="recovery_codes">Codici di recupero</string>
-    <string name="recovery_codes_warning">Conserva questi codici in un luogo sicuro e separato da questo dispositivo. Ogni codice apre questo caveau una volta se dimentichi la password. Non verranno mostrati di nuovo. Generare nuovi codici sostituisce quelli precedenti e cambiare la password li annulla tutti.</string>
+    <string name="recovery_codes_warning">Questi codici sono salvati nel file di questa cassaforte. Esegui ora un backup della cassaforte (Salva sul dispositivo) — il recupero avviene reimportando quel backup e inserendo un codice invece della password, quindi un backup fatto prima d’ora non accetterà questi codici. Conserva i codici in un luogo sicuro e separato dal dispositivo. Ogni codice funziona una volta, non verranno più mostrati, i nuovi codici sostituiscono i precedenti e cambiare la password li annulla tutti.</string>
     <string name="recovery_codes_saved">Li ho salvati</string>
     <string name="copy_all">Copia tutto</string>
     <string name="recovery_code">Codice di recupero</string>

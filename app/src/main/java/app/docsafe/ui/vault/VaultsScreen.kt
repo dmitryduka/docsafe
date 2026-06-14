@@ -198,7 +198,7 @@ fun VaultsScreen(
             },
             onConfirmRecovery = { name, code ->
                 scope.launch {
-                    val ok = viewModel.importVaultWithRecovery(name, file, code)
+                    val ok = runCatching { viewModel.importVaultWithRecovery(name, file, code) }.getOrDefault(false)
                     if (ok) {
                         toast(context, context.getString(R.string.vault_created))
                         file.delete(); importFile = null

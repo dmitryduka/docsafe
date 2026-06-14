@@ -92,7 +92,7 @@
     <string name="export_new_vault_message">Los elementos seleccionados se copian en un archivo de caja fuerte totalmente nuevo con la contraseña que definas aquí. Tu caja fuerte actual no cambia.</string>
     <string name="exported_documents">%1$d documento(s) exportado(s)</string>
     <string name="recovery_codes">Códigos de recuperación</string>
-    <string name="recovery_codes_warning">Guarda estos códigos en un lugar seguro y separado de este dispositivo. Cada código abre esta caja fuerte una vez si olvidas la contraseña. No se volverán a mostrar. Generar códigos nuevos reemplaza los anteriores y cambiar la contraseña los cancela todos.</string>
+    <string name="recovery_codes_warning">Estos códigos se guardan dentro del archivo de esta caja fuerte. Haz una copia de seguridad de la caja fuerte ahora (Guardar en el dispositivo): la recuperación se hace reimportando esa copia e introduciendo un código en lugar de la contraseña, por lo que una copia hecha antes no aceptará estos códigos. Guarda los códigos en un lugar seguro y separado de este dispositivo. Cada código funciona una vez, no se volverán a mostrar, los códigos nuevos reemplazan a los anteriores y cambiar la contraseña los cancela todos.</string>
     <string name="recovery_codes_saved">Los he guardado</string>
     <string name="copy_all">Copiar todo</string>
     <string name="recovery_code">Código de recuperación</string>

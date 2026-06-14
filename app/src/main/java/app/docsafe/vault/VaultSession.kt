@@ -97,9 +97,23 @@ class VaultSession @Inject constructor(
      * Returns the DEK, or null if the code does not match.
      */
     fun importIntoWithRecovery(dest: File, src: File, code: CharArray): ByteArray? = lock.write {
-        val probe = VaultFile.openWithRecoveryCode(LocalFileVaultStore(src), code) ?: return@write null
-        val dek = probe.dataKey
-        probe.close()
+        // Probe the staged source. Own the store explicitly so it is always closed (no fd leak)
+        // and so a malformed file fails closed (return null) instead of throwing — the caller
+        // surfaces a clean error rather than crashing.
+        val store = LocalFileVaultStore(src)
+        val dek = try {
+            val probe = VaultFile.openWithRecoveryCode(store, code)
+            if (probe == null) {
+                store.close()
+                return@write null
+            }
+            probe.dataKey.also { probe.close() } // probe.close() also closes `store`
+        } catch (t: Throwable) {
+            // Anything here (malformed file, or even an OOM from the memory-hard KDF) must fail
+            // closed so the caller shows a clean error instead of crashing the app.
+            runCatching { store.close() }
+            return@write null
+        }
         close()
         src.copyTo(dest, overwrite = true)
         openWithDek(dest, dek)

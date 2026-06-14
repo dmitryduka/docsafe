@@ -92,7 +92,7 @@
     <string name="export_new_vault_message">De valda objekten kopieras till en helt ny valvfil med lösenordet du anger här. Ditt nuvarande valv ändras inte.</string>
     <string name="exported_documents">%1$d dokument exporterade</string>
     <string name="recovery_codes">Återställningskoder</string>
-    <string name="recovery_codes_warning">Spara dessa koder på en säker plats, skild från den här enheten. Varje kod öppnar valvet en gång om du glömmer lösenordet. De visas inte igen. Att skapa nya koder ersätter de tidigare, och att byta lösenord upphäver alla.</string>
+    <string name="recovery_codes_warning">Dessa koder lagras i den här valvfilen. Säkerhetskopiera valvet nu (Spara till enhet) — återställning sker genom att återimportera den säkerhetskopian och ange en kod i stället för lösenordet, så en kopia gjord tidigare godtar inte dessa koder. Förvara koderna säkert och skilt från enheten. Varje kod fungerar en gång, de visas inte igen, nya koder ersätter de gamla och att byta lösenord upphäver alla.</string>
     <string name="recovery_codes_saved">Jag har sparat dem</string>
     <string name="copy_all">Kopiera alla</string>
     <string name="recovery_code">Återställningskod</string>

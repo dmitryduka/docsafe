@@ -92,7 +92,7 @@
     <string name="export_new_vault_message">所选项目将复制到一个全新的保险库文件中，并使用你在此设置的密码。当前保险库保持不变。</string>
     <string name="exported_documents">已导出 %1$d 个文档</string>
     <string name="recovery_codes">恢复代码</string>
-    <string name="recovery_codes_warning">请将这些代码保存在安全且与本设备分开的地方。如果你忘记密码，每个代码可打开此保险库一次。它们不会再次显示。生成新代码会替换旧代码，更改密码会使其全部失效。</string>
+    <string name="recovery_codes_warning">这些代码保存在此保险库的文件中。请立即备份保险库（保存到设备）——恢复是通过重新导入该备份并输入代码（而非密码）来完成的，因此此前生成的备份不会接受这些代码。请将代码保存在安全且与本设备分开的地方。每个代码只能使用一次，且不会再次显示；生成新代码会替换旧代码，更改密码会使其全部失效。</string>
     <string name="recovery_codes_saved">我已保存</string>
     <string name="copy_all">全部复制</string>
     <string name="recovery_code">恢复代码</string>

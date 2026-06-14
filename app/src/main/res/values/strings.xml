@@ -98,7 +98,7 @@
     <string name="exported_documents">Exported %1$d document(s)</string>
     <!-- Recovery codes -->
     <string name="recovery_codes">Recovery codes</string>
-    <string name="recovery_codes_warning">Save these codes somewhere safe and separate from this device. Each code opens this vault once if you forget the password. They will not be shown again. Generating new codes replaces any previous ones, and changing the password cancels them all.</string>
+    <string name="recovery_codes_warning">These codes are stored inside this vault\'s file. Back up the vault now (Save vault to device) — recovery works by re-importing that backup and entering a code instead of the password, so a backup made before now will not accept these codes. Keep the codes somewhere safe and separate from this device. Each code works once, they will not be shown again, generating new codes replaces the old ones, and changing the password cancels them all.</string>
     <string name="recovery_codes_saved">I\'ve saved them</string>
     <string name="copy_all">Copy all</string>
     <string name="recovery_code">Recovery code</string>

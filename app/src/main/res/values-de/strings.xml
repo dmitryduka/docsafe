@@ -92,7 +92,7 @@
     <string name="export_new_vault_message">Die ausgewählten Elemente werden in eine brandneue Tresordatei mit dem hier festgelegten Passwort kopiert. Dein aktueller Tresor bleibt unverändert.</string>
     <string name="exported_documents">%1$d Dokument(e) exportiert</string>
     <string name="recovery_codes">Wiederherstellungscodes</string>
-    <string name="recovery_codes_warning">Bewahre diese Codes sicher und getrennt von diesem Gerät auf. Jeder Code öffnet diesen Tresor einmal, falls du das Passwort vergisst. Sie werden nicht erneut angezeigt. Neue Codes ersetzen die bisherigen, und eine Passwortänderung macht alle ungültig.</string>
+    <string name="recovery_codes_warning">Diese Codes werden in der Datei dieses Tresors gespeichert. Sichere den Tresor jetzt (Auf Gerät speichern) — die Wiederherstellung erfolgt durch erneuten Import dieser Sicherung und Eingabe eines Codes statt des Passworts; eine frühere Sicherung akzeptiert diese Codes daher nicht. Bewahre die Codes sicher und getrennt vom Gerät auf. Jeder Code funktioniert einmal, sie werden nicht erneut angezeigt, neue Codes ersetzen die alten, und eine Passwortänderung macht alle ungültig.</string>
     <string name="recovery_codes_saved">Ich habe sie gespeichert</string>
     <string name="copy_all">Alle kopieren</string>
     <string name="recovery_code">Wiederherstellungscode</string>

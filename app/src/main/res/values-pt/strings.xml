@@ -92,7 +92,7 @@
     <string name="export_new_vault_message">Os itens selecionados são copiados para um arquivo de cofre totalmente novo com a senha definida aqui. Seu cofre atual permanece inalterado.</string>
     <string name="exported_documents">%1$d documento(s) exportado(s)</string>
     <string name="recovery_codes">Códigos de recuperação</string>
-    <string name="recovery_codes_warning">Guarde estes códigos em um local seguro e separado deste dispositivo. Cada código abre este cofre uma vez se você esquecer a senha. Eles não serão mostrados novamente. Gerar novos códigos substitui os anteriores, e alterar a senha cancela todos.</string>
+    <string name="recovery_codes_warning">Estes códigos são guardados dentro do arquivo deste cofre. Faça um backup do cofre agora (Salvar no dispositivo) — a recuperação é feita reimportando esse backup e digitando um código em vez da senha, então um backup feito antes disto não aceitará estes códigos. Guarde os códigos em um local seguro e separado deste dispositivo. Cada código funciona uma vez, não serão mostrados novamente, novos códigos substituem os antigos e alterar a senha cancela todos.</string>
     <string name="recovery_codes_saved">Eu os salvei</string>
     <string name="copy_all">Copiar tudo</string>
     <string name="recovery_code">Código de recuperação</string>

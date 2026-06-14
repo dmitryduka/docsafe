@@ -92,7 +92,7 @@
     <string name="export_new_vault_message">選択した項目は、ここで設定したパスワードで新しい保管庫ファイルにコピーされます。現在の保管庫は変更されません。</string>
     <string name="exported_documents">%1$d 件の書類をエクスポートしました</string>
     <string name="recovery_codes">リカバリーコード</string>
-    <string name="recovery_codes_warning">これらのコードは、この端末とは別の安全な場所に保管してください。パスワードを忘れた場合、各コードはこの保管庫を一度だけ開けます。再表示はされません。新しいコードを生成すると以前のものは置き換えられ、パスワードを変更するとすべて無効になります。</string>
+    <string name="recovery_codes_warning">これらのコードはこの保管庫のファイル内に保存されます。今すぐ保管庫をバックアップしてください（端末に保存）。復元はそのバックアップを再インポートし、パスワードの代わりにコードを入力して行うため、これより前に作成したバックアップではこれらのコードは使えません。コードは端末とは別の安全な場所に保管してください。各コードは一度だけ有効で、再表示されず、新しいコードを生成すると古いものは置き換えられ、パスワードを変更するとすべて無効になります。</string>
     <string name="recovery_codes_saved">保存しました</string>
     <string name="copy_all">すべてコピー</string>
     <string name="recovery_code">リカバリーコード</string>
