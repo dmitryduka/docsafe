@@ -88,6 +88,11 @@
     <string name="save_to_device">Auf Gerät speichern</string>
     <string name="file_saved">Auf Gerät gespeichert</string>
     <string name="err_cant_save_file">Diese Datei konnte nicht gespeichert werden</string>
+    <string name="reclaimed_space">%1$s freigegeben · jetzt %2$s</string>
+    <string name="already_compact">Bereits kompakt · %1$s</string>
+    <string name="reclaim_failed">Speicher konnte nicht freigegeben werden</string>
+    <string name="err_cant_save_vault">Tresor konnte nicht gespeichert werden</string>
+    <string name="confirm_identity">Bestätigen Sie Ihre Identität</string>
     <string name="add_field">Feld hinzufügen</string>
     <string name="field_key">Schlüssel</string>
     <string name="field_value">Wert</string>

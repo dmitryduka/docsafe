@@ -88,6 +88,11 @@
     <string name="save_to_device">ذخیره در دستگاه</string>
     <string name="file_saved">در دستگاه ذخیره شد</string>
     <string name="err_cant_save_file">ذخیره این فایل ممکن نشد</string>
+    <string name="reclaimed_space">%1$s آزاد شد · اکنون %2$s</string>
+    <string name="already_compact">از قبل فشرده است · %1$s</string>
+    <string name="reclaim_failed">آزادسازی فضا ممکن نشد</string>
+    <string name="err_cant_save_vault">ذخیره گاوصندوق ممکن نشد</string>
+    <string name="confirm_identity">هویت خود را تأیید کنید</string>
     <string name="add_field">افزودن فیلد</string>
     <string name="field_key">کلید</string>
     <string name="field_value">مقدار</string>

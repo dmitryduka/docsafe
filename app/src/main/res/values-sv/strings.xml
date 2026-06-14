@@ -88,6 +88,11 @@
     <string name="save_to_device">Spara på enheten</string>
     <string name="file_saved">Sparat på enheten</string>
     <string name="err_cant_save_file">Det gick inte att spara filen</string>
+    <string name="reclaimed_space">Återvann %1$s · nu %2$s</string>
+    <string name="already_compact">Redan kompakt · %1$s</string>
+    <string name="reclaim_failed">Det gick inte att frigöra utrymme</string>
+    <string name="err_cant_save_vault">Det gick inte att spara valvet</string>
+    <string name="confirm_identity">Bekräfta att det är du</string>
     <string name="add_field">Lägg till fält</string>
     <string name="field_key">Nyckel</string>
     <string name="field_value">Värde</string>

@@ -83,13 +83,13 @@ class VaultFile private constructor(
     /** Returns the raw ciphertext bytes of a blob (for copying between vaults during sync). */
     fun readBlobCiphertext(blobId: String): ByteArray {
         val entry = currentIndex.blobs[blobId] ?: error("Unknown blob $blobId")
-        return store.read(entry.encOffset, entry.encLength.toInt())
+        return store.read(entry.encOffset, intLength(entry.encLength))
     }
 
     /** Seeks to and decrypts a single blob by id. Reads only that blob's byte range. */
     fun readBlob(blobId: String): ByteArray {
         val entry = currentIndex.blobs[blobId] ?: error("Unknown blob $blobId")
-        val ciphertext = store.read(entry.encOffset, entry.encLength.toInt())
+        val ciphertext = store.read(entry.encOffset, intLength(entry.encLength))
         return blobCipher.decrypt(Hashing.fromHex(blobId), ciphertext, entry.chunkSize)
     }
 
@@ -149,7 +149,7 @@ class VaultFile private constructor(
         val newBlobs = LinkedHashMap<String, BlobEntry>()
         for (id in referenced) {
             val entry = currentIndex.blobs[id] ?: continue
-            val ciphertext = store.read(entry.encOffset, entry.encLength.toInt())
+            val ciphertext = store.read(entry.encOffset, intLength(entry.encLength))
             val offset = target.append(ciphertext)
             newBlobs[id] = entry.copy(encOffset = offset)
         }
@@ -162,6 +162,12 @@ class VaultFile private constructor(
     override fun close() {
         dek.fill(0)
         store.close()
+    }
+
+    /** Narrows a stored byte length to Int, rejecting values that would overflow (corrupt/crafted index). */
+    private fun intLength(value: Long): Int {
+        require(value in 0..Int.MAX_VALUE.toLong()) { "Blob length out of range: $value" }
+        return value.toInt()
     }
 
     companion object {

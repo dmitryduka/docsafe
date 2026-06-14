@@ -90,6 +90,11 @@
     <string name="save_to_device">Save to device</string>
     <string name="file_saved">Saved to device</string>
     <string name="err_cant_save_file">Couldn\'t save this file</string>
+    <string name="err_cant_save_vault">Couldn\'t save vault</string>
+    <string name="confirm_identity">Confirm it\'s you</string>
+    <string name="reclaimed_space">Reclaimed %1$s · now %2$s</string>
+    <string name="already_compact">Already compact · %1$s</string>
+    <string name="reclaim_failed">Couldn\'t reclaim space</string>
     <string name="add_field">Add field</string>
     <string name="field_key">Key</string>
     <string name="field_value">Value</string>

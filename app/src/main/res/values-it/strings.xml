@@ -88,6 +88,11 @@
     <string name="save_to_device">Salva sul dispositivo</string>
     <string name="file_saved">Salvato sul dispositivo</string>
     <string name="err_cant_save_file">Impossibile salvare questo file</string>
+    <string name="reclaimed_space">Recuperati %1$s · ora %2$s</string>
+    <string name="already_compact">Già compatto · %1$s</string>
+    <string name="reclaim_failed">Impossibile recuperare spazio</string>
+    <string name="err_cant_save_vault">Impossibile salvare la cassaforte</string>
+    <string name="confirm_identity">Conferma la tua identità</string>
     <string name="add_field">Aggiungi campo</string>
     <string name="field_key">Chiave</string>
     <string name="field_value">Valore</string>

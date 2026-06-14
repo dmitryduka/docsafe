@@ -88,6 +88,11 @@
     <string name="save_to_device">მოწყობილობაზე შენახვა</string>
     <string name="file_saved">შენახულია მოწყობილობაზე</string>
     <string name="err_cant_save_file">ამ ფაილის შენახვა ვერ მოხერხდა</string>
+    <string name="reclaimed_space">გათავისუფლდა %1$s · ახლა %2$s</string>
+    <string name="already_compact">უკვე კომპაქტურია · %1$s</string>
+    <string name="reclaim_failed">სივრცის გათავისუფლება ვერ მოხერხდა</string>
+    <string name="err_cant_save_vault">სეიფის შენახვა ვერ მოხერხდა</string>
+    <string name="confirm_identity">დაადასტურეთ ვინაობა</string>
     <string name="add_field">ველის დამატება</string>
     <string name="field_key">გასაღები</string>
     <string name="field_value">მნიშვნელობა</string>

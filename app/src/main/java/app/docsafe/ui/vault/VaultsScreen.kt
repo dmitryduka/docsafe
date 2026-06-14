@@ -61,9 +61,9 @@ import app.docsafe.security.VaultMeta
 import app.docsafe.vault.model.VaultIndex
 import kotlinx.coroutines.launch
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import app.docsafe.ui.formatDate
+import app.docsafe.ui.rememberStepUp
+import app.docsafe.ui.toast
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,6 +76,14 @@ fun VaultsScreen(
     val activeId by viewModel.activeVaultId.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+
+    // Removing a vault is destructive — require a fresh biometric/PIN confirmation.
+    val stepUp = rememberStepUp(
+        biometricEnabled = viewModel.biometricEnabled,
+        title = stringResource(R.string.confirm_identity),
+        subtitle = stringResource(R.string.unlock_subtitle),
+        verifyPin = viewModel::verifyPin,
+    )
 
     var showCreate by remember { mutableStateOf(false) }
     var importFile by remember { mutableStateOf<File?>(null) }
@@ -184,9 +192,13 @@ fun VaultsScreen(
             text = { Text(stringResource(R.string.remove_vault_warning, vault.name)) },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.removeVault(vault.id)
-                    toast(context, context.getString(R.string.vault_removed))
+                    val id = vault.id
                     removeTarget = null
+                    // Step-up confirm before the destructive removal.
+                    stepUp {
+                        viewModel.removeVault(id)
+                        toast(context, context.getString(R.string.vault_removed))
+                    }
                 }) {
                     Text(stringResource(R.string.remove_vault_confirm), color = MaterialTheme.colorScheme.error)
                 }
@@ -235,7 +247,7 @@ private fun VaultRow(
             colors = if (isActive) ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.secondaryContainer) else ListItemDefaults.colors(),
             leadingContent = { Icon(Icons.Filled.Lock, null, tint = MaterialTheme.colorScheme.primary) },
             headlineContent = { Text(vault.name, fontWeight = FontWeight.Medium) },
-            supportingContent = { Text(rowDate(vault.createdAt)) },
+            supportingContent = { Text(formatDate(vault.createdAt)) },
             trailingContent = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (isActive) {
@@ -346,17 +358,14 @@ internal fun VaultChooserDialog(
     )
 }
 
-private fun rowDate(epochMs: Long): String =
-    SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(Date(epochMs))
-
-private fun toast(context: android.content.Context, message: String) =
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-
 /** Copies a picked `.dsvault` content [uri] into a temp file for import. */
 private suspend fun stageImport(context: android.content.Context, uri: Uri): File? =
     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
         runCatching {
-            val temp = File(context.cacheDir, "import_${System.nanoTime()}.dsvault")
+            // Staged under a cache subdir that is wiped on lock, so an abandoned import (e.g. the
+            // dialog dismissed via back-press) cannot leave the file behind indefinitely.
+            val dir = File(context.cacheDir, "import_tmp").apply { mkdirs() }
+            val temp = File(dir, "import_${System.nanoTime()}.dsvault")
             context.contentResolver.openInputStream(uri)?.use { input -> temp.outputStream().use { input.copyTo(it) } }
                 ?: return@runCatching null
             temp

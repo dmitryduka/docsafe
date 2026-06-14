@@ -37,4 +37,23 @@ class Argon2idKdfTest {
     fun newRandomParamsHaveUniqueSalts() {
         assertThat(KdfParams.newRandom().salt).isNotEqualTo(KdfParams.newRandom().salt)
     }
+
+    @Test
+    fun rejectsAbsurdCostParamsFromAMaliciousHeader() {
+        val salt = ByteArray(16) { 7 }
+        // Memory / iterations / parallelism above the sane ceilings are refused before any
+        // (OOM / unbounded-CPU) derivation is attempted.
+        assertThrows { KdfParams(memoryKib = KdfParams.MAX_MEMORY_KIB + 1, iterations = 1, parallelism = 1, salt = salt) }
+        assertThrows { KdfParams(memoryKib = 1024, iterations = KdfParams.MAX_ITERATIONS + 1, parallelism = 1, salt = salt) }
+        assertThrows { KdfParams(memoryKib = 1024, iterations = 1, parallelism = KdfParams.MAX_PARALLELISM + 1, salt = salt) }
+    }
+
+    private fun assertThrows(block: () -> Unit) {
+        try {
+            block()
+            throw AssertionError("Expected an exception but none was thrown")
+        } catch (e: IllegalArgumentException) {
+            // expected
+        }
+    }
 }

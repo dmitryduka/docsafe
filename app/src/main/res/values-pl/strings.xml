@@ -88,6 +88,11 @@
     <string name="save_to_device">Zapisz na urządzeniu</string>
     <string name="file_saved">Zapisano na urządzeniu</string>
     <string name="err_cant_save_file">Nie udało się zapisać tego pliku</string>
+    <string name="reclaimed_space">Odzyskano %1$s · teraz %2$s</string>
+    <string name="already_compact">Już skompaktowano · %1$s</string>
+    <string name="reclaim_failed">Nie udało się odzyskać miejsca</string>
+    <string name="err_cant_save_vault">Nie można zapisać sejfu</string>
+    <string name="confirm_identity">Potwierdź swoją tożsamość</string>
     <string name="add_field">Dodaj pole</string>
     <string name="field_key">Klucz</string>
     <string name="field_value">Wartość</string>

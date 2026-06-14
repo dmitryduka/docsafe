@@ -18,6 +18,11 @@ data class KdfParams(
         require(algorithm == ALGORITHM_ARGON2ID) { "Unsupported KDF algorithm: $algorithm" }
         require(salt.size >= MIN_SALT_LEN) { "Salt must be at least $MIN_SALT_LEN bytes" }
         require(memoryKib > 0 && iterations > 0 && parallelism > 0) { "KDF cost parameters must be positive" }
+        // Upper bounds reject absurd values from a maliciously-crafted vault header, which would
+        // otherwise drive an out-of-memory / unbounded-CPU derivation on open/import.
+        require(memoryKib <= MAX_MEMORY_KIB) { "KDF memory too large: $memoryKib KiB" }
+        require(iterations <= MAX_ITERATIONS) { "KDF iterations too large: $iterations" }
+        require(parallelism <= MAX_PARALLELISM) { "KDF parallelism too large: $parallelism" }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -46,6 +51,11 @@ data class KdfParams(
         const val DEFAULT_PARALLELISM = 1
         const val DEFAULT_SALT_LEN = 16
         const val MIN_SALT_LEN = 16
+
+        // Sanity ceilings for header-supplied (hence untrusted) cost parameters.
+        const val MAX_MEMORY_KIB = 1024 * 1024 // 1 GiB
+        const val MAX_ITERATIONS = 64
+        const val MAX_PARALLELISM = 16
 
         /** Creates parameters with a fresh random salt and the interactive defaults. */
         fun newRandom(): KdfParams = KdfParams(salt = randomBytes(DEFAULT_SALT_LEN))

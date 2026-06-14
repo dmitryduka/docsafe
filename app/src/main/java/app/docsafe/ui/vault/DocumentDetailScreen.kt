@@ -1,5 +1,11 @@
 package app.docsafe.ui.vault
 
+import app.docsafe.ui.copyUriToClipboard
+import app.docsafe.ui.exportManyToShareCache
+import app.docsafe.ui.exportToShareCache
+import app.docsafe.ui.formatDate
+import app.docsafe.ui.safeFileName
+import app.docsafe.ui.toast
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -79,6 +85,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -140,14 +147,16 @@ fun DocumentDetailScreen(
     var selected by remember { mutableStateOf(setOf<String>()) }
 
     if (document == null) {
-        onNavigateUp()
+        // Document was deleted out from under us — leave the screen as a side effect, not during
+        // composition, and render nothing this frame.
+        LaunchedEffect(Unit) { onNavigateUp() }
         return
     }
     val selectionMode = selected.isNotEmpty()
 
     fun openExternally(attachment: Attachment) {
         scope.launch {
-            val result = runCatching { exportToCache(context, viewModel, attachment) }.getOrNull()
+            val result = runCatching { exportToShareCache(context, viewModel, attachment) }.getOrNull()
                 ?: return@launch toast(context, context.getString(R.string.err_cant_open))
             viewModel.notifyExternalActivityStarting()
             val intent = Intent(Intent.ACTION_VIEW)
@@ -163,7 +172,7 @@ fun DocumentDetailScreen(
 
     fun shareOne(attachment: Attachment) {
         scope.launch {
-            val result = runCatching { exportToCache(context, viewModel, attachment) }.getOrNull()
+            val result = runCatching { exportToShareCache(context, viewModel, attachment) }.getOrNull()
                 ?: return@launch toast(context, context.getString(R.string.err_cant_share))
             viewModel.notifyExternalActivityStarting()
             val intent = Intent(Intent.ACTION_SEND)
@@ -178,7 +187,7 @@ fun DocumentDetailScreen(
         val attachments = document.attachments.filter { it.id in selected }
         if (attachments.isEmpty()) return
         scope.launch {
-            val uris = withContext(Dispatchers.IO) { exportMany(context, viewModel, attachments) }
+            val uris = withContext(Dispatchers.IO) { exportManyToShareCache(context, viewModel, attachments) }
             if (uris.isEmpty()) return@launch
             viewModel.notifyExternalActivityStarting()
             val intent = if (uris.size == 1) {
@@ -690,19 +699,6 @@ internal fun AddFieldDialog(
     )
 }
 
-private data class ExportedBlob(val uri: Uri, val mime: String)
-
-private suspend fun exportToCache(context: Context, viewModel: VaultViewModel, attachment: Attachment): ExportedBlob =
-    withContext(Dispatchers.IO) {
-        val bytes = viewModel.readBlob(attachment.blobId)
-        val dir = File(context.cacheDir, "shared").apply { mkdirs() }
-        dir.listFiles()?.forEach { it.delete() }
-        val file = File(dir, safeFileName(attachment.fileName))
-        file.writeBytes(bytes)
-        val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-        ExportedBlob(uri, attachment.mimeType ?: mimeFromName(attachment.fileName) ?: "application/octet-stream")
-    }
-
 /** Decrypts an attachment and writes it to a user-chosen location (SAF). Returns success. */
 private suspend fun saveAttachmentToUri(context: Context, viewModel: VaultViewModel, attachment: Attachment, dest: Uri): Boolean =
     withContext(Dispatchers.IO) {
@@ -714,29 +710,12 @@ private suspend fun saveAttachmentToUri(context: Context, viewModel: VaultViewMo
         }.getOrDefault(false)
     }
 
-/** Exports several attachments to cache and returns their FileProvider uris (for multi-share). */
-private suspend fun exportMany(context: Context, viewModel: VaultViewModel, attachments: List<Attachment>): List<Uri> {
-    val dir = File(context.cacheDir, "shared").apply { mkdirs() }
-    dir.listFiles()?.forEach { it.delete() }
-    val out = ArrayList<Uri>()
-    attachments.forEachIndexed { i, att ->
-        runCatching {
-            val bytes = viewModel.readBlob(att.blobId)
-            val file = File(dir, "${i}_" + safeFileName(att.fileName))
-            file.writeBytes(bytes)
-            out.add(FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file))
-        }
-    }
-    return out
-}
-
 private fun copyToClipboard(context: Context, viewModel: VaultViewModel, scope: CoroutineScope, attachment: Attachment) {
     scope.launch {
-        val result = runCatching { exportToCache(context, viewModel, attachment) }.getOrNull()
-            ?: return@launch toast(context, "Couldn't copy this file")
-        val clipboard = context.getSystemService(android.content.ClipboardManager::class.java)
-        clipboard?.setPrimaryClip(android.content.ClipData.newUri(context.contentResolver, attachment.fileName, result.uri))
-        toast(context, "Copied to clipboard")
+        val result = runCatching { exportToShareCache(context, viewModel, attachment) }.getOrNull()
+            ?: return@launch toast(context, context.getString(R.string.err_cant_copy))
+        copyUriToClipboard(context, attachment.fileName, result.uri)
+        toast(context, context.getString(R.string.copied))
     }
 }
 
@@ -754,11 +733,7 @@ private data class ImportedFile(val bytes: ByteArray, val fileName: String, val 
 private fun readImported(context: Context, uri: Uri): ImportedFile? {
     val resolver = context.contentResolver
     val mime = resolver.getType(uri)
-    val kind = when {
-        mime == "application/pdf" -> AttachmentKind.PDF
-        mime?.startsWith("image/") == true -> AttachmentKind.IMAGE
-        else -> AttachmentKind.OTHER
-    }
+    val kind = AttachmentKind.fromMime(mime)
     val name = queryDisplayName(context, uri) ?: uri.lastPathSegment?.substringAfterLast('/') ?: defaultName(mime)
     val bytes = resolver.openInputStream(uri)?.use { it.readBytes() } ?: return null
     return ImportedFile(bytes, name, kind, mime)
@@ -779,17 +754,3 @@ private fun defaultName(mime: String?): String {
     return if (ext != null) "file.$ext" else "file"
 }
 
-private fun mimeFromName(name: String): String? {
-    val ext = name.substringAfterLast('.', "").lowercase()
-    if (ext.isEmpty()) return null
-    return MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext)
-}
-
-private fun safeFileName(name: String): String = name.replace(Regex("[^A-Za-z0-9._-]"), "_").ifEmpty { "file" }
-
-private fun formatDate(epochMs: Long): String =
-    SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(Date(epochMs))
-
-private fun toast(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}

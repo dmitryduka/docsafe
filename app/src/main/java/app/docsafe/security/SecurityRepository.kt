@@ -1,9 +1,12 @@
 package app.docsafe.security
 
+import android.content.Context
 import android.os.SystemClock
 import app.docsafe.crypto.DecryptionException
 import app.docsafe.crypto.KeyEnvelope
+import app.docsafe.ui.wipeShareCaches
 import app.docsafe.vault.VaultSession
+import dagger.hilt.android.qualifiers.ApplicationContext
 import app.docsafe.vault.format.KdfParamsDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,6 +46,7 @@ enum class SecurityState {
  */
 @Singleton
 class SecurityRepository @Inject constructor(
+    @ApplicationContext private val appContext: Context,
     private val secureStore: SecureStore,
     private val keyManager: BiometricKeyManager,
     private val session: VaultSession,
@@ -62,7 +66,9 @@ class SecurityRepository @Inject constructor(
     var pendingImportName: String? = null
         private set
 
-    private var suppressNextBackgroundLock = false
+    // Auto-lock is suppressed only briefly while we launch our own pickers/scanners, so a cancelled
+    // launch can't leave the vault permanently un-lockable. Expressed as an expiry timestamp.
+    private var suppressBackgroundLockUntilMs: Long = 0L
     private var backgroundedAtElapsedMs: Long? = null
 
     private val _state = MutableStateFlow(initialState())
@@ -112,6 +118,7 @@ class SecurityRepository @Inject constructor(
     fun createVault(password: CharArray) = createVault(DEFAULT_VAULT_NAME, password)
 
     /** Creates a new vault. If unlocked, it is added and becomes active; otherwise it begins onboarding. */
+    @Synchronized
     fun createVault(name: String, password: CharArray) {
         deviceId()
         val unlocked = masterKey != null
@@ -128,6 +135,7 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Imports an external [src] `.dsvault` as a new vault. Returns false on a wrong password. */
+    @Synchronized
     fun importVault(name: String, src: File, password: CharArray): Boolean {
         deviceId()
         val unlocked = masterKey != null
@@ -165,6 +173,7 @@ class SecurityRepository @Inject constructor(
     /** True while a shared `.dsvault` is staged and waiting to be unlocked before import. */
     fun hasPendingImport(): Boolean = pendingImportFile != null
 
+    @Synchronized
     fun beginImport(file: File, displayName: String?) {
         pendingImportFile = file
         pendingImportName = displayName
@@ -177,11 +186,13 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Once unlocked with a pending import present, move to the password prompt. */
+    @Synchronized
     fun promotePendingImport() {
         if (pendingImportFile != null) _state.value = SecurityState.ImportPending
     }
 
     /** Confirms a pending shared-file import with its master [password]; adds it as a new vault. */
+    @Synchronized
     fun confirmImport(password: CharArray): Boolean {
         val src = pendingImportFile ?: return false
         val name = pendingImportName?.removeSuffix(".dsvault")?.ifBlank { null } ?: DEFAULT_IMPORTED_NAME
@@ -194,6 +205,7 @@ class SecurityRepository @Inject constructor(
         return ok
     }
 
+    @Synchronized
     fun cancelImport() {
         pendingImportFile?.delete()
         pendingImportFile = null
@@ -214,6 +226,7 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Completes biometric *setup*: wraps the (pending) master key with the authenticated cipher. */
+    @Synchronized
     fun completeBiometricSetup(authenticatedCipher: Cipher) {
         val mk = currentMasterKey()
         val ciphertext = authenticatedCipher.doFinal(mk)
@@ -221,6 +234,7 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Completes biometric *unlock*: unwraps the master key, migrates if needed, opens active vault. */
+    @Synchronized
     fun completeBiometricUnlock(authenticatedCipher: Cipher) {
         val wrapped = requireNotNull(biometricWrappedBlob())
         val mk = authenticatedCipher.doFinal(wrapped.copyOfRange(GCM_IV_LEN, wrapped.size))
@@ -232,6 +246,7 @@ class SecurityRepository @Inject constructor(
 
     // --- PIN setup / unlock ------------------------------------------------------------
 
+    @Synchronized
     fun enablePin(pin: CharArray) {
         val mk = currentMasterKey()
         val params = PinKdf.newParams()
@@ -245,6 +260,7 @@ class SecurityRepository @Inject constructor(
         }
     }
 
+    @Synchronized
     fun disablePin(): Boolean {
         if (!secureStore.biometricEnabled) return false
         secureStore.masterKeyPinWrapped = null
@@ -252,6 +268,7 @@ class SecurityRepository @Inject constructor(
         return true
     }
 
+    @Synchronized
     fun disableBiometric(): Boolean {
         if (!secureStore.pinEnabled) return false
         secureStore.masterKeyBiometricWrapped = null
@@ -259,6 +276,7 @@ class SecurityRepository @Inject constructor(
         return true
     }
 
+    @Synchronized
     fun unlockWithPin(pin: CharArray): Boolean {
         val paramsBytes = secureStore.pinKdfParams ?: return false
         val wrapped = pinWrappedBlob() ?: return false
@@ -348,6 +366,7 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Switches the active vault (seamless — uses the master key already in memory). */
+    @Synchronized
     fun switchToVault(id: String) {
         val mk = masterKey ?: error("Locked")
         val meta = registry.meta(id) ?: return
@@ -362,6 +381,7 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Removes a vault (deletes its file + keys). If it was the last one, returns to onboarding. */
+    @Synchronized
     fun removeVault(id: String) {
         val meta = registry.meta(id) ?: return
         val wasActive = registry.activeVaultId == id
@@ -390,6 +410,7 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Unwraps a vault's DEK for cross-vault copy/merge (requires unlocked). Caller zeroes it. */
+    @Synchronized
     fun dekFor(id: String): ByteArray {
         val mk = masterKey ?: error("Locked")
         return unwrapDek(mk, id)
@@ -401,29 +422,35 @@ class SecurityRepository @Inject constructor(
     }
 
     /** Changes the active vault's master password (re-wraps its DEK under a new password). */
+    @Synchronized
     fun changeActiveVaultPassword(newPassword: CharArray) {
         session.require().changePassword(newPassword)
     }
 
     // --- Lock lifecycle ----------------------------------------------------------------
 
+    @Synchronized
     fun notifyExternalActivityStarting() {
-        suppressNextBackgroundLock = true
+        suppressBackgroundLockUntilMs = SystemClock.elapsedRealtime() + EXTERNAL_LAUNCH_WINDOW_MS
     }
 
+    private fun backgroundLockSuppressed(): Boolean =
+        SystemClock.elapsedRealtime() < suppressBackgroundLockUntilMs
+
+    @Synchronized
     fun onAppBackgrounded() {
-        if (suppressNextBackgroundLock) return
+        if (backgroundLockSuppressed()) return
         if (_state.value == SecurityState.Unlocked) {
             backgroundedAtElapsedMs = SystemClock.elapsedRealtime()
         }
     }
 
+    @Synchronized
     fun onAppForegrounded() {
-        val suppressed = suppressNextBackgroundLock
-        suppressNextBackgroundLock = false
+        // Consume any pending suppression on return so it can't carry over to a later backgrounding.
+        suppressBackgroundLockUntilMs = 0L
         val backgroundedAt = backgroundedAtElapsedMs
         backgroundedAtElapsedMs = null
-        if (suppressed) return
         if (_state.value == SecurityState.Unlocked &&
             backgroundedAt != null &&
             SystemClock.elapsedRealtime() - backgroundedAt >= LOCK_GRACE_MS
@@ -432,11 +459,15 @@ class SecurityRepository @Inject constructor(
         }
     }
 
+    @Synchronized
     fun lock() {
         session.close()
         masterKey?.fill(0); masterKey = null
         pendingMasterKey?.fill(0); pendingMasterKey = null
         backgroundedAtElapsedMs = null
+        // Drop any decrypted plaintext we wrote to the cache for sharing/opening so it does not
+        // linger at rest once the vault is locked.
+        wipeShareCaches(appContext)
         if (secureStore.anyMethodEnabled && registry.active != null) _state.value = SecurityState.Locked
     }
 
@@ -444,6 +475,7 @@ class SecurityRepository @Inject constructor(
         masterKey ?: pendingMasterKey ?: error("No master key available for setup")
 
     /** Leaves onboarding once at least one unlock method is configured. */
+    @Synchronized
     fun completeOnboarding() {
         if (!secureStore.anyMethodEnabled) return
         masterKey = pendingMasterKey
@@ -458,6 +490,7 @@ class SecurityRepository @Inject constructor(
     private companion object {
         const val GCM_IV_LEN = 12
         const val LOCK_GRACE_MS = 30_000L
+        const val EXTERNAL_LAUNCH_WINDOW_MS = 60_000L
         const val DEFAULT_VAULT_NAME = "My Vault"
         const val DEFAULT_IMPORTED_NAME = "Imported vault"
     }

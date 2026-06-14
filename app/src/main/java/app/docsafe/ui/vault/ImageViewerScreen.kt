@@ -1,8 +1,8 @@
 package app.docsafe.ui.vault
 
+import app.docsafe.ui.copyTextToClipboard
+import app.docsafe.ui.exportToShareCache
 import android.content.ActivityNotFoundException
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -42,6 +42,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -106,7 +107,8 @@ fun ImageViewerScreen(
     val document = index.activeDocument(documentId)
     val images = document?.attachments?.filter { it.kind == AttachmentKind.IMAGE }.orEmpty()
     if (images.isEmpty()) {
-        onBack()
+        // No images left (document/attachment removed) — navigate back as a side effect.
+        LaunchedEffect(Unit) { onBack() }
         return
     }
     val startIndex = images.indexOfFirst { it.id == startAttachmentId }.coerceAtLeast(0)
@@ -401,24 +403,9 @@ private class FitMapping(container: IntSize, val bw: Int, val bh: Int) {
     }
 }
 
-private data class ViewerBlob(val uri: Uri, val mime: String)
-
-private suspend fun exportBlob(context: Context, viewModel: VaultViewModel, attachment: Attachment): ViewerBlob? =
-    withContext(Dispatchers.IO) {
-        runCatching {
-            val bytes = viewModel.readBlob(attachment.blobId)
-            val dir = File(context.cacheDir, "shared").apply { mkdirs() }
-            dir.listFiles()?.forEach { it.delete() }
-            val file = File(dir, attachment.fileName.replace(Regex("[^A-Za-z0-9._-]"), "_").ifEmpty { "image" })
-            file.writeBytes(bytes)
-            val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-            ViewerBlob(uri, attachment.mimeType ?: "image/*")
-        }.getOrNull()
-    }
-
 private fun openExternally(context: Context, viewModel: VaultViewModel, scope: CoroutineScope, attachment: Attachment) {
     scope.launch {
-        val e = exportBlob(context, viewModel, attachment) ?: return@launch
+        val e = runCatching { exportToShareCache(context, viewModel, attachment) }.getOrNull() ?: return@launch
         viewModel.notifyExternalActivityStarting()
         val intent = Intent(Intent.ACTION_VIEW).setDataAndType(e.uri, e.mime)
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -429,7 +416,7 @@ private fun openExternally(context: Context, viewModel: VaultViewModel, scope: C
 
 private fun shareExternally(context: Context, viewModel: VaultViewModel, scope: CoroutineScope, attachment: Attachment) {
     scope.launch {
-        val e = exportBlob(context, viewModel, attachment) ?: return@launch
+        val e = runCatching { exportToShareCache(context, viewModel, attachment) }.getOrNull() ?: return@launch
         viewModel.notifyExternalActivityStarting()
         val intent = Intent(Intent.ACTION_SEND).setType(e.mime).putExtra(Intent.EXTRA_STREAM, e.uri)
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -437,9 +424,8 @@ private fun shareExternally(context: Context, viewModel: VaultViewModel, scope: 
     }
 }
 
-/** Copies plain text to the clipboard with a short confirmation toast. */
+/** Copies plain text to the clipboard (marked sensitive) with a short confirmation toast. */
 internal fun copyText(context: Context, value: String) {
-    val clipboard = context.getSystemService(ClipboardManager::class.java)
-    clipboard?.setPrimaryClip(ClipData.newPlainText("value", value))
+    copyTextToClipboard(context, "value", value)
     Toast.makeText(context, context.getString(R.string.copied), Toast.LENGTH_SHORT).show()
 }

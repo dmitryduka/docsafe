@@ -77,6 +77,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.content.Context
 import android.content.Intent
 import app.docsafe.vault.breadcrumb
+import app.docsafe.ui.formatDate
+import app.docsafe.ui.rememberStepUp
 import app.docsafe.vault.childDocuments
 import app.docsafe.vault.childFolders
 import app.docsafe.vault.model.Document
@@ -134,6 +136,14 @@ fun FolderBrowserScreen(
     val compactionMessage by viewModel.compactionMessage.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+
+    // Fresh confirmation gate before exporting/sharing the whole vault.
+    val stepUp = rememberStepUp(
+        biometricEnabled = viewModel.biometricEnabled,
+        title = stringResource(R.string.confirm_identity),
+        subtitle = stringResource(R.string.unlock_subtitle),
+        verifyPin = viewModel::verifyPin,
+    )
 
     // Save the encrypted vault to a user-chosen location on the device (Files/Downloads/etc.).
     val saveLauncher = rememberLauncherForActivityResult(
@@ -197,8 +207,11 @@ fun FolderBrowserScreen(
                                 leadingIcon = { Icon(Icons.Filled.Download, null) },
                                 onClick = {
                                     topMenuOpen = false
-                                    viewModel.notifyExternalActivityStarting()
-                                    saveLauncher.launch("DocSafe-vault.dsvault")
+                                    // Exporting the whole vault — require a fresh confirmation first.
+                                    stepUp {
+                                        viewModel.notifyExternalActivityStarting()
+                                        saveLauncher.launch("DocSafe-vault.dsvault")
+                                    }
                                 },
                             )
                             DropdownMenuItem(
@@ -206,7 +219,7 @@ fun FolderBrowserScreen(
                                 leadingIcon = { Icon(Icons.Filled.IosShare, null) },
                                 onClick = {
                                     topMenuOpen = false
-                                    scope.launch { exportAndShareVault(context, viewModel) }
+                                    stepUp { scope.launch { exportAndShareVault(context, viewModel) } }
                                 },
                             )
                             DropdownMenuItem(
@@ -473,7 +486,7 @@ private data class MoveTargets(val folderIds: Set<String>, val docIds: Set<Strin
 
 @Composable
 private fun docSubtitle(doc: Document): String =
-    stringResource(R.string.files_count, doc.attachments.size) + " · " + rowDate(doc.createdAt)
+    stringResource(R.string.files_count, doc.attachments.size) + " · " + formatDate(doc.createdAt)
 
 /** Human-readable location path ("My Vault › Folder › Subfolder") for a search result. */
 @Composable
@@ -493,7 +506,7 @@ private fun folderSubtitle(index: VaultIndex, folder: Folder): String {
         docs > 0 -> stringResource(R.string.count_documents, docs)
         else -> stringResource(R.string.empty)
     }
-    return count + " · " + rowDate(folder.createdAt)
+    return count + " · " + formatDate(folder.createdAt)
 }
 
 @Composable
@@ -576,9 +589,6 @@ private fun EntryRow(
     )
 }
 
-private fun rowDate(epochMs: Long): String =
-    java.text.SimpleDateFormat("MMM d, yyyy", java.util.Locale.getDefault()).format(java.util.Date(epochMs))
-
 @Composable
 private fun SectionHeader(text: String) {
     Text(
@@ -614,7 +624,7 @@ private suspend fun saveVaultToUri(context: Context, viewModel: VaultViewModel, 
             true
         }.getOrDefault(false)
     }
-    Toast.makeText(context, if (ok) "Vault saved" else "Couldn't save vault", Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, context.getString(if (ok) R.string.vault_saved else R.string.err_cant_save_vault), Toast.LENGTH_SHORT).show()
 }
 
 /** Exports the encrypted vault to cache and opens the system share sheet to send it anywhere. */
@@ -629,7 +639,7 @@ private suspend fun exportAndShareVault(context: Context, viewModel: VaultViewMo
         .setType("application/octet-stream")
         .putExtra(Intent.EXTRA_STREAM, uri)
         .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    context.startActivity(Intent.createChooser(intent, "Share vault"))
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_vault)))
 }
 
 private sealed interface NameDialogRequest {

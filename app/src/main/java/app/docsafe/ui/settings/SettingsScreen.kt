@@ -45,9 +45,9 @@ import app.docsafe.R
 import app.docsafe.i18n.AppLocales
 import app.docsafe.security.BiometricAuthenticator
 import app.docsafe.security.BiometricResult
+import app.docsafe.ui.MIN_PIN_LEN
+import app.docsafe.ui.rememberStepUp
 import kotlinx.coroutines.launch
-
-private const val MIN_PIN_LEN = 4
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,25 +63,15 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
     var showPinDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showChangePassword by remember { mutableStateOf(false) }
-    var showVerifyPin by remember { mutableStateOf(false) }
 
-    // Step-up confirmation before the sensitive "change master password" action.
-    fun requestChangePassword() {
-        if (flags.biometric) {
-            scope.launch {
-                when (val r = authenticator.authenticate(
-                    context.getString(R.string.change_master_password),
-                    context.getString(R.string.unlock_subtitle),
-                )) {
-                    is BiometricResult.Success -> showChangePassword = true
-                    is BiometricResult.Error -> Toast.makeText(context, r.message, Toast.LENGTH_SHORT).show()
-                    BiometricResult.Failed -> Unit
-                }
-            }
-        } else {
-            showVerifyPin = true
-        }
-    }
+    // Fresh biometric/PIN confirmation gate for sensitive actions (change password, disable an
+    // unlock method, change PIN). Being already unlocked is not enough.
+    val stepUp = rememberStepUp(
+        biometricEnabled = flags.biometric,
+        title = stringResource(R.string.confirm_identity),
+        subtitle = stringResource(R.string.unlock_subtitle),
+        verifyPin = viewModel::verifyPin,
+    )
 
     fun enableBiometric() {
         scope.launch {
@@ -133,8 +123,10 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
                         enabled = !busy && (flags.biometric || biometricAvailable),
                         onCheckedChange = { on ->
                             if (on) enableBiometric()
-                            else if (!viewModel.disableBiometric()) {
-                                Toast.makeText(context, context.getString(R.string.keep_one_method), Toast.LENGTH_SHORT).show()
+                            else stepUp {
+                                if (!viewModel.disableBiometric()) {
+                                    Toast.makeText(context, context.getString(R.string.keep_one_method), Toast.LENGTH_SHORT).show()
+                                }
                             }
                         },
                     )
@@ -149,23 +141,25 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
                         enabled = !busy,
                         onCheckedChange = { on ->
                             if (on) showPinDialog = true
-                            else if (!viewModel.disablePin()) {
-                                Toast.makeText(context, context.getString(R.string.keep_one_method), Toast.LENGTH_SHORT).show()
+                            else stepUp {
+                                if (!viewModel.disablePin()) {
+                                    Toast.makeText(context, context.getString(R.string.keep_one_method), Toast.LENGTH_SHORT).show()
+                                }
                             }
                         },
                     )
                 },
-                modifier = Modifier.clickable(enabled = !busy) { showPinDialog = true },
+                modifier = Modifier.clickable(enabled = !busy && !flags.pin) { showPinDialog = true },
             )
             if (flags.pin) {
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.change_pin)) },
-                    modifier = Modifier.clickable(enabled = !busy) { showPinDialog = true },
+                    modifier = Modifier.clickable(enabled = !busy) { stepUp { showPinDialog = true } },
                 )
             }
             ListItem(
                 headlineContent = { Text(stringResource(R.string.change_master_password)) },
-                modifier = Modifier.clickable(enabled = !busy) { requestChangePassword() },
+                modifier = Modifier.clickable(enabled = !busy) { stepUp { showChangePassword = true } },
             )
 
             HorizontalDivider()
@@ -184,21 +178,6 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
         PinDialog(
             onDismiss = { showPinDialog = false },
             onConfirm = { pin -> viewModel.setPin(pin.toCharArray()); showPinDialog = false },
-        )
-    }
-    if (showVerifyPin) {
-        VerifyPinDialog(
-            onDismiss = { showVerifyPin = false },
-            onConfirm = { pin ->
-                scope.launch {
-                    if (viewModel.verifyPin(pin.toCharArray())) {
-                        showVerifyPin = false
-                        showChangePassword = true
-                    } else {
-                        Toast.makeText(context, context.getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show()
-                    }
-                }
-            },
         )
     }
     if (showChangePassword) {
@@ -269,32 +248,6 @@ private fun PinDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
             }
         },
         confirmButton = { TextButton(onClick = { onConfirm(pin) }, enabled = valid) { Text(stringResource(R.string.action_save)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
-    )
-}
-
-@Composable
-private fun VerifyPinDialog(onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
-    var pin by remember { mutableStateOf("") }
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.change_master_password)) },
-        text = {
-            OutlinedTextField(
-                value = pin,
-                onValueChange = { pin = it.filter(Char::isDigit) },
-                label = { Text(stringResource(R.string.pin)) },
-                singleLine = true,
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                modifier = Modifier.fillMaxWidth(),
-            )
-        },
-        confirmButton = {
-            TextButton(onClick = { onConfirm(pin) }, enabled = pin.length >= MIN_PIN_LEN) {
-                Text(stringResource(R.string.action_continue))
-            }
-        },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
     )
 }

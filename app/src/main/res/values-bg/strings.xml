@@ -88,6 +88,11 @@
     <string name="save_to_device">Запази на устройството</string>
     <string name="file_saved">Запазено на устройството</string>
     <string name="err_cant_save_file">Този файл не можа да бъде запазен</string>
+    <string name="reclaimed_space">Освободени %1$s · сега %2$s</string>
+    <string name="already_compact">Вече е компактно · %1$s</string>
+    <string name="reclaim_failed">Неуспешно освобождаване на място</string>
+    <string name="err_cant_save_vault">Неуспешно запазване на трезора</string>
+    <string name="confirm_identity">Потвърдете самоличността си</string>
     <string name="add_field">Добави поле</string>
     <string name="field_key">Ключ</string>
     <string name="field_value">Стойност</string>

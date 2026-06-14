@@ -18,6 +18,24 @@ fun VaultIndex.childDocuments(folderId: String?): List<Document> =
 
 fun VaultIndex.activeFolder(id: String?): Folder? = id?.let { folders[it] }?.takeUnless { it.deleted }
 
+/**
+ * [root] plus all of its descendant folder ids (breadth-first). By default tombstoned folders are
+ * excluded; pass [includeDeleted] = true for structural checks (e.g. a move-cycle guard) that must
+ * still account for not-yet-purged folders. O(n) via a parent index.
+ */
+fun VaultIndex.descendantFolderIds(root: String, includeDeleted: Boolean = false): Set<String> {
+    val byParent = folders.values
+        .filter { includeDeleted || !it.deleted }
+        .groupBy { it.parentId }
+    val result = LinkedHashSet<String>()
+    val stack = ArrayDeque<String>().apply { add(root) }
+    while (stack.isNotEmpty()) {
+        val id = stack.removeLast()
+        if (result.add(id)) byParent[id]?.forEach { stack.add(it.id) }
+    }
+    return result
+}
+
 fun VaultIndex.activeDocument(id: String): Document? = documents[id]?.takeUnless { it.deleted }
 
 fun VaultIndex.starredFolders(): List<Folder> =

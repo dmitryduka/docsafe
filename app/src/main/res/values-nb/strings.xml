@@ -88,6 +88,11 @@
     <string name="save_to_device">Lagre på enheten</string>
     <string name="file_saved">Lagret på enheten</string>
     <string name="err_cant_save_file">Kunne ikke lagre denne filen</string>
+    <string name="reclaimed_space">Frigjorde %1$s · nå %2$s</string>
+    <string name="already_compact">Allerede kompakt · %1$s</string>
+    <string name="reclaim_failed">Kunne ikke frigjøre plass</string>
+    <string name="err_cant_save_vault">Kunne ikke lagre hvelvet</string>
+    <string name="confirm_identity">Bekreft at det er deg</string>
     <string name="add_field">Legg til felt</string>
     <string name="field_key">Nøkkel</string>
     <string name="field_value">Verdi</string>

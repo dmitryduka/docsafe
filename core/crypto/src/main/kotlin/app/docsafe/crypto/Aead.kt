@@ -1,6 +1,6 @@
 package app.docsafe.crypto
 
-import javax.crypto.AEADBadTagException
+import java.security.GeneralSecurityException
 import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -35,7 +35,9 @@ object Aead {
             cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(TAG_BITS, nonce))
             aad?.let { cipher.updateAAD(it) }
             cipher.doFinal(ciphertext)
-        } catch (e: AEADBadTagException) {
+        } catch (e: GeneralSecurityException) {
+            // Covers a bad GCM tag and any other cipher failure (e.g. malformed/short ciphertext
+            // from a tampered file) so decryption never leaks distinct failure modes.
             throw DecryptionException(cause = e)
         }
     }

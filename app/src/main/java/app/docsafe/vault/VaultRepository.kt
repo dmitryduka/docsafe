@@ -47,20 +47,6 @@ class VaultRepository @Inject constructor(
         session.current()?.let { _index.value = it.snapshot() }
     }
 
-    fun foldersIn(parentId: String?): List<Folder> =
-        _index.value.folders.values
-            .filter { !it.deleted && it.parentId == parentId }
-            .sortedBy { it.name.lowercase() }
-
-    fun documentsIn(folderId: String?): List<Document> =
-        _index.value.documents.values
-            .filter { !it.deleted && it.folderId == folderId }
-            .sortedBy { it.name.lowercase() }
-
-    fun folder(id: String): Folder? = _index.value.folders[id]?.takeUnless { it.deleted }
-
-    fun document(id: String): Document? = _index.value.documents[id]?.takeUnless { it.deleted }
-
     suspend fun createFolder(name: String, parentId: String?): String = mutate { vault, idx ->
         val folder = Folder(
             id = newId(),
@@ -75,14 +61,12 @@ class VaultRepository @Inject constructor(
     }
 
     suspend fun renameFolder(id: String, name: String) = mutateUnit { vault, idx ->
-        val folder = idx.folders[id] ?: return@mutateUnit
-        val updated = folder.copy(name = name.trim(), modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders + (id to updated), idx.documents)
+        vault.commitFolder(idx, id) { it.copy(name = name.trim()) }
     }
 
     /** Tombstones a folder and everything beneath it (subfolders + their documents). */
     suspend fun deleteFolder(id: String) = mutateUnit { vault, idx ->
-        val folderIds = collectSubtree(idx, id)
+        val folderIds = idx.descendantFolderIds(id, includeDeleted = true)
         val ts = now()
         val folders = idx.folders.mapValues { (fid, f) ->
             if (fid in folderIds) f.copy(deleted = true, modifiedAt = ts, modifiedBy = me()) else f
@@ -108,23 +92,18 @@ class VaultRepository @Inject constructor(
     }
 
     suspend fun renameDocument(id: String, name: String) = mutateUnit { vault, idx ->
-        val doc = idx.documents[id] ?: return@mutateUnit
-        val updated = doc.copy(name = name.trim(), modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders, idx.documents + (id to updated))
+        vault.commitDocument(idx, id) { it.copy(name = name.trim()) }
     }
 
     suspend fun deleteDocument(id: String) = mutateUnit { vault, idx ->
-        val doc = idx.documents[id] ?: return@mutateUnit
-        val updated = doc.copy(deleted = true, modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders, idx.documents + (id to updated))
+        vault.commitDocument(idx, id) { it.copy(deleted = true) }
     }
 
     /** Moves a document into [newFolderId] (null = vault root). */
     suspend fun moveDocument(id: String, newFolderId: String?) = mutateUnit { vault, idx ->
         val doc = idx.documents[id] ?: return@mutateUnit
         if (doc.folderId == newFolderId) return@mutateUnit
-        val updated = doc.copy(folderId = newFolderId, modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders, idx.documents + (id to updated))
+        vault.commitDocument(idx, id) { it.copy(folderId = newFolderId) }
     }
 
     /**
@@ -134,9 +113,8 @@ class VaultRepository @Inject constructor(
     suspend fun moveFolder(id: String, newParentId: String?) = mutateUnit { vault, idx ->
         val folder = idx.folders[id] ?: return@mutateUnit
         if (folder.parentId == newParentId) return@mutateUnit
-        if (newParentId != null && newParentId in collectSubtree(idx, id)) return@mutateUnit
-        val updated = folder.copy(parentId = newParentId, modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders + (id to updated), idx.documents)
+        if (newParentId != null && newParentId in idx.descendantFolderIds(id, includeDeleted = true)) return@mutateUnit
+        vault.commitFolder(idx, id) { it.copy(parentId = newParentId) }
     }
 
     /** Adds an attachment to a document, storing [bytes] as a content-addressed blob. */
@@ -174,13 +152,7 @@ class VaultRepository @Inject constructor(
     }
 
     suspend fun removeAttachment(documentId: String, attachmentId: String) = mutateUnit { vault, idx ->
-        val doc = idx.documents[documentId] ?: return@mutateUnit
-        val updated = doc.copy(
-            attachments = doc.attachments.filterNot { it.id == attachmentId },
-            modifiedAt = now(),
-            modifiedBy = me(),
-        )
-        vault.commit(idx.folders, idx.documents + (documentId to updated))
+        vault.commitDocument(idx, documentId) { it.copy(attachments = it.attachments.filterNot { a -> a.id == attachmentId }) }
     }
 
     /** Adds a key/value text field to a document. */
@@ -190,51 +162,37 @@ class VaultRepository @Inject constructor(
 
     /** Adds a key/value text field and returns the new field's id (or null if the doc is gone). */
     suspend fun addFieldReturningId(documentId: String, key: String, value: String): String? {
-        var newFieldId: String? = null
+        val field = DocField(id = newId(), key = key.trim(), value = value.trim())
+        var added = false
         mutateUnit { vault, idx ->
-            val doc = idx.documents[documentId] ?: return@mutateUnit
-            val field = DocField(id = newId(), key = key.trim(), value = value.trim())
-            newFieldId = field.id
-            val updated = doc.copy(fields = doc.fields + field, modifiedAt = now(), modifiedBy = me())
-            vault.commit(idx.folders, idx.documents + (documentId to updated))
+            if (idx.documents[documentId] == null) return@mutateUnit
+            added = true
+            vault.commitDocument(idx, documentId) { it.copy(fields = it.fields + field) }
         }
-        return newFieldId
+        return if (added) field.id else null
     }
 
     suspend fun removeField(documentId: String, fieldId: String) = mutateUnit { vault, idx ->
-        val doc = idx.documents[documentId] ?: return@mutateUnit
-        val updated = doc.copy(
-            fields = doc.fields.filterNot { it.id == fieldId },
-            modifiedAt = now(),
-            modifiedBy = me(),
-        )
-        vault.commit(idx.folders, idx.documents + (documentId to updated))
+        vault.commitDocument(idx, documentId) { it.copy(fields = it.fields.filterNot { f -> f.id == fieldId }) }
     }
 
     suspend fun addTag(documentId: String, tag: String) = mutateUnit { vault, idx ->
         val doc = idx.documents[documentId] ?: return@mutateUnit
         val clean = tag.trim()
         if (clean.isEmpty() || doc.tags.any { it.equals(clean, ignoreCase = true) }) return@mutateUnit
-        val updated = doc.copy(tags = doc.tags + clean, modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders, idx.documents + (documentId to updated))
+        vault.commitDocument(idx, documentId) { it.copy(tags = it.tags + clean) }
     }
 
     suspend fun removeTag(documentId: String, tag: String) = mutateUnit { vault, idx ->
-        val doc = idx.documents[documentId] ?: return@mutateUnit
-        val updated = doc.copy(tags = doc.tags.filterNot { it == tag }, modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders, idx.documents + (documentId to updated))
+        vault.commitDocument(idx, documentId) { it.copy(tags = it.tags.filterNot { t -> t == tag }) }
     }
 
     suspend fun setDocumentStarred(documentId: String, starred: Boolean) = mutateUnit { vault, idx ->
-        val doc = idx.documents[documentId] ?: return@mutateUnit
-        val updated = doc.copy(starred = starred, modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders, idx.documents + (documentId to updated))
+        vault.commitDocument(idx, documentId) { it.copy(starred = starred) }
     }
 
     suspend fun setFolderStarred(folderId: String, starred: Boolean) = mutateUnit { vault, idx ->
-        val folder = idx.folders[folderId] ?: return@mutateUnit
-        val updated = folder.copy(starred = starred, modifiedAt = now(), modifiedBy = me())
-        vault.commit(idx.folders + (folderId to updated), idx.documents)
+        vault.commitFolder(idx, folderId) { it.copy(starred = starred) }
     }
 
     /**
@@ -258,7 +216,7 @@ class VaultRepository @Inject constructor(
 
     /** Decrypts a single blob (seeks to its range; never reads the whole file). */
     suspend fun readBlob(blobId: String): ByteArray = withContext(Dispatchers.IO) {
-        session.require().readBlob(blobId)
+        session.withVault { it.readBlob(blobId) }
     }
 
     /** Current size of the encrypted vault file on disk. */
@@ -295,21 +253,42 @@ class VaultRepository @Inject constructor(
         docIds: Set<String>,
         folderIds: Set<String>,
         destFolderId: String?,
+    ): Int = transfer(destVaultId, destFolderId) { _ -> docIds to folderIds }
+
+    /** Merges the entire active vault into [destVaultId] (at [destFolderId], or its root if null). */
+    suspend fun mergeActiveInto(destVaultId: String, destFolderId: String?): Int =
+        transfer(destVaultId, destFolderId) { srcIndex ->
+            val rootFolders = srcIndex.folders.values.filter { !it.deleted && it.parentId == null }.map { it.id }.toSet()
+            val rootDocs = srcIndex.documents.values.filter { !it.deleted && it.folderId == null }.map { it.id }.toSet()
+            rootDocs to rootFolders
+        }
+
+    /**
+     * Copies from the active vault into [destVaultId] under [destFolderId]. [select] chooses which
+     * (docIds, folderIds) to copy from the source snapshot — taken **inside** the lock so it can't
+     * race a concurrent mutation. Re-encrypts every blob + thumbnail; returns documents copied.
+     */
+    private suspend fun transfer(
+        destVaultId: String,
+        destFolderId: String?,
+        select: (VaultIndex) -> Pair<Set<String>, Set<String>>,
     ): Int = withContext(Dispatchers.IO) {
         mutex.withLock {
             val source = session.require()
             val srcIndex = source.snapshot()
+            val (docIds, folderIds) = select(srcIndex)
             // Items copied into a folder that already holds a same-named item are renamed
             // "<name> from <source vault>" so nothing is silently overwritten or duplicated.
             val sourceVaultName = securityRepository.activeVaultName().orEmpty()
             val rename = { name: String -> appContext.getString(R.string.copied_conflict_suffix, name, sourceVaultName) }
             withVault(destVaultId) { dest ->
+                val destIndex = dest.snapshot()
                 val result = VaultCopier.copy(
                     source = source,
                     sourceIndex = srcIndex,
                     dest = dest,
-                    destFolders = dest.snapshot().folders,
-                    destDocuments = dest.snapshot().documents,
+                    destFolders = destIndex.folders,
+                    destDocuments = destIndex.documents,
                     folderIds = folderIds,
                     docIds = docIds,
                     destParentId = destFolderId,
@@ -323,14 +302,6 @@ class VaultRepository @Inject constructor(
                 result.copiedDocuments
             }
         }
-    }
-
-    /** Merges the entire active vault into [destVaultId] (at [destFolderId], or its root if null). */
-    suspend fun mergeActiveInto(destVaultId: String, destFolderId: String?): Int {
-        val idx = session.require().snapshot()
-        val rootFolders = idx.folders.values.filter { !it.deleted && it.parentId == null }.map { it.id }.toSet()
-        val rootDocs = idx.documents.values.filter { !it.deleted && it.folderId == null }.map { it.id }.toSet()
-        return copyToVault(destVaultId, rootDocs, rootFolders, destFolderId)
     }
 
     /** Opens a non-active vault transiently (via its master-key-unwrapped DEK), runs [block], closes it. */
@@ -362,19 +333,22 @@ class VaultRepository @Inject constructor(
         mutate { vault, idx -> block(vault, idx) }
     }
 
-    private fun collectSubtree(idx: VaultIndex, rootId: String): Set<String> {
-        val result = mutableSetOf(rootId)
-        var added = true
-        while (added) {
-            added = false
-            for (f in idx.folders.values) {
-                if (f.parentId in result && f.id !in result) {
-                    result += f.id
-                    added = true
-                }
-            }
-        }
-        return result
+    /**
+     * Looks up document [id], applies [transform], stamps the merge clock (modifiedAt/By), and
+     * commits. No-ops if the document is gone. Centralizes the clock-stamp so single-document edits
+     * can't forget it.
+     */
+    private fun VaultFile.commitDocument(idx: VaultIndex, id: String, transform: (Document) -> Document) {
+        val doc = idx.documents[id] ?: return
+        val updated = transform(doc).copy(modifiedAt = now(), modifiedBy = me())
+        commit(idx.folders, idx.documents + (id to updated))
+    }
+
+    /** Folder counterpart of [commitDocument]. */
+    private fun VaultFile.commitFolder(idx: VaultIndex, id: String, transform: (Folder) -> Folder) {
+        val folder = idx.folders[id] ?: return
+        val updated = transform(folder).copy(modifiedAt = now(), modifiedBy = me())
+        commit(idx.folders + (id to updated), idx.documents)
     }
 
     private fun newId(): String = UUID.randomUUID().toString()

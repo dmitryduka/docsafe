@@ -1,11 +1,13 @@
 package app.docsafe.ui.vault
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.docsafe.R
 import app.docsafe.ocr.OcrCandidate
 import app.docsafe.ocr.OcrEngine
 import app.docsafe.security.SecurityRepository
@@ -14,11 +16,13 @@ import app.docsafe.share.SharedFileRef
 import app.docsafe.vault.ThumbnailGenerator
 import app.docsafe.vault.VaultRepository
 import app.docsafe.vault.activeDocument
+import app.docsafe.vault.descendantFolderIds
 import app.docsafe.vault.model.Attachment
 import app.docsafe.vault.model.AttachmentKind
 import app.docsafe.vault.model.Document
 import app.docsafe.vault.model.VaultIndex
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +33,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VaultViewModel @Inject constructor(
+    @ApplicationContext private val appContext: Context,
     private val repository: VaultRepository,
     private val securityRepository: SecurityRepository,
     private val thumbnailLoader: ThumbnailLoader,
@@ -61,12 +66,12 @@ class VaultViewModel @Inject constructor(
         _compactionMessage.value = try {
             val result = repository.compact()
             if (result.reclaimedBytes > 0) {
-                "Reclaimed ${formatBytes(result.reclaimedBytes)} · now ${formatBytes(result.afterBytes)}"
+                appContext.getString(R.string.reclaimed_space, formatBytes(result.reclaimedBytes), formatBytes(result.afterBytes))
             } else {
-                "Already compact · ${formatBytes(result.afterBytes)}"
+                appContext.getString(R.string.already_compact, formatBytes(result.afterBytes))
             }
         } catch (e: Exception) {
-            "Couldn't reclaim space: ${e.message ?: "error"}"
+            appContext.getString(R.string.reclaim_failed)
         }
         _compacting.value = false
     }
@@ -156,16 +161,10 @@ class VaultViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             files.forEach { ref ->
                 val bytes = runCatching { ref.file.readBytes() }.getOrNull() ?: return@forEach
-                repository.addAttachment(documentId, bytes, kindOf(ref.mime), ref.name, ref.mime)
+                repository.addAttachment(documentId, bytes, AttachmentKind.fromMime(ref.mime), ref.name, ref.mime)
             }
         }
         pendingShareStore.clear()
-    }
-
-    private fun kindOf(mime: String?): AttachmentKind = when {
-        mime == "application/pdf" -> AttachmentKind.PDF
-        mime?.startsWith("image/") == true -> AttachmentKind.IMAGE
-        else -> AttachmentKind.OTHER
     }
 
     // --- Multiple vaults ---------------------------------------------------------------
@@ -181,6 +180,13 @@ class VaultViewModel @Inject constructor(
     }
 
     fun activeVaultName(): String? = securityRepository.activeVaultName()
+
+    /** Whether biometric unlock is configured — drives the step-up confirmation method. */
+    val biometricEnabled: Boolean get() = securityRepository.biometricEnabled
+
+    /** Verifies the app PIN for a step-up confirmation (Argon2 off the main thread). */
+    suspend fun verifyPin(pin: CharArray): Boolean =
+        withContext(Dispatchers.Default) { securityRepository.verifyPin(pin) }
 
     /** Seamless switch (no re-auth): uses the master key already in memory, then reloads the UI. */
     fun switchToVault(id: String) = viewModelScope.launch {
@@ -277,7 +283,7 @@ class VaultViewModel @Inject constructor(
     /** Image-bearing documents in [folderId] and all of its subfolders (root = whole vault). */
     fun batchDocuments(folderId: String?): List<Document> {
         val idx = index.value
-        val scope: Set<String>? = folderId?.let { descendantFolderIds(idx, it) }
+        val scope: Set<String>? = folderId?.let { idx.descendantFolderIds(it) }
         return idx.documents.values
             .filter { doc ->
                 !doc.deleted &&
@@ -303,17 +309,6 @@ class VaultViewModel @Inject constructor(
             }
         }
         return out
-    }
-
-    private fun descendantFolderIds(idx: VaultIndex, root: String): Set<String> {
-        val byParent = idx.folders.values.filterNot { it.deleted }.groupBy { it.parentId }
-        val result = LinkedHashSet<String>()
-        val stack = ArrayDeque<String>().apply { add(root) }
-        while (stack.isNotEmpty()) {
-            val id = stack.removeLast()
-            if (result.add(id)) byParent[id]?.forEach { stack.add(it.id) }
-        }
-        return result
     }
 
     private companion object {

@@ -88,6 +88,11 @@
     <string name="save_to_device">Tallenna laitteelle</string>
     <string name="file_saved">Tallennettu laitteelle</string>
     <string name="err_cant_save_file">Tämän tiedoston tallennus epäonnistui</string>
+    <string name="reclaimed_space">Vapautettu %1$s · nyt %2$s</string>
+    <string name="already_compact">Jo tiivistetty · %1$s</string>
+    <string name="reclaim_failed">Tilan vapautus epäonnistui</string>
+    <string name="err_cant_save_vault">Holvin tallennus epäonnistui</string>
+    <string name="confirm_identity">Vahvista henkilöllisyytesi</string>
     <string name="add_field">Lisää kenttä</string>
     <string name="field_key">Avain</string>
     <string name="field_value">Arvo</string>

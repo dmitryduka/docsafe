@@ -7,7 +7,18 @@ import kotlinx.serialization.Serializable
  * covers any other file type (documents, archives, XML, …) shown with a generic file icon.
  */
 @Serializable
-enum class AttachmentKind { IMAGE, PDF, OTHER }
+enum class AttachmentKind {
+    IMAGE, PDF, OTHER;
+
+    companion object {
+        /** Classifies an attachment from its MIME type. */
+        fun fromMime(mime: String?): AttachmentKind = when {
+            mime == "application/pdf" -> PDF
+            mime?.startsWith("image/") == true -> IMAGE
+            else -> OTHER
+        }
+    }
+}
 
 /**
  * A single file attached to a document. Blobs are content-addressed: [blobId] is the

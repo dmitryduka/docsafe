@@ -88,6 +88,11 @@
     <string name="save_to_device">Enregistrer sur l\'appareil</string>
     <string name="file_saved">Enregistré sur l\'appareil</string>
     <string name="err_cant_save_file">Impossible d\'enregistrer ce fichier</string>
+    <string name="reclaimed_space">Récupéré %1$s · maintenant %2$s</string>
+    <string name="already_compact">Déjà compact · %1$s</string>
+    <string name="reclaim_failed">Impossible de récupérer de l’espace</string>
+    <string name="err_cant_save_vault">Impossible d’enregistrer le coffre</string>
+    <string name="confirm_identity">Confirmez votre identité</string>
     <string name="add_field">Ajouter un champ</string>
     <string name="field_key">Clé</string>
     <string name="field_value">Valeur</string>

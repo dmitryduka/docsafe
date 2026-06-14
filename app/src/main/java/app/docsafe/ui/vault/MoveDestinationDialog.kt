@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import app.docsafe.R
 import app.docsafe.vault.breadcrumb
 import app.docsafe.vault.childFolders
+import app.docsafe.vault.descendantFolderIds
 import app.docsafe.vault.model.VaultIndex
 
 /**
@@ -57,7 +58,7 @@ fun MoveDestinationDialog(
 
     val excluded = remember(index, movingFolderIds) {
         val set = HashSet<String>()
-        movingFolderIds.forEach { set += descendantFolderIds(index, it) }
+        movingFolderIds.forEach { set += index.descendantFolderIds(it) }
         set
     }
     val trail = index.breadcrumb(browseId)
@@ -136,14 +137,3 @@ fun MoveDestinationDialog(
     }
 }
 
-/** [root] plus every non-deleted folder beneath it. */
-private fun descendantFolderIds(index: VaultIndex, root: String): Set<String> {
-    val byParent = index.folders.values.filterNot { it.deleted }.groupBy { it.parentId }
-    val result = LinkedHashSet<String>()
-    val stack = ArrayDeque<String>().apply { add(root) }
-    while (stack.isNotEmpty()) {
-        val id = stack.removeLast()
-        if (result.add(id)) byParent[id]?.forEach { stack.add(it.id) }
-    }
-    return result
-}

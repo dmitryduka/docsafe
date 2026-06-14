@@ -88,6 +88,11 @@
     <string name="save_to_device">保存到设备</string>
     <string name="file_saved">已保存到设备</string>
     <string name="err_cant_save_file">无法保存此文件</string>
+    <string name="reclaimed_space">已回收 %1$s · 现为 %2$s</string>
+    <string name="already_compact">已是最简 · %1$s</string>
+    <string name="reclaim_failed">无法回收空间</string>
+    <string name="err_cant_save_vault">无法保存保险库</string>
+    <string name="confirm_identity">确认是你本人</string>
     <string name="add_field">添加字段</string>
     <string name="field_key">键</string>
     <string name="field_value">值</string>

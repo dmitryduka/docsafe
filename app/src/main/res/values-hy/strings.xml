@@ -88,6 +88,11 @@
     <string name="save_to_device">Պահպանել սարքում</string>
     <string name="file_saved">Պահպանվեց սարքում</string>
     <string name="err_cant_save_file">Չհաջողվեց պահպանել այս ֆայլը</string>
+    <string name="reclaimed_space">Ազատվեց %1$s · այժմ %2$s</string>
+    <string name="already_compact">Արդեն սեղմված է · %1$s</string>
+    <string name="reclaim_failed">Չհաջողվեց ազատել տարածք</string>
+    <string name="err_cant_save_vault">Չհաջողվեց պահպանել պահոցը</string>
+    <string name="confirm_identity">Հաստատեք, որ դա դուք եք</string>
     <string name="add_field">Ավելացնել դաշտ</string>
     <string name="field_key">Բանալի</string>
     <string name="field_value">Արժեք</string>

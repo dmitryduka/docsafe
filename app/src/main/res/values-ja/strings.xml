@@ -88,6 +88,11 @@
     <string name="save_to_device">端末に保存</string>
     <string name="file_saved">端末に保存しました</string>
     <string name="err_cant_save_file">このファイルを保存できませんでした</string>
+    <string name="reclaimed_space">%1$s を回収 · 現在 %2$s</string>
+    <string name="already_compact">すでに最適化済み · %1$s</string>
+    <string name="reclaim_failed">空き容量を回収できませんでした</string>
+    <string name="err_cant_save_vault">保管庫を保存できませんでした</string>
+    <string name="confirm_identity">本人確認</string>
     <string name="add_field">フィールドを追加</string>
     <string name="field_key">キー</string>
     <string name="field_value">値</string>

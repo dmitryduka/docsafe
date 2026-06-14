@@ -1,7 +1,9 @@
 package app.docsafe.security
 
+import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import java.security.ProviderException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -27,8 +29,21 @@ class BiometricKeyManager {
     /** Creates the auth-bound key if it does not already exist. */
     fun ensureKey() {
         if (hasKey()) return
+        // Prefer a StrongBox (secure-element) backed key where available; fall back to TEE/software
+        // keymaster on devices without StrongBox rather than failing key creation.
+        try {
+            generate(strongBox = true)
+        } catch (e: ProviderException) {
+            // StrongBoxUnavailableException (a ProviderException) on devices without a secure
+            // element — fall back to TEE/software keymaster. Caught by the always-present
+            // superclass so this method verifies on API < 28 too.
+            generate(strongBox = false)
+        }
+    }
+
+    private fun generate(strongBox: Boolean) {
         val generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE)
-        val spec = KeyGenParameterSpec.Builder(
+        val builder = KeyGenParameterSpec.Builder(
             KEY_ALIAS,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT,
         )
@@ -36,10 +51,16 @@ class BiometricKeyManager {
             .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
             .setKeySize(256)
             .setUserAuthenticationRequired(true)
-            // Re-authenticate for each unwrap; valid for biometric AND device credential.
+            // Re-authenticate for each unwrap; valid for biometric AND device credential. We keep
+            // the device-credential fallback deliberately (so users without enrolled biometrics can
+            // still unlock), which means the key is not invalidated on new biometric enrollment.
             .setUserAuthenticationParameters(0, KeyProperties.AUTH_BIOMETRIC_STRONG or KeyProperties.AUTH_DEVICE_CREDENTIAL)
-            .build()
-        generator.init(spec)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            // Defense in depth: the key is only usable while the device is unlocked.
+            builder.setUnlockedDeviceRequired(true)
+            if (strongBox) builder.setIsStrongBoxBacked(true)
+        }
+        generator.init(builder.build())
         generator.generateKey()
     }
 
