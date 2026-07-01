@@ -126,7 +126,7 @@ You can't reproduce Play's re-signed split APKs byte-for-byte, but you can confi
    app to the one published on the Releases page / store listing:
 
    ```bash
-   adb shell pm path app.docsafe                 # find base.apk path
+   adb shell pm path com.dmitryduka.docsafe      # find base.apk path
    adb pull <path>/base.apk play-base.apk
    apksigner verify --print-certs play-base.apk  # check the SHA-256 cert digest
    ```
