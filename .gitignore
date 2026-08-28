@@ -21,7 +21,3 @@ keystore.properties
 
 # Personal / encrypted vault files — NEVER commit
 *.dsvault
-
-# Server ops scratch — VPN private keys, /etc/shadow, SSH passwords — NEVER commit
-/amnezia-server/
-/ubuntu-2gb-ssh.txt
