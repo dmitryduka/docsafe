@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base launch theme; Compose drives the in-app theming via DocSafeTheme. -->
+    <!-- Base launch theme; Compose drives the in-app theming via DocSafeTheme.
+
+         Edge-to-edge: the app draws behind the system bars, so the bars are made transparent
+         here in the theme instead of through Window.setStatusBarColor / setNavigationBarColor at
+         runtime. Those two APIs are no-ops on Android 15+ (which enforces edge-to-edge itself)
+         and Play's pre-launch report flags any call to them; as theme attributes they simply stop
+         being consulted on 15+, while still doing the right thing on Android 14 and below.
+
+         Note there is deliberately no android:windowLayoutInDisplayCutoutMode here. Letting
+         content bleed into the cutout is cosmetic, the constant for it is likewise flagged, and
+         the screens already keep content clear of the cutout via WindowInsets.safeDrawing. -->
     <style name="Theme.DocSafe" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/ic_launcher_background</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 </resources>

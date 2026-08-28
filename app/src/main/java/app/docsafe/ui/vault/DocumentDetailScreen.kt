@@ -1,5 +1,7 @@
 package app.docsafe.ui.vault
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
 import app.docsafe.ui.copyUriToClipboard
 import app.docsafe.ui.exportManyToShareCache
 import app.docsafe.ui.exportToShareCache
@@ -309,6 +311,9 @@ fun DocumentDetailScreen(
     }
 
     Scaffold(
+        // Draw edge to edge safely: the default (systemBars) ignores the display cutout,
+        // which matters in landscape on notched devices, and the IME.
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             if (selectionMode) {
                 TopAppBar(

@@ -3,8 +3,10 @@ package app.docsafe.ui.vault
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -64,6 +66,9 @@ fun ShareTargetScreen() {
     val title = trail.lastOrNull()?.name ?: stringResource(R.string.add_items, pending.size)
 
     Scaffold(
+        // Draw edge to edge safely: the default (systemBars) ignores the display cutout,
+        // which matters in landscape on notched devices, and the IME.
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             TopAppBar(
                 title = { Text(title) },

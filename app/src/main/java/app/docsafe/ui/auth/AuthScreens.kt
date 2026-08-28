@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -392,9 +392,13 @@ private fun AuthScaffold(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            // imePadding() must come BEFORE verticalScroll so it shrinks the scroll viewport
-            // (lifting content above the keyboard); applied after, it only pads the content.
-            .imePadding()
+            // These screens have no Scaffold, so they must consume the window insets themselves:
+            // the app draws edge to edge, and without this the icon and title sit under the status
+            // bar and the bottom button under the gesture pill. safeDrawing covers the system bars,
+            // the display cutout and the IME. It must come BEFORE verticalScroll so the keyboard
+            // shrinks the scroll viewport (lifting content above it); applied after, it would only
+            // pad the content.
+            .safeDrawingPadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

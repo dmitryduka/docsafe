@@ -20,9 +20,12 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
@@ -165,7 +168,13 @@ fun ImageViewerScreen(
         },
         bottomBar = {
             if (ocrMode) {
-                Surface(color = Color.Black.copy(alpha = 0.6f)) {
+                // Scaffold applies its insets to the body, not to the bottomBar slot, and this is a
+                // plain Surface rather than a BottomAppBar -- so it has to keep itself clear of the
+                // navigation bar / gesture pill.
+                Surface(
+                    color = Color.Black.copy(alpha = 0.6f),
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars),
+                ) {
                     Text(
                         stringResource(if (regionMode) R.string.ocr_hint_region else R.string.ocr_hint_auto),
                         style = MaterialTheme.typography.bodySmall,

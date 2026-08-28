@@ -80,6 +80,19 @@
             </intent-filter>
         </activity>
 
+        <!-- ML Kit's document-scanner delegate activity hardcodes android:screenOrientation="portrait"
+             in the library manifest. From Android 16 that restriction is ignored on large screens
+             anyway, and Play flags it as an orientation restriction on the whole app, so drop it.
+             The library pinned the orientation only to avoid recreating this invisible delegate
+             (which would lose the scanner result), so keep that guarantee by handling the config
+             changes here instead of restricting them. -->
+        <activity
+            android:name="com.google.mlkit.vision.documentscanner.internal.GmsDocumentScanningDelegateActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="unspecified"
+            tools:replace="android:screenOrientation" />
+
         <!-- Pre-download the on-device OCR (text recognition) model when the app installs,
              so field extraction works offline without a first-run delay. -->
         <meta-data

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.WindowManager
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import android.content.Context
@@ -42,7 +42,13 @@ class MainActivity : FragmentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+        // Edge to edge. Deliberately NOT androidx's enableEdgeToEdge(): that helper calls
+        // Window.setStatusBarColor / setNavigationBarColor and sets LAYOUT_IN_DISPLAY_CUTOUT_MODE_
+        // SHORT_EDGES, which are all no-ops on Android 15+ and are flagged by Play's pre-launch
+        // report. The transparent bars it set up for older releases are declared in themes.xml
+        // instead, so all that is left here is to stop the decor view fitting the system windows.
+        // Compose then receives the real insets, which the screens consume via safeDrawing.
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         // Treat the whole app as sensitive: keep decrypted documents out of screenshots, the
         // recents thumbnail, and screen recorders/casting. Single activity, so this covers all UI.

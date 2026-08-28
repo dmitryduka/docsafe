@@ -4,9 +4,11 @@ import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -90,6 +92,9 @@ fun SettingsScreen(onNavigateUp: () -> Unit) {
     }
 
     Scaffold(
+        // Draw edge to edge safely: the default (systemBars) ignores the display cutout,
+        // which matters in landscape on notched devices, and the IME.
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.settings_title)) },
